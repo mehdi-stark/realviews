@@ -1,26 +1,41 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="flex">
+    <!-- Sidebar fixe sur le côté -->
+    <Sidebar />
+
+    <!-- Contenu principal qui change avec les routes -->
+    <div class="flex-1 overflow-auto">
+      <router-view :key="$route.fullPath"></router-view>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/SidebarPage.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Sidebar
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+/* Styliser la sidebar pour qu'elle soit fixe */
+.sidebar {
+  position: fixed;
+  /* autres styles */
+}
+
+/* Styliser le contenu principal pour qu'il ne soit pas caché par la sidebar */
+.main-content {
+  margin-left: 200px; /* ajustez en fonction de la largeur de votre sidebar */
+  /* autres styles */
+}
+
+/* Assurez-vous que le html et le body prennent toute la hauteur */
+html, body {
+  height: 100%;
+  margin: 0;
 }
 </style>
