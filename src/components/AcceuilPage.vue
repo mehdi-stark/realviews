@@ -13,12 +13,12 @@
           />
         </div>
      </header>
-      <h1 class="text-4xl justify-center items-center font-bold mt-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
       <!-- ... contenu supplémentaire ... -->
-      <div class="flex justify-center items-center h-screen">
+      <div class="flex flex-col justify-center items-center h-screen">
+        <h1 class="text-4xl justify-center items-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
         <iframe
           class="w-3/4 h-auto md:w-1/2 lg:w-2/3 xl:w-3/4"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          src="https://www.youtube.com/embed?v=Y2Dps_AMLsQ"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>

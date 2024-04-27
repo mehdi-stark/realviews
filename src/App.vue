@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="flex">
     <!-- Sidebar fixe sur le côté -->
-    <Sidebar />
+    <Sidebar class="h-screen overflow-hidden" />
 
     <!-- Contenu principal qui change avec les routes -->
-    <div class="flex-1 overflow-auto">
+    <div id="main_content" class="flex-1 overflow-auto">
       <router-view :key="$route.fullPath"></router-view>
     </div>
   </div>
@@ -34,8 +34,24 @@ export default {
 }
 
 /* Assurez-vous que le html et le body prennent toute la hauteur */
-html, body {
+/* html, body {
   height: 100%;
   margin: 0;
+} */
+
+/* Ajoutez ce style pour fixer la hauteur de la page et de la sidebar */
+#app {
+  height: 100vh; /* Hauteur complète de la fenêtre de visualisation */
 }
+
+#main_content {
+  height: 100vh; /* Hauteur complète de la fenêtre de visualisation */
+  overflow-y: scroll; /* Permet le défilement vertical si le contenu dépasse */
+}
+
+Sidebar {
+  height: 100vh; /* Hauteur complète de la fenêtre de visualisation */
+  overflow-y: hidden; /* Empêche le défilement de la sidebar */
+}
+
 </style>

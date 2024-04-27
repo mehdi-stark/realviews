@@ -3,6 +3,7 @@ import AcceuilPage from '@/components/AcceuilPage.vue'
 import ScrapperPage from '@/components/ScrapperPage.vue'
 import ProductListPage from '@/components/ProductListPage.vue'
 import LoginPage from '@/components/LoginPage.vue'
+import GenerateFormPage from '@/components/GenerateFormPage.vue'
 // import RegistrationPage from '@/views/RegistrationPage.vue'
 // import LoginView from '@/views/LoginView.vue'
 
@@ -19,6 +20,7 @@ const routes = [
   { path: '/scrapper', component: ScrapperPage, name: 'Scrapper' },
   { path: '/products', component: ProductListPage, name: 'Products' },
   { path: '/login', component: LoginPage, name: 'Login' },
+  { path: '/amazon', component: GenerateFormPage, name: 'Generate Amazon' },
 
   // { 
   //   path: '/login', 
