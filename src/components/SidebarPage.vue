@@ -70,6 +70,9 @@
             </li>
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/communaute.png"
+                    class="object-fill mr-2 w-6 h-6"/>
                 <span class="ml-3">Communaute</span>
               </a>
             </li>
@@ -98,7 +101,7 @@
             <li @click="logout()" class="flex items-center">
                 <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
-                    src="../assets/logout.png"
+                    src="../assets/sidebar/logout.png"
                     class="object-fill mr-3 w-6 h-6"/>
                   <span class="">Deconnexion</span>
               </a>

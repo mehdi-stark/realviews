@@ -16,13 +16,19 @@
       <!-- ... contenu supplémentaire ... -->
       <div class="flex flex-col justify-center items-center h-screen">
         <h1 class="text-4xl justify-center items-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
-        <iframe
+        <!-- <iframe
           class="w-3/4 h-auto md:w-1/2 lg:w-2/3 xl:w-3/4"
           src="https://www.youtube.com/embed?v=Y2Dps_AMLsQ"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
-        </iframe>
+        </iframe> -->
+        <iframe width="860" height="515" 
+        src="https://www.youtube.com/embed/Y2Dps_AMLsQ?si=6DppwumiuH7OjWj8" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
     </div>
   </div>

@@ -18,14 +18,17 @@
       <div class="bg-purple-600 text-white p-8 rounded-lg">
         <h2 class="text-lg underline">Selectionner la source</h2>
         <div class="flex flex-col justify-around mt-4">
-          <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2">
+          <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2 flex items-center">
+            <img src="../assets/amazon-icon.png" alt="Logo Amazon" class="mr-2" width="24" height="24"> <!-- Ajoutez le chemin vers votre logo Amazon -->
             <router-link to="/amazon" id="gettingStarted">Lien Amazon</router-link> 
           </button>
-          <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2">
+          <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2 flex items-center">
+            <img src="../assets/aliexpress-icon.png" alt="Logo Aliexpress" class="mr-2" width="24" height="24">
             <router-link to="/amazon" id="gettingStarted">Lien Aliexpress</router-link> 
           </button>
-          <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2">
-            Site Shopify
+          <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2 flex items-center">
+            <img src="../assets/shopify-icon.png" alt="Logo shopify" class="mr-2" width="24" height="24">
+            <router-link to="/amazon" id="gettingStarted">Site Shopify</router-link> 
           </button>
         </div>
       </div>
