@@ -107,7 +107,7 @@
             })
             localStorage.setItem('user', user);
             this.loading_login = false
-            this.$router.push("/")
+            this.$router.push("/products")
           }
           else {
             console.error("Access token is null");
