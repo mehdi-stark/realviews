@@ -16,7 +16,7 @@
     <h1 class="text-4xl font-bold mb-5">Generez des avis <span class="text-purple-600">en <br/> un clic</span> grâce à l’IA</h1>
     <div class="text-center">
       <div class="bg-purple-600 text-white p-8 rounded-lg">
-        <h2 class="text-lg">Selectionner la source</h2>
+        <h2 class="text-lg underline">Selectionner la source</h2>
         <div class="flex flex-col justify-around mt-4">
           <button class="bg-white text-purple-600 font-semibold py-2 px-4 border border-purple-600 rounded shadow mb-2">
             <router-link to="/amazon" id="gettingStarted">Lien Amazon</router-link> 

@@ -17,121 +17,32 @@
         </div>
       </div>
 
-      <!-- Modale -->
-      <div
-        v-if="showModal"
-        class="fixed inset-0 flex items-center justify-center h-full w-full mx-auto backdrop-blur-sm text-black"
-      >
-        <!-- <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25"> -->
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-          <form @submit.prevent="scrapProduct" class="space-y-4">
-            <div class="form-group">
-              <label for="product_name" class="text-gray-600">Product Handle</label>
-              <input
-                type="text"
-                id="product_name"
-                v-model="form.product_name"
-                required
-                class="mt-1 p-2 border rounded-md w-full"
-              />
-            </div>
-            <div class="form-group">
-              <label for="description" class="text-gray-600"
-                >Description du produit</label
-              >
-              <textarea
-                id="description"
-                v-model="form.description"
-                required
-                class="mt-1 p-2 border rounded-md w-full"
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label for="amazon_link" class="text-gray-600">Lien produit Amazon</label>
-              <input
-                type="link"
-                id="amazon_link"
-                v-model="form.amazon_link"
-                class="mt-1 p-2 border rounded-md w-full"
-              />
-            </div>
-            <div class="form-group">
-              <div class="mt-4">
-                <label for="language" class="text-gray-600">Langue</label>
-                <select
-                  id="language"
-                  v-model="form.language"
-                  name="language"
-                  class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                  <option value="anglais">Anglais</option>
-                  <option value="francais">Français</option>
-                  <option value="espagnol">Espagnol</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="comments" class="text-gray-600">Nombre de Commentaires</label>
-              <input
-                type="number"
-                id="comments"
-                v-model="form.number"
-                required
-                class="mt-1 p-2 border rounded-md w-full"
-                min="1"
-              />
-            </div>
-            <div class="form-group justify-center space-x-4">
-              <button
-                type="submit"
-                class="submit-button bg-teal-500 text-white hover:bg-purple-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 py-2 px-4 rounded-md"
-              >
-                Ajouter
-              </button>
-              <button
-                type="submit"
-                class="bg-cyan-500 text-white hover:bg-purple-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 py-2 px-4 rounded-md"
-              >
-                Scrapper
-              </button>
-            </div>
-          </form>
-          <div
-            v-if="loading"
-            class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
-          >
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-              <div class="flex flex-col items-center">
-                <div
-                  class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"
-                ></div>
-                <!-- <p class="text-gray-600 mt-2">Récupération des commentaires...</p> -->
-                <p class="text-gray-600 mt-2">{{ spinner_text }}</p>
-              </div>
-            </div>
-          </div>
-          <!-- Bouton pour fermer la modale -->
-          <button
-            @click="closeModal"
-            class="mt-4 text-gray-500 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md mt-2"
-          >
-            Fermer
-          </button>
-          <!-- <button @click="closeModal" class=" items-center submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-30 py-2 px-4 rounded-md mt-2">Fermer</button> -->
-        </div>
-      </div>
-
       <!-- Product List Header -->
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">Produits</h2>
         <div class="flex space-x-4">
-          <button
-            @click="openModal"
-            class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600"
-          >
-            Ajouter produit
-          </button>
-          <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
+          <div class="flex items-center mt-2 hidden md:block relative">
+            <input
+              type="text"
+              placeholder="Rechercher des produits..."
+              class="bg-slate-100 text-black rounded-md px-2 py-1 w-80 h-10 pl-11"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 absolute top-2 left-3 opacity-50"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+          <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 h-10">
             Filtres
           </button>
         </div>
@@ -147,11 +58,11 @@
           <div class="flex text-gray-40">
             <span class="w-20"></span>
 
-            <div class="w-1/4 text-right flex justify-start">PRODUCT NAME</div>
-            <div class="w-1/6 text-right flex justify-end ml-16">RATINGS</div>
+            <div class="w-1/4 flex justify-start">NOM PRODUIT</div>
+            <div class="w-1/6 text-right flex justify-end ml-16">NOTE</div>
             <div class="w-1/6 text-right flex justify-around ml-5">
               <div></div>
-              <div>CREATED</div>
+              <div>DATE CREATION</div>
             </div>
             <div class="w-1/4 text-right flex justify-end mr-20">ACTIONS</div>
           </div>
@@ -227,7 +138,7 @@
                   <span class="">Download</span>
                 </button>
                 <button
-                  @click="doDelete"
+                  @click="deleteProduct(product)"
                   class="bg-red-700 text-white px-2 py-1 rounded items-center text-sm w-28 text-center flex justify-center"
                 >
                   <svg

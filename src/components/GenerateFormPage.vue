@@ -1,8 +1,5 @@
 <template>
-      <!-- Modale -->
-      <div
-        class="fixed inset-0 flex items-center justify-center h-full w-full mx-auto text-black">
-        <!-- <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25"> -->
+      <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black">
         <div class="bg-white p-6 rounded-lg shadow-lg">
           <form @submit.prevent="scrapProduct" class="space-y-4">
             <div class="form-group">
@@ -26,7 +23,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="description" class="text-gray-600"
+              <label for="description" class="text-gray-600 bold"
                 >Description du produit</label
               >
               <textarea
@@ -62,12 +59,18 @@
                 min="1"
               />
             </div>
-            <div class="form-group justify-center space-x-4">
+            <div class="form-group justify-center space-y-4">
               <button
                 type="submit"
                 class="w-full bg-cyan-500 text-white hover:bg-purple-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 py-2 px-4 rounded-md"
               >
                 Generer
+              </button>
+              <button
+                @click="closeForm"
+                class="mt-4 text-gray-500 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md mt-2"
+                >
+                Fermer
               </button>
             </div>
           </form>
@@ -85,20 +88,13 @@
               </div>
             </div>
           </div>
-          <!-- Bouton pour fermer la modale -->
-          <button
-            @click="closeModal"
-            class="mt-4 text-gray-500 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md mt-2"
-          >
-            Fermer
-          </button>
-          <!-- <button @click="closeModal" class=" items-center submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-30 py-2 px-4 rounded-md mt-2">Fermer</button> -->
         </div>
       </div>
 </template>
 
 <script>
 import axios from 'axios'
+import router from '@/router'
 
 export default {
   name: 'AmazonPage',
@@ -130,49 +126,64 @@ export default {
     };
   },
 
-methods: {
+  mounted() {
+    if (!localStorage.getItem("user") || !localStorage.getItem("access_token")) {
+      console.error("user or token not present ! Login is required !");
+      router.push("/login");
+    } else {
+      this.current_user = JSON.parse(localStorage.getItem("user"));
+      this.access_token = localStorage.getItem("access_token");
+
+      console.log(
+        "Current user in productlist mounted: " + JSON.stringify(this.current_user)
+      );
+      console.log("Current user ID in productlist mounted: " + this.current_user.id);
+      console.log("Current access-token in productlist mounted: " + this.access_token);
+    }
+  },
+
+  methods: {
       // API Call to insert a new product on the DB
-      async submitForm() {
-      this.spinner_text = "Recuperation des commentaires ..";
-      this.loading = true;
-      console.log("URL called : " + process.env.VUE_APP_ROOT_API);
-      // Appelez l'endpoint Spring Boot pour générer le fichier Excel
+      async scrapProduct() {
+        console.log('URL to call : ' + process.env.VUE_APP_ROOT_API);
 
-      // construct request object
-      console.log("Current User id dans submit: " + this.current_user.id);
-      this.form.user_id = this.current_user.id;
-      try {
-        const response = await axios.post(
-          process.env.VUE_APP_ROOT_API + "/api/v1/product",
-          this.form,
-          {
+        this.spinner_text = 'Recuperation des commentaires ..';
+        this.loading = true;
+        console.log('URL called : ' + process.env.VUE_APP_ROOT_API);
+
+        // construct request object
+        console.log('Current User id dans submit: ' + this.current_user.id);
+        this.form.user_id = this.current_user.id
+        try {
+          const response = await axios.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
             headers: {
-              Authorization: "Bearer " + localStorage.getItem("access_token"),
-            },
-            responseType: "arraybuffer", // Définir le type de réponse sur 'arraybuffer'
-          }
-        );
+              'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          },
+          responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
+          })
 
-        this.spinner_text = "Generation du fichier Excel ..";
-        await this.wait(1000);
-        const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
-        const blob = new Blob([excelArrayBuffer], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.target = "_blank"; // Ouvre le lien dans une nouvelle fenêtre
-        link.download = "comments_gen.xlsx";
-        link.click();
-        this.loading = false;
-        this.showModal = false; // Ferme le popup après soumission
-        location.reload();
-      } catch (error) {
+          this.spinner_text = 'Generation du fichier Excel ..';
+          await this.wait(1000);
+          const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
+          const blob = new Blob([excelArrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
+          link.download = 'comments_gen.xlsx';
+          link.click();
+          this.loading = false;
+          router.push("/products");
+        }
+        catch (error) {
         // Handle API error
         this.loading = false; // Set loading to false to hide the modal
+        console.error('Error on scrapping : ' + error)
       }
     },
+    closeForm() {
+      router.push('/scrapper')
+    }
 }
 
 };

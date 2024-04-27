@@ -31,9 +31,11 @@
           <h3 class="text-slate-200">Navigation</h3>
           <ul class="space-y-2">
             <li>
-              <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
-                <span class="ml-3"><router-link to="/" id="gettingStarted">Accueil</router-link></span>
+              <router-link to="/" id="gettingStarted">
+                <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <span class="ml-3">Accueil</span>
               </a>
+              </router-link>
             </li>
             <!-- <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
@@ -41,14 +43,18 @@
               </a>
             </li> -->
             <li>
+              <router-link to="/scrapper" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
-                <span class="ml-3"><router-link to="/scrapper" id="gettingStarted">Generer</router-link></span>
+                <span class="ml-3">Generer</span>
               </a>
+              </router-link>
             </li>
             <li>
+              <router-link to="/products" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
-                <span class="ml-3"><router-link to="/products" id="gettingStarted">Historique</router-link></span>
+                <span class="ml-3">Historique</span>
               </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -92,9 +98,8 @@
             <li @click="logout()" class="flex items-center">
                 <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
-                src="../assets/logout.png"
-                class="object-fill mr-3 w-6 h-6"
-                />
+                    src="../assets/logout.png"
+                    class="object-fill mr-3 w-6 h-6"/>
                   <span class="">Deconnexion</span>
               </a>
             </li>
