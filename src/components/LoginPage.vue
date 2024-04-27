@@ -106,6 +106,7 @@
               role: this.string
             })
             localStorage.setItem('user', user);
+            localStorage.setItem('isUserConnected', true);
             this.loading_login = false
             this.$router.push("/products")
           }

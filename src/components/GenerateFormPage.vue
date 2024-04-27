@@ -183,6 +183,9 @@ export default {
     },
     closeForm() {
       router.push('/scrapper')
+    },
+    wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     }
 }
 

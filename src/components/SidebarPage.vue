@@ -19,12 +19,11 @@
         </button>
       </div>
       <!-- logo sidebar -->
-      <div id="logo_sidebar" class="logo h-1/4">
+      <div id="logo_sidebar" class="logo h-24" style="display: flex; align-items: center; justify-content: center;">
         <img
-        src="../assets/realview_logo.jpeg"
-        class="object-fill" />
+          src="../assets/sidebar/C.png"
+          class="object-cover h-full w-full" />
       </div>
-
       <div class="mt-10 py-4 px-3 bg-custom-purple rounded dark:bg-custom-purple space-between-10">
           <!-- Navigation element Sidebar -->
         <div class="navigation_element content-start">
@@ -33,6 +32,9 @@
             <li>
               <router-link to="/" id="gettingStarted">
                 <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                  <img
+                    src="../assets/sidebar/home-logo.png"
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Accueil</span>
               </a>
               </router-link>
@@ -45,6 +47,9 @@
             <li>
               <router-link to="/scrapper" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/scrapp.png"
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Generer</span>
               </a>
               </router-link>
@@ -52,6 +57,9 @@
             <li>
               <router-link to="/products" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/home-logo.png"
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Historique</span>
               </a>
               </router-link>
@@ -65,6 +73,9 @@
           <ul class="space-y-2">
             <li>
               <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/affiliation.png"
+                    class="object-fill mr-2 w-6 h-6"/>
                 <span class="ml-3">Affiliation</span>
               </a>
             </li>
@@ -85,16 +96,25 @@
           <ul class="space-y-2">
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/reglages.png"
+                    class="object-fill mr-2 w-6 h-6"/>
                 <span class="ml-3">Reglages</span>
               </a>
             </li>
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/dark-mode.png"
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Dark Mode</span>
               </a>
             </li>
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/info.png"
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Aides & Tutoriels</span>
               </a>
             </li>
@@ -106,7 +126,8 @@
                   <span class="">Deconnexion</span>
               </a>
             </li> -->
-            <li>
+            <!-- Menu user -->
+            <li class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
                 <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../assets/sidebar/user-logo.png"
@@ -165,7 +186,9 @@
       />
     </svg>
   </button>
-    <div
+  
+  <!-- Spinner -->
+  <div
     v-if="loading_logout"
     class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 duration-3000">
     <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -194,6 +217,23 @@ export default {
     return { isOpen, toggleDropdown };
   },
 
+  computed: {
+    isUserConnected() {
+      // Cette propriété calculée vérifie l'état de connexion de l'utilisateur
+      return localStorage.getItem('isUserConnected') === 'true';
+    }
+  },
+
+  watch: {
+    // Ce watcher surveille les changements de la propriété calculée 'isUserConnected'
+    isUserConnected(newValue) {
+      if (newValue) {
+        // Si l'utilisateur est connecté, effectuez les actions nécessaires
+        this.reloadSidebar();
+      }
+    }
+  },
+
   mounted() {
     this.userItem = localStorage.getItem("user");
     if (this.userItem) {
@@ -209,6 +249,13 @@ export default {
     if (window.innerWidth < window.innerHeight) {
       this.showBar = false;
     }
+
+        // Lorsque le composant est monté, ajoutez un écouteur d'événement pour surveiller les changements dans le localStorage
+      window.addEventListener('storage', (event) => {
+      if (event.key === 'userConnected') {
+        this.reloadSidebar();
+      }
+    });
   },
 
   data() {
@@ -216,11 +263,17 @@ export default {
       loading_logout: false,
       spinner_text: "",
       showBar: true,
-      username: ""
+      username: "",
     };
   },
 
   methods: {
+    reloadSidebar() {
+      // Méthode pour recharger la barre latérale
+      // Vous pouvez forcer la mise à jour du composant ou effectuer des actions spécifiques ici
+      location.reload();
+    },
+
     async logout() {
       console.log("test logout")
       this.spinner_text = "Deconnexion en cours..";
@@ -229,6 +282,7 @@ export default {
       if (localStorage.getItem("access_token")) {
         console.log("storage item ==> " + localStorage.getItem("access_token"));
         localStorage.removeItem("access_token");
+        localStorage.removeItem("user");
         this.loading_logout = false;
         router.push("/login");
         // alert("L'utilisateur a bien été déconnecté")
