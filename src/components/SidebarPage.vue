@@ -19,7 +19,7 @@
         </button>
       </div>
       <!-- logo sidebar -->
-      <div class="logo h-1/4">
+      <div id="logo_sidebar" class="logo h-1/4">
         <img
         src="../assets/realview_logo.jpeg"
         class="object-fill" />
@@ -98,14 +98,49 @@
                 <span class="ml-3">Aides & Tutoriels</span>
               </a>
             </li>
-            <li @click="logout()" class="flex items-center">
+            <!-- <li @click="logout()" class="flex items-center">
                 <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../assets/sidebar/logout.png"
                     class="object-fill mr-3 w-6 h-6"/>
                   <span class="">Deconnexion</span>
               </a>
+            </li> -->
+            <li>
+                <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                  <img
+                    src="../assets/sidebar/user-logo.png"
+                    class="object-fill mr-2 w-6 h-6"/>
+                  <span class="ml-3">{{ username }}</span>
+                  <div v-if="isOpen" class="absolute right-0 mt-2 py-2 w-48 bottom-10 bg-white rounded-lg shadow-xl transform origin-bottom">
+                    <div class="px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer" @click="userAction">
+                      Modifier profil
+                    </div>
+                    <hr class="my-2">
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a>
+                    <!-- <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700"> -->
+                    <a @click="logout()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                      <img
+                      src="../assets/sidebar/logout.png"
+                      class="object-fill mr-3 w-6 h-6"/>
+                      Déconnexion</a>
+                  </div>
+                </a>
             </li>
+            <!-- Menu Utilisateur Dropdown -->
+            <!-- <div class="relative">
+              <button @click="toggleDropdown" class="p-2 border rounded absolute bottom-0">Menu</button>
+              <div v-if="isOpen" class="absolute right-0 mt-2 py-2 w-48 bottom-10 bg-white rounded-lg shadow-xl transform origin-bottom">
+                <div class="px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer" @click="userAction">
+                  {{ userName }}
+                </div>
+                <hr class="my-2">
+                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a>
+                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a>
+                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Déconnexion</a>
+              </div>
+            </div> -->
           </ul>
         </div>
       </div>
@@ -144,10 +179,33 @@
 
 <script>
 import router from "@/router";
+import { ref } from 'vue';
 
 export default {
   name: 'App',
+
+  setup() {
+    const isOpen = ref(false);
+
+    function toggleDropdown() {
+      isOpen.value = !isOpen.value;
+    }
+
+    return { isOpen, toggleDropdown };
+  },
+
   mounted() {
+    this.userItem = localStorage.getItem("user");
+    if (this.userItem) {
+      console.log("user on header exist");
+      console.log("username on header ====> " + JSON.parse(this.userItem).username);
+      if (JSON.parse(this.userItem).username) {
+        this.username = JSON.parse(this.userItem).username;
+      } else console.error("No username found");
+    } else {
+      console.error("error user");
+    }
+
     if (window.innerWidth < window.innerHeight) {
       this.showBar = false;
     }
@@ -158,6 +216,7 @@ export default {
       loading_logout: false,
       spinner_text: "",
       showBar: true,
+      username: ""
     };
   },
 
