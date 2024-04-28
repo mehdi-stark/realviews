@@ -3,7 +3,7 @@
         <div class="bg-white p-6 rounded-lg shadow-lg">
           <form @submit.prevent="scrapProduct" class="space-y-4">
             <div class="form-group">
-              <label for="amazon_link" class="text-gray-600">Lien produit Amazon</label>
+              <label for="amazon_link" class="text-gray-600">Lien produit {{ maProp }}</label>
               <input
                 type="link"
                 id="amazon_link"
@@ -98,7 +98,13 @@ import router from '@/router'
 
 export default {
   name: 'AmazonPage',
-  // Vous pouvez ajouter ici la logique de composant nécessaire pour le scraping
+
+  props: {
+    maProp: {
+      type: String, // Type attendu
+      required: true // Rend la prop obligatoire
+    }
+  },
 
   data() {
     return {

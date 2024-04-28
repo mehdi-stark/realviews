@@ -88,9 +88,14 @@
               <button
                 v-else
                 @click="onPickFile(product)"
-                class="btn btn-info h-14 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 flex items-center justify-center mr-4"
+                class="btn btn-info h-14 bg-slate-200 text-white rounded-md hover:bg-slate-300 flex items-center justify-center mr-4"
               >
-                <span class="text-xl w-20">+</span>
+              <span class="text-xl w-20">+</span>
+
+                <!-- <img
+                src="../assets/excel-logo.png"
+                  class="btn btn-info h-14 rounded-md flex items-center justify-center mr-4"
+                /> -->
               </button>
               <input
                 id="fileInput"
@@ -178,6 +183,7 @@
 import router from "@/router";
 import axios from "axios";
 import dayjs from "dayjs";
+import api from '../api'
 
 export default {
   // Component logic here
@@ -327,13 +333,18 @@ export default {
       console.log("Current User id dans submit: " + this.current_user.id);
       this.form.user_id = this.current_user.id;
       try {
-        const response = await axios.post(
-          process.env.VUE_APP_ROOT_API + "/api/v1/product",
+        // const response = await axios.post(
+        //   process.env.VUE_APP_ROOT_API + "/api/v1/product",
+        //   this.form,
+        //   {
+        //     headers: {
+        //       Authorization: "Bearer " + localStorage.getItem("access_token"),
+        //     },
+        //     responseType: "arraybuffer", // Définir le type de réponse sur 'arraybuffer'
+        //   }
+        const response = await api.post("/api/v1/product",
           this.form,
           {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("access_token"),
-            },
             responseType: "arraybuffer", // Définir le type de réponse sur 'arraybuffer'
           }
         );
@@ -370,7 +381,7 @@ export default {
 
       console.log("Current User id dans fetchproduct: " + this.current_user.id);
       console.log("URL called : " + process.env.VUE_APP_ROOT_API);
-      await axios
+      await api
         .get(
           process.env.VUE_APP_ROOT_API +
             "/api/v1/products?user_id=" +
@@ -387,7 +398,6 @@ export default {
         })
         .catch((error) => {
           console.error("ERROR ====> " + error);
-          alert("Erreur pendant la recuperation des produits");
         });
 
       this.products.forEach((productTmp) => {
@@ -410,12 +420,8 @@ export default {
       // const response = await axios.get(process.env.VUE_APP_ROOT_API + '/api/v1/product_csv?product_id=' +
       // product.id);
 
-      const response = await axios.get(
-        process.env.VUE_APP_ROOT_API + "/api/v1/product_csv?product_id=" + product.id,
+      const response = await api.get("/api/v1/product_csv?product_id=" + product.id,
         {
-          headers: {
-            Authorization: "Bearer " + this.access_token,
-          },
           responseType: "arraybuffer", // Définir le type de réponse sur 'arraybuffer'
         }
       );

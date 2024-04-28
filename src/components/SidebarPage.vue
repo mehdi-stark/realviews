@@ -48,7 +48,7 @@
               <router-link to="/scrapper" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/scrapp.png"
+                    src="../assets/sidebar/scraper-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Generer</span>
               </a>
@@ -58,7 +58,7 @@
               <router-link to="/products" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/home-logo.png"
+                    src="../assets/sidebar/generer-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Historique</span>
               </a>
@@ -74,7 +74,7 @@
             <li>
               <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/affiliation.png"
+                    src="../assets/sidebar/affiliate-logo.png"
                     class="object-fill mr-2 w-6 h-6"/>
                 <span class="ml-3">Affiliation</span>
               </a>
@@ -82,7 +82,7 @@
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/communaute.png"
+                    src="../assets/sidebar/communaute-logo.png"
                     class="object-fill mr-2 w-6 h-6"/>
                 <span class="ml-3">Communaute</span>
               </a>
@@ -97,7 +97,7 @@
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/reglages.png"
+                    src="../assets/sidebar/reglages-logo.png"
                     class="object-fill mr-2 w-6 h-6"/>
                 <span class="ml-3">Reglages</span>
               </a>
@@ -105,7 +105,7 @@
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/dark-mode.png"
+                    src="../assets/sidebar/dark-mode-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Dark Mode</span>
               </a>
@@ -113,7 +113,7 @@
             <li>
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/info.png"
+                    src="../assets/sidebar/help-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Aides & Tutoriels</span>
               </a>
@@ -134,9 +134,11 @@
                     class="object-fill mr-2 w-6 h-6"/>
                   <span class="ml-3">{{ username }}</span>
                   <div v-if="isOpen" class="absolute right-0 mt-2 py-2 w-48 bottom-10 bg-white rounded-lg shadow-xl transform origin-bottom">
-                    <div class="px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer" @click="userAction">
-                      Modifier profil
-                    </div>
+                    <a @click="logout()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                      <img
+                      src="../assets/sidebar/profile.png"
+                      class="object-fill mr-3 w-6 h-6"/>
+                      Mon profil</a>
                     <hr class="my-2">
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a>
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a>
