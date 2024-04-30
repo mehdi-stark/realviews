@@ -2,7 +2,7 @@
   <!-- Header -->
   <div id="header">
     <header class="flex justify-between items-center h-35 bg-slate-100 text-black">
-      <span class="ml-3 flex justify-start font-bold p-3">Generer</span>
+      <span class="ml-3 flex justify-start font-bold p-3">Scraper</span>
       <div class="logo h-6 w-6 flex justify-end">
         <img
           src="../assets/question.png"
@@ -13,7 +13,7 @@
     </header>
   </div>
   <div class="flex flex-col items-center justify-center min-h-screen bg-white">
-    <h1 class="text-4xl font-bold mb-5">Generez des avis <span class="text-purple-600">en <br/> un clic</span> grâce à l’IA</h1>
+    <h1 class="text-4xl font-bold mb-5">Scraper des avis <span class="text-purple-600">en <br/> un clic</span> grâce à l’IA</h1>
     <div class="flex items-center justify-center" style="width: 450px; height: 400px;">
       <!-- <div class="text-center"> -->
         <div class="bg-purple-600 text-white p-8 rounded-lg w-full h-full flex flex-col justify-center items-center">

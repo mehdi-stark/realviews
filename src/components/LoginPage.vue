@@ -97,7 +97,7 @@
           });
 
           const test = await response.json();
-          if(test.access_token) {
+          console.log('login if(access_token) -> ' + test.access_token);
             localStorage.setItem('access_token', test.access_token);
             const user = JSON.stringify({
               id: test.id,
@@ -109,11 +109,24 @@
             localStorage.setItem('isUserConnected', true);
             this.loading_login = false
             this.$router.push("/products")
-          }
-          else {
-            console.error("Access token is null");
-          }
-          this.loading_login = false
+          // if(test.access_token) {
+          //   console.log('login if(access_token) -> ' + test.access_token);
+          //   localStorage.setItem('access_token', test.access_token);
+          //   const user = JSON.stringify({
+          //     id: test.id,
+          //     email: test.email,
+          //     username: test.username,
+          //     role: this.string
+          //   })
+          //   localStorage.setItem('user', user);
+          //   localStorage.setItem('isUserConnected', true);
+          //   this.loading_login = false
+          //   this.$router.push("/products")
+          // }
+          // else {
+          //   console.error("Access token is null");
+          // }
+          // this.loading_login = false
         },
         
         logout() {

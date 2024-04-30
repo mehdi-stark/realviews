@@ -1,6 +1,6 @@
 <template>
       <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black">
-        <div class="bg-white p-6 rounded-lg shadow-lg">
+        <div class="bg-white p-6 rounded-lg shadow-md">
           <form @submit.prevent="scrapProduct" class="space-y-4">
             <div class="form-group">
               <label for="amazon_link" class="text-gray-600">Lien produit {{ maProp }}</label>
@@ -84,7 +84,7 @@
                   class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"
                 ></div>
                 <!-- <p class="text-gray-600 mt-2">Récupération des commentaires...</p> -->
-                <p class="text-gray-600 mt-2">{{ spinner_text }}</p>
+                <p class="text-gray-600 mt-2" v-html="spinner_text"></p>
               </div>
             </div>
           </div>
@@ -93,8 +93,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import router from '@/router'
+import api from '@/api';
 
 export default {
   name: 'AmazonPage',
@@ -151,22 +151,17 @@ export default {
   methods: {
       // API Call to insert a new product on the DB
       async scrapProduct() {
-        console.log('URL to call : ' + process.env.VUE_APP_ROOT_API);
-
-        this.spinner_text = 'Recuperation des commentaires ..';
+        this.spinner_text = 'Recuperation des commentaires .. \nVeuillez patientez cela peut prendre plusieurs minutes';
         this.loading = true;
-        console.log('URL called : ' + process.env.VUE_APP_ROOT_API);
 
         // construct request object
         console.log('Current User id dans submit: ' + this.current_user.id);
         this.form.user_id = this.current_user.id
         try {
-          const response = await axios.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-          },
-          responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
+          const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
+            responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
           })
+          console.log('test 1');
 
           this.spinner_text = 'Generation du fichier Excel ..';
           await this.wait(1000);
@@ -175,9 +170,12 @@ export default {
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
+          console.log('test 2');
+
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
           link.download = 'comments_gen.xlsx';
           link.click();
+          console.log('test 3');
           this.loading = false;
           router.push("/products");
         }
@@ -187,6 +185,7 @@ export default {
         console.error('Error on scrapping : ' + error)
       }
     },
+
     closeForm() {
       router.push('/scrapper')
     },

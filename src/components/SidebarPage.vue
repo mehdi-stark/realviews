@@ -39,16 +39,21 @@
               </a>
               </router-link>
             </li>
-            <!-- <li>
-              <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
-                <span class="ml-3"><router-link to="/scrapper" id="gettingStarted">Scrapper</router-link></span>
-              </a>
-            </li> -->
             <li>
               <router-link to="/scrapper" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/scraper-logo.png"
+                    class="object-fill mr-2 w-5 h-5"/>
+                <span class="ml-3">Scraper</span>
+              </a>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/generate" id="gettingStarted">
+              <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <img
+                    src="../assets/sidebar/generer-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Generer</span>
               </a>
@@ -58,7 +63,7 @@
               <router-link to="/products" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
-                    src="../assets/sidebar/generer-logo.png"
+                    src="../assets/sidebar/transparent-list-icon.jpg"
                     class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Historique</span>
               </a>
@@ -193,7 +198,7 @@
   <div
     v-if="loading_logout"
     class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 duration-3000">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="bg-black p-6 rounded-lg shadow-lg">
       <div class="flex flex-col items-center">
         <div class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
         <p class="text-gray-600 mt-2">{{ spinner_text }}</p>

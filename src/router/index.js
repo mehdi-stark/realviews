@@ -5,6 +5,7 @@ import ProductListPage from '@/components/ProductListPage.vue'
 import LoginPage from '@/components/LoginPage.vue'
 import GenerateFormPage from '@/components/GenerateFormPage.vue'
 import RegistrationPage from '@/components/RegistrationPage.vue'
+import GenereratePage from '@/components/GenereratePage.vue'
 // import RegistrationPage from '@/views/RegistrationPage.vue'
 // import LoginView from '@/views/LoginView.vue'
 
@@ -12,14 +13,18 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: AcceuilPage,
+    component: AcceuilPage
+  },
+  { path: '/scrapper', component: ScrapperPage, name: 'Scraper' },
+  { path: '/generate', component: GenereratePage, name: 'Generer' },
+  { 
+    path: '/products', 
+    component: ProductListPage, 
+    name: 'Products',
     meta: {
       requiresAuth: true
     }
-    
   },
-  { path: '/scrapper', component: ScrapperPage, name: 'Scrapper' },
-  { path: '/products', component: ProductListPage, name: 'Products' },
   { path: '/login', component: LoginPage, name: 'Login' },
   { path: '/signup', component: RegistrationPage, name: 'Signup' },
   { path: '/amazon', component: GenerateFormPage, name: 'Generate Amazon' },
@@ -57,8 +62,8 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       // User is not authenticated, redirect to login
-      console.log('No token')
-      to('/login');
+      console.error('No token')
+      next('/login');
     }
   } else {
     // Non-protected route, allow access

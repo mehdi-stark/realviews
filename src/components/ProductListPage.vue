@@ -373,30 +373,18 @@ export default {
     // API Call to retrieve a product on the DB from the product ID
     async fetchProducts() {
       console.log("fetchProducts called");
-      // console.log('currentuser fecth : ' + JSON.parse(this.current_user));
-      // console.log('currentuser id fecth: ' + JSON.parse(this.current_user).id);
+      console.log('current token fecthproducts : ' + localStorage.getItem('access_token'));
+      console.log("Current User id dans fetchproduct: " + this.current_user.id);
 
       this.spinner_text = "Recuperation des produits..";
       this.loading_products = true;
-
-      console.log("Current User id dans fetchproduct: " + this.current_user.id);
-      console.log("URL called : " + process.env.VUE_APP_ROOT_API);
-      await api
-        .get(
-          process.env.VUE_APP_ROOT_API +
-            "/api/v1/products?user_id=" +
-            this.current_user.id,
-          {
-            headers: {
-              Authorization: "Bearer " + this.access_token,
-            },
-          }
-        )
+      await api.get(process.env.VUE_APP_ROOT_API + "/api/v1/products?user_id=" + this.current_user.id)
         .then((res) => {
           this.products = res.data;
           localStorage.setItem("fetchedProduct", res.data);
         })
         .catch((error) => {
+          console.error("token on fetchproduct : " + this.access_token);
           console.error("ERROR ====> " + error);
         });
 
@@ -423,8 +411,7 @@ export default {
       const response = await api.get("/api/v1/product_csv?product_id=" + product.id,
         {
           responseType: "arraybuffer", // Définir le type de réponse sur 'arraybuffer'
-        }
-      );
+        });
 
       const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
       const blob = new Blob([excelArrayBuffer], {
@@ -434,8 +421,7 @@ export default {
       const link = document.createElement("a");
       link.href = url;
       link.target = "_blank"; // Ouvre le lien dans une nouvelle fenêtre
-      link.download =
-        product.productName.toLowerCase().replace(" ", "_") + "_comments.xlsx";
+      link.download = product.productName.toLowerCase().replace(" ", "_") + "_comments.xlsx";
       link.click();
       this.loading = false;
     },
@@ -447,14 +433,7 @@ export default {
 
       console.log("URL called : " + process.env.VUE_APP_ROOT_API);
       // Appelez l'endpoint Spring Boot pour générer le fichier Excel
-      await axios.delete(
-        process.env.VUE_APP_ROOT_API + "/api/v1/product?product_id=" + product.id,
-        {
-          headers: {
-            Authorization: "Bearer " + this.access_token,
-          },
-        }
-      );
+      await api.delete(process.env.VUE_APP_ROOT_API + "/api/v1/product?product_id=" + product.id);
       await this.wait(2000);
       this.fetchProducts();
       this.loading = false;
@@ -470,11 +449,8 @@ export default {
         console.log('Current User id dans submit: ' + this.current_user.id);
         this.form.user_id = this.current_user.id
         try {
-          const response = await axios.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-          },
-          responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
+          const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
+            responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
           })
 
           this.spinner_text = 'Generation du fichier Excel ..';
