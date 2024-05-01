@@ -31,7 +31,7 @@
     <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 950px">
       <h3 type="text" class="text-3xl text-white p-2 font-bold">Depuis une description* produit</h3>
       <div class="text-md mb-6 text-white">*Plus votre description sera précise, plus les avis seront pertinents</div>
-      <textarea class="bg-white border-double border-8 border-gray-400 rounded-lg p-2 mb-2 h-64" style="width: 750px" v-model="productDescription"></textarea>
+      <textarea class="bg-white border-double border-8 border-gray-400 rounded-lg p-2 mb-2 h-64" style="width: 750px; height: 200px;" v-model="productDescription"></textarea>
       <button @click="generate()" class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5">Générer</button>
     </div>
   </div>

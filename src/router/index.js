@@ -2,12 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AcceuilPage from '@/components/AcceuilPage.vue'
 import ScrapperPage from '@/components/ScrapperPage.vue'
 import ProductListPage from '@/components/ProductListPage.vue'
-import LoginPage from '@/components/LoginPage.vue'
-import GenerateFormPage from '@/components/GenerateFormPage.vue'
-import RegistrationPage from '@/components/RegistrationPage.vue'
 import GenereratePage from '@/components/GenereratePage.vue'
-// import RegistrationPage from '@/views/RegistrationPage.vue'
-// import LoginView from '@/views/LoginView.vue'
+import LoginPage from '@/components/auth/LoginPage.vue'
+import RegistrationPage from '@/components/auth/RegistrationPage.vue'
+import NewGenerateFormPage from '@/components/NewGenerateFormPage.vue'
 
 const routes = [
   {
@@ -27,7 +25,7 @@ const routes = [
   },
   { path: '/login', component: LoginPage, name: 'Login' },
   { path: '/signup', component: RegistrationPage, name: 'Signup' },
-  { path: '/amazon', component: GenerateFormPage, name: 'Generate Amazon' },
+  { path: '/amazon', component: NewGenerateFormPage, name: 'Generate Amazon' },
 
   // { 
   //   path: '/login', 
