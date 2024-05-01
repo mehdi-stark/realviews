@@ -290,12 +290,12 @@ export default {
         console.log("storage item ==> " + localStorage.getItem("access_token"));
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
-        this.loading_logout = false;
-        router.push("/login");
         // alert("L'utilisateur a bien été déconnecté")
       } else {
         console.log("storage item not found");
       }
+      this.loading_logout = false;
+      router.push("/login");
     },
 
     wait(ms) {

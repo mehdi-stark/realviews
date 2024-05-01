@@ -13,21 +13,21 @@
     </header>
   </div>
   <div class="flex flex-col items-center justify-center min-h-screen bg-white">
-    <h1 class="text-4xl font-bold mb-5">Scraper des avis <span class="text-purple-600">en <br/> un clic</span> grâce à l’IA</h1>
+    <h1 class="text-5xl font-bold mb-5">Scraper des avis <span class="text-purple-600">en <br/> un clic</span> grâce à l’IA</h1>
     <div class="flex items-center justify-center" style="width: 450px; height: 400px;">
       <!-- <div class="text-center"> -->
         <div class="bg-purple-600 text-white p-8 rounded-lg w-full h-full flex flex-col justify-center items-center">
-        <h2 class="text-3xl underline">Selectionner la source</h2>
-        <div class="flex flex-col justify-around  mt-4">
-          <button class="bg-white text-purple-600 font-semibold py-2 px-4 text-lg border border-purple-600 rounded shadow mb-2 flex items-center" style="width: 350px">
+        <h2 class="text-4xl underline mb-10">Selectionner la source</h2>
+        <div class="flex flex-col justify-around mt-4">
+          <button class="bg-white text-purple-600 font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full shadow mb-2 flex items-center" style="width: 350px">
             <img src="../assets/amazon-icon.png" alt="Logo Amazon" class="mr-2" width="24" height="24"> <!-- Ajoutez le chemin vers votre logo Amazon -->
             <router-link to="/amazon" id="gettingStarted">Lien Amazon</router-link> 
           </button>
-          <button class="bg-white text-purple-600 font-semibold py-2 px-4 text-lg border border-purple-600 rounded shadow mb-2 flex items-center">
+          <button class="bg-white text-purple-600 font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full shadow mb-2 flex items-center">
             <img src="../assets/aliexpress-icon.png" alt="Logo Aliexpress" class="mr-2" width="24" height="24">
             <router-link to="/amazon" id="gettingStarted" data-="">Lien Aliexpress</router-link> 
           </button>
-          <button class="bg-white text-purple-600 font-semibold py-2 px-4 text-lg border border-purple-600 rounded shadow mb-2 flex items-center">
+          <button class="bg-white text-purple-600 font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full shadow mb-2 flex items-center">
             <img src="../assets/shopify-icon.png" alt="Logo shopify" class="mr-2" width="24" height="24">
             <router-link to="/amazon" id="gettingStarted" :ma-prop="shopifyLink">Site Shopify</router-link> 
           </button>

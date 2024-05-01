@@ -3,7 +3,7 @@
         <div class="bg-white p-6 rounded-lg shadow-md">
           <form @submit.prevent="scrapProduct" class="space-y-4">
             <div class="form-group">
-              <label for="amazon_link" class="text-gray-600">Lien produit {{ maProp }}</label>
+              <label for="amazon_link" class="text-gray-600">URL produit {{ maProp }}</label>
               <input
                 type="link"
                 id="amazon_link"
@@ -35,7 +35,7 @@
 
             <div class="form-group">
               <div class="mt-4">
-                <label for="language" class="text-gray-600">Langue</label>
+                <label for="language" class="text-gray-600">Langue des avis</label>
                 <select
                   id="language"
                   v-model="form.language"
@@ -74,7 +74,9 @@
               </button>
             </div>
           </form>
-          <div
+          
+          <!-- Spinner -->
+          <!-- <div
             v-if="loading"
             class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
           >
@@ -83,21 +85,40 @@
                 <div
                   class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"
                 ></div>
-                <!-- <p class="text-gray-600 mt-2">Récupération des commentaires...</p> -->
                 <p class="text-gray-600 mt-2" v-html="spinner_text"></p>
               </div>
             </div>
+          </div> -->
+          <!-- <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+              <Vue3Lottie :animationData="yourAnimationData" :height="200" :width="200" />
+              <p class="text-gray-600 mt-2" v-html="spinner_text"></p>
+            </div>
+          </div> -->
+
+          <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
+            <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
+              <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
+              <p class="text-gray-600 mt-2 text-center" v-html="spinner_text"></p>
+            </div>
           </div>
         </div>
+
       </div>
 </template>
 
 <script>
 import router from '@/router'
 import api from '@/api';
+// import Vue3Lottie from 'vue3-lottie';
+import yourAnimationData from '../assets/animation-loader.json';
 
 export default {
   name: 'AmazonPage',
+  
+  // components: {
+  //   Vue3Lottie,
+  // },
 
   props: {
     maProp: {
@@ -108,6 +129,7 @@ export default {
 
   data() {
     return {
+      yourAnimationData,
       token: null,
       langue: "Français",
       product_id: null,
@@ -151,7 +173,7 @@ export default {
   methods: {
       // API Call to insert a new product on the DB
       async scrapProduct() {
-        this.spinner_text = 'Recuperation des commentaires .. \nVeuillez patientez cela peut prendre plusieurs minutes';
+        this.spinner_text = 'Recuperation des commentaires .. <br/>Veuillez patientez cela peut prendre plusieurs minutes';
         this.loading = true;
 
         // construct request object
