@@ -143,7 +143,7 @@ export default {
       this.access_token = localStorage.getItem("access_token");
 
       console.log(
-        "Current user in productlist mounted: " + JSON.stringify(this.current_user)
+        "Current user in new generate product mounted: " + JSON.stringify(this.current_user)
       );
       console.log("Current user ID in productlist mounted: " + this.current_user.id);
       console.log("Current access-token in productlist mounted: " + this.access_token);

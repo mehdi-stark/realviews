@@ -145,10 +145,10 @@
                       class="object-fill mr-3 w-6 h-6"/>
                       Mon profil</a>
                     <hr class="my-2">
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a>
+                    <!-- <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a> -->
+                    <!-- <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a> -->
                     <!-- <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700"> -->
-                    <a @click="logout()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                    <a @click="logout2()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
                       <img
                       src="../assets/sidebar/logout.png"
                       class="object-fill mr-3 w-6 h-6"/>
@@ -156,6 +156,11 @@
                   </div>
                 </a>
             </li>
+            <li v-else class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+              <button @click="redirectLogin()" 
+              class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 ml-15">Se Connecter</button>
+            </li>
+
             <!-- Menu Utilisateur Dropdown -->
             <!-- <div class="relative">
               <button @click="toggleDropdown" class="p-2 border rounded absolute bottom-0">Menu</button>
@@ -210,6 +215,7 @@
 <script>
 import router from "@/router";
 import { ref } from 'vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -225,14 +231,16 @@ export default {
   },
 
   computed: {
-    isUserConnected() {
-      // Cette propriété calculée vérifie l'état de connexion de l'utilisateur
-      return localStorage.getItem('isUserConnected') === 'true';
-    },
-    username() {
-      // Retourne le username stocké dans le localStorage
-      return localStorage.getItem('user');
-    }
+    ...mapState(['user', 'isUserConnected']),
+
+    // isUserConnected() {
+    //   // Cette propriété calculée vérifie l'état de connexion de l'utilisateur
+    //   return localStorage.getItem('isUserConnected') === 'true';
+    // },
+    // username() {
+    //   // Retourne le username stocké dans le localStorage
+    //   return localStorage.getItem('user');
+    // }
   },
 
   watch: {
@@ -246,12 +254,12 @@ export default {
   },
 
   mounted() {
-    this.userItem = localStorage.getItem("user");
+    this.userItem = JSON.parse(this.user);
     if (this.userItem) {
       console.log("user on header exist");
-      console.log("username on header ====> " + JSON.parse(this.userItem).username);
-      if (JSON.parse(this.userItem).username) {
-        this.username = JSON.parse(this.userItem).username;
+      console.log("username on header ====> " + this.userItem.username);
+      if (this.userItem.username) {
+        this.username = this.userItem.username;
       } else console.error("No username found");
     } else {
       console.error("error user");
@@ -275,7 +283,7 @@ export default {
       loading_logout: false,
       spinner_text: "",
       showBar: true,
-      // username: "",
+      username: "",
     };
   },
 
@@ -291,6 +299,16 @@ export default {
       // Méthode pour recharger la barre latérale
       // Vous pouvez forcer la mise à jour du composant ou effectuer des actions spécifiques ici
       location.reload();
+    },
+
+    async logout2() {
+      console.log("test logout")
+      this.spinner_text = "Deconnexion en cours..";
+      this.loading_logout = true;
+      await this.wait(1000);
+      this.loading_logout = false;
+      this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
+      router.push("/");
     },
 
     async logout() {
@@ -310,6 +328,10 @@ export default {
       this.loading_logout = false;
       this.isOpen = false;
       this.isUserConnected = false
+      router.push("/");
+    },
+
+    redirectLogin() {
       router.push("/login");
     },
 

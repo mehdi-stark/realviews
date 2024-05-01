@@ -184,10 +184,15 @@ import router from "@/router";
 import axios from "axios";
 import dayjs from "dayjs";
 import api from '../api'
+import { mapState } from 'vuex';
 
 export default {
   // Component logic here
   components: {  },
+  
+  computed: {
+    ...mapState(['user', 'accessToken', 'isUserConnected']),
+  },
 
   data() {
     return {
@@ -211,22 +216,21 @@ export default {
       result: null,
       showModal: false,
       current_user: null,
-      access_token: "",
     };
   },
 
   mounted() {
-    if (!localStorage.getItem("user") || !localStorage.getItem("access_token")) {
+    if (!this.user || !this.accessToken) {
       console.error("user or token not present ! Login is required !");
       router.push("/login");
     } else {
-      this.current_user = JSON.parse(localStorage.getItem("user"));
-      this.access_token = localStorage.getItem("access_token");
+      this.current_user = JSON.parse(this.user);
+      // this.access_token = localStorage.getItem("access_token");
       console.log(
-        "Current user in productlist mounted: " + JSON.stringify(this.current_user)
+        "Current user in productlist mounted: " + JSON.stringify(this.user)
       );
-      console.log("Current user ID in productlist mounted: " + this.current_user.id);
-      console.log("Current access-token in productlist mounted: " + this.access_token);
+      console.log("Current user ID in productlist mounted: " + JSON.parse(this.user).id);
+      console.log("Current access-token in productlist mounted: " + this.accessToken);
 
       this.fetchProducts();
     }
