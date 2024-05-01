@@ -132,7 +132,7 @@
               </a>
             </li> -->
             <!-- Menu user -->
-            <li class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+            <li v-if="isUserConnected" class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
                 <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../assets/sidebar/user-logo.png"
@@ -228,6 +228,10 @@ export default {
     isUserConnected() {
       // Cette propriété calculée vérifie l'état de connexion de l'utilisateur
       return localStorage.getItem('isUserConnected') === 'true';
+    },
+    username() {
+      // Retourne le username stocké dans le localStorage
+      return localStorage.getItem('user');
     }
   },
 
@@ -256,13 +260,14 @@ export default {
     if (window.innerWidth < window.innerHeight) {
       this.showBar = false;
     }
+ },
 
-        // Lorsque le composant est monté, ajoutez un écouteur d'événement pour surveiller les changements dans le localStorage
-      window.addEventListener('storage', (event) => {
-      if (event.key === 'userConnected') {
-        this.reloadSidebar();
-      }
-    });
+  created() {
+    window.addEventListener('storage', this.handleStorageEvent);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener('storage', this.handleStorageEvent);
   },
 
   data() {
@@ -270,11 +275,18 @@ export default {
       loading_logout: false,
       spinner_text: "",
       showBar: true,
-      username: "",
+      // username: "",
     };
   },
 
   methods: {
+    handleStorageEvent(e) {
+    if (e.key === 'isUserConnected' || e.key === 'user') {
+      this.$forceUpdate();
+      this.reloadSidebar // Force Vue.js à re-révaluer les propriétés qui dépendent de localStorage.
+    }
+  },
+
     reloadSidebar() {
       // Méthode pour recharger la barre latérale
       // Vous pouvez forcer la mise à jour du composant ou effectuer des actions spécifiques ici
@@ -288,6 +300,7 @@ export default {
       await this.wait(1000)
       if (localStorage.getItem("access_token")) {
         console.log("storage item ==> " + localStorage.getItem("access_token"));
+        localStorage.removeItem("isUserConnected");
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
         // alert("L'utilisateur a bien été déconnecté")
@@ -295,6 +308,8 @@ export default {
         console.log("storage item not found");
       }
       this.loading_logout = false;
+      this.isOpen = false;
+      this.isUserConnected = false
       router.push("/login");
     },
 

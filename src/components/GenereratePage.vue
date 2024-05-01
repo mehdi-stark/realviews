@@ -18,7 +18,7 @@
     <div class="bg-custom-purple rounded-xl mb-3">
       <div class="flex items-center justify-center space-x-10 p-8">
         <h3 type="text" class="text-2xl text-white p-2 mb-2 font-bold">Depuis un lien Amazon</h3>
-        <input type="text" class="bg-white border ml-4 border-gray-300 rounded-full p-4 w-96" v-model="amazonLink">
+        <input type="text" class="bg-white border ml-4 border-gray-300 rounded-full p-4 w-96" v-model="amazonLink" autocomplete="on">
         <button @click="generateAmazon()" class="bg-purple-600 text-white font-bold text-xl py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-14">Générer</button>
       </div>
       <div class="flex items-center justify-center space-x-10 p-8">
@@ -37,7 +37,7 @@
   </div>
 
   <!-- Modale  -->
-  <div v-if="amazonLinkFilled || aliexpressLinkFilled" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-85"
+  <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-85"
     @click="closeForm">
     <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 500px; height: 650px;"
     @click.stop>
@@ -81,7 +81,7 @@
             </div>
 
             <div class="form-group flex flex-col items-center space-y-4">
-              <button @click="generate('description')" class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5">Générer</button>
+              <button type="submit" class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5">Générer</button>
               <!-- <button
                 @click="closeForm"
                 class="mt-2 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md"
@@ -92,7 +92,13 @@
       </form>
     </div>
   </div>
-
+  <!-- Spinner -->
+  <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
+    <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
+      <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
+      <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -106,7 +112,7 @@ export default {
     return {
       shopifyLink: 'Shopify',
       amazonLink: null,
-      aliexpressLink: null,
+      showModal: null,
       amazonLinkFilled: false,
       aliexpressLinkFilled: false,
       productDescription: "",
@@ -118,12 +124,17 @@ export default {
         language: "francais",
         number: null,
       },
+      current_user: null,
+      access_token: "",
+      spinner_text: null,
+      loading: false
     };
   },
 
   mounted() {
-    this.amazonLinkFilled = false
-    this.aliexpressLinkFilled = false
+    this.showModal = false
+    this.current_user = JSON.parse(localStorage.getItem("user"));
+    this.access_token = localStorage.getItem("access_token");
     window.addEventListener('keydown', this.handleEsc);
   },
 
@@ -139,7 +150,7 @@ export default {
         alert("Veuillez entrer un lien Amazon valide avant de générer !");
         return;
       }
-      this.amazonLinkFilled = true
+      this.showModal = true
       this.form.product_link = this.amazonLink;
     },
 
@@ -148,18 +159,19 @@ export default {
         alert("Veuillez entrer un lien Aliexpress valide avant de générer !");
         return;
       }
-      this.aliexpressLinkFilled = true
+      this.showModal = true
       this.form.product_link = this.aliexpressLink;
     },
 
     // API Call to insert a new product on the DB
     async generateProduct() {
-        this.spinner_text = 'Recuperation des commentaires .. \nVeuillez patientez cela peut prendre plusieurs minutes';
+        this.spinner_text = 'Recuperation des commentaires .. <br/>Veuillez patientez cela peut prendre plusieurs minutes';
         this.loading = true;
 
         // construct request object
         console.log('Current User id dans submit: ' + this.current_user.id);
         this.form.user_id = this.current_user.id
+        this.form.product_name = 'unamed_product'
         try {
           const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
             responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
@@ -175,6 +187,7 @@ export default {
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
           link.download = 'comments_gen.xlsx';
           link.click();
+          this.showModal = false
           this.loading = false;
           router.push("/products");
         }
@@ -188,8 +201,7 @@ export default {
     closeForm() {
       this.amazonLink = null
       this.aliexpressLink = null
-      this.amazonLinkFilled = false
-      this.aliexpressLinkFilled = false
+      this.showModal = false
     },
     
     handleEsc(event) {
@@ -197,6 +209,10 @@ export default {
       if (event.key === 'Escape') {
         this.closeForm();
       }
+    },
+
+    wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     }
   }
 

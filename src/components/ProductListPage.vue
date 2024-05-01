@@ -222,7 +222,6 @@ export default {
     } else {
       this.current_user = JSON.parse(localStorage.getItem("user"));
       this.access_token = localStorage.getItem("access_token");
-
       console.log(
         "Current user in productlist mounted: " + JSON.stringify(this.current_user)
       );

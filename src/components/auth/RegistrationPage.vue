@@ -59,8 +59,8 @@ export default {
           });
 
           const test = await response.json();
-          console.error("Reponse signup ==> " + JSON.stringify(test));
-          console.error("User on signup ==> " + JSON.stringify(test.user));
+          console.log("Reponse signup ==> " + JSON.stringify(test));
+          console.log("User on signup ==> " + JSON.stringify(test.user));
 
           if(test.access_token && test.user) {
             const userTmp = JSON.stringify({

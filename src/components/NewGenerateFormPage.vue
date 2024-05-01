@@ -7,7 +7,7 @@
               <input
                 type="link"
                 id="amazon_link"
-                v-model="form.amazon_link"
+                v-model="form.product_link"
                 required
                 class="mt-1 p-2 border rounded-md w-full"
               />
@@ -76,30 +76,10 @@
           </form>
           
           <!-- Spinner -->
-          <!-- <div
-            v-if="loading"
-            class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75"
-          >
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-              <div class="flex flex-col items-center">
-                <div
-                  class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"
-                ></div>
-                <p class="text-gray-600 mt-2" v-html="spinner_text"></p>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-              <Vue3Lottie :animationData="yourAnimationData" :height="200" :width="200" />
-              <p class="text-gray-600 mt-2" v-html="spinner_text"></p>
-            </div>
-          </div> -->
-
           <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
             <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
               <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
-              <p class="text-gray-600 mt-2 text-center" v-html="spinner_text"></p>
+              <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
             </div>
           </div>
         </div>
@@ -141,7 +121,7 @@ export default {
         user_id: "",
         product_name: "",
         description: "",
-        amazon_link: "",
+        product_link: "",
         language: "francais",
         number: null,
       },
