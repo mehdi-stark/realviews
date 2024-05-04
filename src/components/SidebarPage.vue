@@ -1,6 +1,6 @@
 <template>
     <!-- Sidebar -->
-    <aside class="w-80 h-screen bg-custom-purple" aria-label="Sidebar" v-if="showBar">
+    <aside class="w-80 h-screen bg-custom-purple sm:w-64 md:w-80 lg:w-96" aria-label="Sidebar" v-if="showBar">
       <div class="flex justify-end w-full">
         <button @click="showBar = false">
           <svg
@@ -180,7 +180,7 @@
     </aside>
     <button
     v-else
-    class="text-white py-1 w-12 h-12 rounded flex items-center text-sm fixed mt-20 ml-5"
+    class="text-white py-1 w-12 h-12 rounded flex items-center text-sm fixed mt-20 ml-5 sm:mt-16 md:mt-20 lg:mt-24"
     @click="showBar = true"
   >
     <svg
