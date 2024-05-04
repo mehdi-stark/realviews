@@ -6,6 +6,7 @@ import GenereratePage from '@/components/GenereratePage.vue'
 import LoginPage from '@/components/auth/LoginPage.vue'
 import RegistrationPage from '@/components/auth/RegistrationPage.vue'
 import NewGenerateFormPage from '@/components/NewGenerateFormPage.vue'
+import store from '../store/store'
 
 const routes = [
   {
@@ -60,6 +61,7 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       // User is not authenticated, redirect to login
+      store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
       console.error('No token')
       next('/login');
     }

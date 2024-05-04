@@ -1,9 +1,12 @@
 <template>
       <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <form @submit.prevent="scrapProduct" class="space-y-4">
+
+        <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 500px; height: 650px;"
+    @click.stop>
+      <h3 type="text" class="text-3xl text-white p-2 font-bold underline mb-8">Let's go !</h3>
+      <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10">
             <div class="form-group">
-              <label for="amazon_link" class="text-gray-600">URL produit {{ maProp }}</label>
+              <label for="amazon_link" class="text-white text-xl font-bold">URL produit</label>
               <input
                 type="link"
                 id="amazon_link"
@@ -13,29 +16,29 @@
               />
             </div>
             <div class="form-group">
-              <label for="product_name" class="text-gray-600">Product Handle</label>
+              <label for="amazon_link" class="text-white text-xl font-bold">Product handle</label>
               <input
-                type="text"
-                id="product_name"
-                v-model="form.product_name"
+                type="link"
+                id="amazon_link"
+                v-model="form.product_handle"
                 required
                 class="mt-1 p-2 border rounded-md w-full"
               />
             </div>
             <div class="form-group">
-              <label for="description" class="text-gray-600 bold"
-                >Description du produit</label
-              >
-              <textarea
-                id="description"
-                v-model="form.description"
+              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis</label>
+              <input
+                type="number"
+                id="comments"
+                v-model="form.number"
+                required
                 class="mt-1 p-2 border rounded-md w-full"
-              ></textarea>
+                min="1"
+              />
             </div>
-
             <div class="form-group">
               <div class="mt-4">
-                <label for="language" class="text-gray-600">Langue des avis</label>
+                <label for="language" class="text-white text-xl font-bold">Langue des avis</label>
                 <select
                   id="language"
                   v-model="form.language"
@@ -48,43 +51,26 @@
                 </select>
               </div>
             </div>
-            <div class="form-group">
-              <label for="comments" class="text-gray-600">Nombre de Commentaires</label>
-              <input
-                type="number"
-                id="comments"
-                v-model="form.number"
-                required
-                class="mt-1 p-2 border rounded-md w-full"
-                min="1"
-              />
-            </div>
-            <div class="form-group justify-center space-y-4">
-              <button
-                type="submit"
-                class="w-full bg-cyan-500 text-white hover:bg-purple-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 py-2 px-4 rounded-md"
-              >
-                Generer
-              </button>
-              <button
+
+            <div class="form-group flex flex-col items-center space-y-4">
+              <button type="submit" class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5">Générer</button>
+              <!-- <button
                 @click="closeForm"
-                class="mt-4 text-gray-500 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md mt-2"
+                class="mt-2 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md"
                 >
                 Fermer
-              </button>
+              </button> -->
             </div>
-          </form>
-          
-          <!-- Spinner -->
-          <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
-            <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
-              <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
-              <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      </form>
+    </div>
+  </div>
+    <!-- Spinner -->
+    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
+    <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
+      <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
+      <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -124,6 +110,7 @@ export default {
         product_link: "",
         language: "francais",
         number: null,
+        provider: "shopify",
       },
       loading: false,
       loading_products: false,
