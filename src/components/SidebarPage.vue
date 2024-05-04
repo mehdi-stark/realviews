@@ -1,7 +1,8 @@
 <template>
     <!-- Sidebar -->
-    <aside class="w-80 h-screen bg-custom-purple sm:w-64 md:w-80 lg:w-96" aria-label="Sidebar" v-if="showBar">
-      <div class="flex justify-end w-full">
+    <!-- Laptop -->
+    <aside class="w-80 h-screen bg-custom-purple" aria-label="Sidebar">
+      <!-- <div class="flex justify-end w-full">
         <button @click="showBar = false">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -17,9 +18,9 @@
             />
           </svg>
         </button>
-      </div>
+      </div> -->
       <!-- logo sidebar -->
-      <div id="logo_sidebar" class="logo h-24" style="display: flex; align-items: center; justify-content: center;">
+      <div id="logo_sidebar" class="logo h-24 mt-5" style="display: flex; align-items: center; justify-content: center; height: 140px;">
         <img
           src="../assets/sidebar/C.png"
           class="object-cover h-full w-full" />
@@ -178,26 +179,7 @@
         </div>
       </div>
     </aside>
-    <button
-    v-else
-    class="text-white py-1 w-12 h-12 rounded flex items-center text-sm fixed mt-20 ml-5 sm:mt-16 md:mt-20 lg:mt-24"
-    @click="showBar = true"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="w-10 h-10"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-      />
-    </svg>
-  </button>
+
   
   <!-- Spinner -->
   <div
@@ -220,6 +202,9 @@ import { mapState } from 'vuex';
 export default {
   name: 'App',
 
+  components: {
+  },
+
   setup() {
     const isOpen = ref(false);
 
@@ -231,16 +216,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['user', 'isUserConnected']),
-
-    // isUserConnected() {
-    //   // Cette propriété calculée vérifie l'état de connexion de l'utilisateur
-    //   return localStorage.getItem('isUserConnected') === 'true';
-    // },
-    // username() {
-    //   // Retourne le username stocké dans le localStorage
-    //   return localStorage.getItem('user');
-    // }
+    ...mapState(['user', 'isUserConnected'])
   },
 
   watch: {
@@ -254,6 +230,8 @@ export default {
   },
 
   mounted() {
+    window.addEventListener("resize", this.checkScreenSize);
+
     this.userItem = JSON.parse(this.user);
     if (this.userItem) {
       console.log("user on header exist");
@@ -275,11 +253,13 @@ export default {
   },
 
   beforeUnmount() {
+    window.removeEventListener("resize", this.checkScreenSize);
     window.removeEventListener('storage', this.handleStorageEvent);
   },
 
   data() {
     return {
+      isMobile: false,
       loading_logout: false,
       spinner_text: "",
       showBar: true,
@@ -288,6 +268,11 @@ export default {
   },
 
   methods: {
+    checkScreenSize() {
+      console.log("check screen size");
+      this.isMobile = window.innerWidth < 768;
+    },
+
     handleStorageEvent(e) {
     if (e.key === 'isUserConnected' || e.key === 'user') {
       this.$forceUpdate();
