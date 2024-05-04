@@ -11,7 +11,10 @@
 </template>
 
 <script>
-import Sidebar from './components/SidebarPage.vue';
+import router from "@/router";
+import { ref } from 'vue';
+import { mapState } from 'vuex';
+import SidebarPage from "./components/SidebarPage.vue";
 
 export default {
   components: {
