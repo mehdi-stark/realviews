@@ -3,7 +3,7 @@
 
     <!-- Mobile -->
     <div id="sidebar" v-if="isMobile" class="fixed top-0 left-0 w-full h-12 bg-custom-purple text-white flex items-center px-2">
-      <button @click="toggleDropdown" class="text-2xl bg-transparent border-none text-white">
+      <button @click="toggleSidebar" class="text-2xl bg-transparent border-none text-white">
       &#9776; <!-- Unicode character for the burger menu -->
     </button>
     <!-- <div v-if="isMobile" >
@@ -11,7 +11,7 @@
     <transition name="slide">
       <div v-if="isOpen" class="menu fixed top-0 left-0 w-full h-full bg-custom-purple text-white transition-transform transform translate-x-0 mr-4">
          <!-- Close menu button -->
-         <button @click="toggleDropdown" class="text-2xl bg-transparent border-none text-white">
+         <button @click="toggleSidebar" class="text-2xl bg-transparent border-none text-white">
             &times; <!-- Unicode character for the close button -->
           </button>
       <!-- logo sidebar -->
@@ -27,7 +27,7 @@
           <ul class="space-y-2">
             <li>
               <router-link to="/" id="gettingStarted">
-                <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                <a @click="toggleSidebar" href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../src/assets/sidebar/home-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
@@ -37,7 +37,7 @@
             </li>
             <li>
               <router-link to="/scrapper" id="gettingStarted">
-              <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+              <a @click="toggleSidebar" href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../src/assets/sidebar/scraper-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
@@ -47,7 +47,7 @@
             </li>
             <li>
               <router-link to="/generate" id="gettingStarted">
-              <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+              <a @click="toggleSidebar" href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../src/assets/sidebar/generer-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
@@ -57,7 +57,7 @@
             </li>
             <li>
               <router-link to="/products" id="gettingStarted">
-              <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+              <a @click="toggleSidebar" href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../src/assets/sidebar/transparent-list-icon.jpg"
                     class="object-fill mr-2 w-5 h-5"/>
@@ -73,7 +73,7 @@
           <h3 class="text-slate-200">Communaute</h3>
           <ul class="space-y-2">
             <li>
-              <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+              <a @click="toggleSidebar" href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../src/assets/sidebar/affiliate-logo.png"
                     class="object-fill mr-2 w-6 h-6"/>
@@ -128,9 +128,9 @@
               </a>
             </li> -->
             <!-- Menu user -->
-            <li v-if="isUserConnected" class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
-                <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
-                  <img
+            <li v-if="isUserConnected && !isOpen" class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+               <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+                   <img
                     src="../src/assets/sidebar/user-logo.png"
                     class="object-fill mr-2 w-6 h-6"/>
                   <span class="ml-3">{{ username }}</span>
@@ -189,7 +189,7 @@
 
 <script>
 import router from "@/router";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { mapState } from 'vuex';
 import Sidebar from "./components/SidebarPage.vue";
 
@@ -200,13 +200,46 @@ export default {
     Sidebar
   },
 
+  data() {
+    return {
+      // isMobile: false,
+      loading_logout: false,
+      spinner_text: "",
+      showBar: true,
+      username: "",
+    };
+  },
+  
   setup() {
     const isOpen = ref(false);
+    const isMobile = ref(window.innerWidth < 768);
+    const isDropdownOpen = ref(false);
 
+    const checkScreenSize = () => {
+      console.log("check screen size");
+      isMobile.value = window.innerWidth < 768;
+    };
+ 
     function toggleDropdown() {
+      isDropdownOpen.value = !isDropdownOpen.value;
+    }
+
+    function toggleSidebar() {
       isOpen.value = !isOpen.value;
     }
-    return { isOpen, toggleDropdown };
+
+    onMounted(() => {
+      window.addEventListener('resize', checkScreenSize);
+      checkScreenSize();
+    });
+
+    return {
+      isOpen,
+      isMobile,
+      isDropdownOpen,
+      toggleDropdown,
+      toggleSidebar,
+    };
   },
 
   computed: {
@@ -251,22 +284,9 @@ export default {
     window.removeEventListener('storage', this.handleStorageEvent);
   },
 
-  data() {
-    return {
-      isMobile: false,
-      loading_logout: false,
-      spinner_text: "",
-      showBar: true,
-      username: "",
-    };
-  },
+
 
   methods: {
-    checkScreenSize() {
-      console.log("check screen size");
-      this.isMobile = window.innerWidth < 768;
-    },
-
     handleStorageEvent(e) {
     if (e.key === 'isUserConnected' || e.key === 'user') {
       this.$forceUpdate();
