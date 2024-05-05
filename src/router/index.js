@@ -24,28 +24,9 @@ const routes = [
       requiresAuth: true
     }
   },
-  { path: '/login', component: LoginPage, name: 'Login' },
+  { path: '/login', component: LoginPage, props: true,  name: 'Login' },
   { path: '/signup', component: RegistrationPage, name: 'Signup' },
-  { path: '/amazon', component: NewGenerateFormPage, name: 'Generate Amazon' },
-
-  // { 
-  //   path: '/login', 
-  //   name: 'login', 
-  //   component: LoginView
-  // },
-  // { 
-  //   path: '/signup', 
-  //   name: 'signup', 
-  //   component: RegistrationPage,
-  // },
-  // { 
-  //   path: '/products', 
-  //   name: 'products', 
-  //   component: ProductListVue,
-  //   meta: {
-  //     requiresAuth: true
-  //   }
-  // }
+  { path: '/scrapper/:provider', component: NewGenerateFormPage, name: 'amazon', props: true }
 ]
 
 const router = createRouter({

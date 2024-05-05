@@ -310,26 +310,6 @@ export default {
       router.push("/");
     },
 
-    async logout() {
-      console.log("test logout")
-      this.spinner_text = "Deconnexion en cours..";
-      this.loading_logout = true;
-      await this.wait(1000)
-      if (localStorage.getItem("access_token")) {
-        console.log("storage item ==> " + localStorage.getItem("access_token"));
-        localStorage.removeItem("isUserConnected");
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("user");
-        // alert("L'utilisateur a bien été déconnecté")
-      } else {
-        console.log("storage item not found");
-      }
-      this.loading_logout = false;
-      this.isOpen = false;
-      this.isUserConnected = false
-      router.push("/");
-    },
-
     redirectLogin() {
       router.push("/login");
     },

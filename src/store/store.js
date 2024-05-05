@@ -22,8 +22,8 @@ const store = createStore({
       state.accessToken = null;
       state.isUserConnected = false;
       localStorage.removeItem('user');
-      localStorage.removeItem('isUserConnected');
       localStorage.removeItem('access_token');
+      localStorage.setItem('isUserConnected', false);
     }
   },
   actions: {

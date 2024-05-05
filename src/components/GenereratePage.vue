@@ -93,7 +93,7 @@
     </div>
   </div>
   <!-- Spinner -->
-  <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
+  <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95">
     <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
       <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
       <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
@@ -104,6 +104,7 @@
 <script>
 import api from '@/api';
 import router from '@/router';
+import { mapState } from 'vuex';
 
 export default {
   name: 'ScrapperPage',
@@ -123,6 +124,7 @@ export default {
         product_link: "",
         language: "francais",
         number: null,
+        provider: ""
       },
       current_user: null,
       access_token: "",
@@ -131,11 +133,24 @@ export default {
     };
   },
 
+  computed: {
+    ...mapState(['user', 'accessToken', 'isUserConnected']),
+  },
+
   mounted() {
     this.showModal = false
-    this.current_user = JSON.parse(localStorage.getItem("user"));
-    this.access_token = localStorage.getItem("access_token");
     window.addEventListener('keydown', this.handleEsc);
+
+    if (!this.user || !this.accessToken) {
+      console.error("user or token not present ! Login is required !");
+      this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
+      router.push("/login");
+    } else {
+      this.current_user = JSON.parse(this.user);
+      console.log("Current user in new generate product mounted: " + JSON.stringify(this.current_user));
+      console.log("Current user ID in productlist mounted: " + this.current_user.id);
+      console.log("Current access-token in productlist mounted: " + this.access_token);
+    }
   },
 
   beforeUnmount() {
@@ -144,7 +159,6 @@ export default {
   },
 
   methods: {
-
     generateAmazon() {
       if (!this.amazonLink) {
         alert("Veuillez entrer un lien Amazon valide avant de générer !");
@@ -172,6 +186,7 @@ export default {
         console.log('Current User id dans submit: ' + this.current_user.id);
         this.form.user_id = this.current_user.id
         this.form.product_name = 'unamed_product'
+        this.form.provider = 'amazon'
         try {
           const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
             responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'

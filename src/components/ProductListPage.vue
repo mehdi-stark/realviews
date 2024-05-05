@@ -119,7 +119,7 @@
               </div>
 
               <div class="w-1/4 text-right flex justify-start">
-                {{ product.productName }}
+                {{ product.productName ? product.productName : product.productHandle }}
               </div>
               <div class="w-1/6 text-right flex justify-end">
                 {{ product.averageRating.toFixed(2) }}
@@ -181,7 +181,6 @@
 
 <script>
 import router from "@/router";
-import axios from "axios";
 import dayjs from "dayjs";
 import api from '../api'
 import { mapState } from 'vuex';
@@ -283,16 +282,8 @@ export default {
     async uploadImage(product_id) {
       const formData = new FormData();
       formData.append("file", this.selectedImage);
-      axios
-        .post(
-          process.env.VUE_APP_ROOT_API + "/api/v1/product-logo?product_id=" + product_id,
-          formData,
-          {
-            headers: {
-              Authorization: "Bearer " + this.access_token,
-            },
-          }
-        )
+      api
+        .post("/api/v1/product-logo?product_id=" + product_id, formData)
         .then((res) => {
           res.data.files; // binary representation of the file
           res.status; // HTTP status
@@ -381,9 +372,10 @@ export default {
 
       this.spinner_text = "Recuperation des produits..";
       this.loading_products = true;
-      await api.get(process.env.VUE_APP_ROOT_API + "/api/v1/products?user_id=" + this.current_user.id)
+      await api.get("/api/v1/products?user_id=" + this.current_user.id)
         .then((res) => {
           this.products = res.data;
+          console.log("products : " + JSON.stringify(this.products));
           localStorage.setItem("fetchedProduct", res.data);
         })
         .catch((error) => {

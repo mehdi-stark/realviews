@@ -65,7 +65,7 @@
     </div>
   </div>
     <!-- Spinner -->
-    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90">
+    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95">
     <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
       <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
       <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
@@ -78,6 +78,7 @@ import router from '@/router'
 import api from '@/api';
 // import Vue3Lottie from 'vue3-lottie';
 import yourAnimationData from '../assets/animation-loader.json';
+import { mapState } from 'vuex';
 
 export default {
   name: 'AmazonPage',
@@ -85,9 +86,16 @@ export default {
   // components: {
   //   Vue3Lottie,
   // },
+  computed: {
+    ...mapState(['user', 'accessToken', 'isUserConnected']),
+  },
 
   props: {
     maProp: {
+      type: String, // Type attendu
+      required: true // Rend la prop obligatoire
+    },
+    provider: {
       type: String, // Type attendu
       required: true // Rend la prop obligatoire
     }
@@ -110,30 +118,30 @@ export default {
         product_link: "",
         language: "francais",
         number: null,
-        provider: "shopify",
+        provider: "",
       },
       loading: false,
       loading_products: false,
       result: null,
       showModal: false,
       current_user: null,
-      access_token: "",
     };
   },
 
   mounted() {
-    if (!localStorage.getItem("user") || !localStorage.getItem("access_token")) {
+    if (!this.user || !this.accessToken) {
       console.error("user or token not present ! Login is required !");
+      this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
       router.push("/login");
     } else {
-      this.current_user = JSON.parse(localStorage.getItem("user"));
-      this.access_token = localStorage.getItem("access_token");
+      this.current_user = JSON.parse(this.user);
+      // Update provider in the form with the route param
+      this.form.provider = this.$route.params.provider;
 
-      console.log(
-        "Current user in new generate product mounted: " + JSON.stringify(this.current_user)
-      );
+      console.log("Current user in new generate product mounted: " + JSON.stringify(this.current_user));
       console.log("Current user ID in productlist mounted: " + this.current_user.id);
-      console.log("Current access-token in productlist mounted: " + this.access_token);
+      console.log("Current access-token in productlist mounted: " + this.accessToken);
+      console.log("Provider: " + this.form.provider)
     }
   },
 
