@@ -3,24 +3,20 @@
 
     <!-- Mobile -->
     <div id="sidebar" v-if="isMobile" class="fixed top-0 left-0 w-full h-12 bg-custom-purple text-white flex items-center px-2">
-      <button @click="toggleSidebar" class="text-2xl bg-transparent border-none text-white">
-      &#9776; <!-- Unicode character for the burger menu -->
-    </button>
+      <button @click="toggleSidebar" class="text-3xl bg-transparent border-none text-white">
+        &#9776; <!-- Unicode character for the burger menu -->
+      </button>
     <!-- <div v-if="isMobile" >
     <button @click="isOpen = !isOpen">Toggle Menu</button> -->
     <transition name="slide">
-      <div v-if="isOpen" class="menu fixed top-0 left-0 w-full h-full bg-custom-purple text-white transition-transform transform translate-x-0 mr-4">
-         <!-- Close menu button -->
-         <button @click="toggleSidebar" class="text-2xl bg-transparent border-none text-white">
-            &times; <!-- Unicode character for the close button -->
-          </button>
+      <div v-if="isOpen" class="menu fixed top-0 left-0 w-3/4 h-full bg-custom-purple text-white transition-transform transform translate-x-0 mb-12">
       <!-- logo sidebar -->
       <div id="logo_sidebar" class="logo mt-5 flex items-center justify-center">
         <img
           src="../src/assets/sidebar/C.png"
           class="h-12 w-auto mx-auto mt-2"/>
       </div>
-      <div class=" py-4 px-3 bg-custom-purple rounded dark:bg-custom-purple space-between-10">
+      <div class="sidebar h-screen overflow-y-auto py-4 px-3 bg-custom-purple rounded dark:bg-custom-purple space-between-10">
           <!-- Navigation element Sidebar -->
         <div class="navigation_element content-start">
           <h3 class="text-slate-200">Navigation</h3>
@@ -128,7 +124,7 @@
               </a>
             </li> -->
             <!-- Menu user -->
-            <li v-if="isUserConnected && !isOpen" class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+            <li v-if="isUserConnected && !isOpen" class="mt-auto mb-5" style="width: 296px;">
                <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                    <img
                     src="../src/assets/sidebar/user-logo.png"
@@ -152,7 +148,7 @@
                   </div>
                 </a>
             </li>
-            <li v-else class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+            <li v-else class="mt-auto mb-10" style="width: 296px;">
               <button @click="redirectLogin()" 
               class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 ml-15">Se Connecter</button>
             </li>
@@ -175,6 +171,11 @@
       </div>
       </div>
     </transition>
+    <div v-if="isOpen" class="fixed top-0 right-0 w-1/4 h-full flex items-start justify-center bg-black bg-opacity-85">
+        <button @click="toggleSidebar" class="text-4xl bg-transparent border-none text-white mt-5">
+          &times; <!-- Unicode character for the close button -->
+        </button>
+      </div>
   </div>
 
   <!-- Sidebar fixe sur le côté -->
