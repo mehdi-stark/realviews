@@ -1,9 +1,9 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-white">
-    <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
-      <div class="flex items-center ml-4">
-        <img src="../../assets/logo-principal-tranparent.png" alt="SprintPro Logo" class="w-full mr-2 mt-2" />
-      </div>
+    <div class="max-w-md w-full p-6 bg-white rounded-lg">
+      <!-- <div class="flex items-center ml-4">
+        <img src="../../assets/sidebar/C.png" alt="SprintPro Logo" class="w-full mr-2 mt-2" />
+      </div> -->
       <h2 class="text-xl font-semibold mb-4 mt-10">Inscription</h2>
       <form>
         <div class="mb-4">
