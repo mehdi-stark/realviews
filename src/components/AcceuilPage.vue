@@ -15,7 +15,7 @@
      </header>
       <!-- ... contenu supplémentaire ... -->
       <div class="flex flex-col justify-center items-center h-screen">
-        <h1 class="text-4xl justify-center items-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
+        <h1 class="text-4xl justify-center text-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
         <div class="video-container">
         <iframe 
         src="https://www.youtube.com/embed/Y2Dps_AMLsQ?si=6DppwumiuH7OjWj8" 
@@ -54,6 +54,7 @@ export default {
   width: 100%;
   padding-bottom: 56.25%; /* Aspect ratio for 16:9 videos */
   overflow: hidden;
+  z-index: 10; /* Lower z-index */
 }
 
 .video-container iframe {

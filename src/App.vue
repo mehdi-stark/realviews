@@ -148,7 +148,8 @@
                   </div>
                 </a>
             </li>
-            <li v-else class="mt-auto mb-10" style="width: 296px;">
+            <li v-else class="mt-auto mb-5" style="width: 296px;">
+            <!-- <li v-else class="mt-auto mb-10" style="width: 296px;"> -->
               <button @click="redirectLogin()"
               class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 mx-auto">Se Connecter</button>
             </li>
@@ -327,6 +328,7 @@ export default {
 /* Styliser la sidebar pour qu'elle soit fixe */
 .sidebar {
   position: fixed;
+  z-index: 20; /* Higher z-index */
   /* autres styles */
 }
 

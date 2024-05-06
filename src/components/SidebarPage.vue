@@ -157,7 +157,7 @@
                   </div>
                 </a>
             </li>
-            <li v-else class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+            <li v-else class="mt-auto mb-5" style="width: 296px;">
               <button @click="redirectLogin()" 
               class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 ml-15">Se Connecter</button>
             </li>
