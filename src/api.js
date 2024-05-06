@@ -42,8 +42,7 @@ api.interceptors.response.use(
       console.error("Error interceptor access token = " + token);
 
       // Supprimez le token du localStorage
-      localStorage.removeItem('access_token');
-
+      store.commit('logout');
       console.log("access token after removal = " + token);
       // Redirigez vers la page de connexion
       router.push('/login');
