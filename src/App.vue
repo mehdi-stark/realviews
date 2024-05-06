@@ -124,7 +124,7 @@
               </a>
             </li> -->
             <!-- Menu user -->
-            <li v-if="isUserConnected && !isOpen" class="mt-auto mb-5" style="width: 296px;">
+            <li v-if="isUserConnected" class="mt-auto mb-5" style="width: 296px;">
                <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                    <img
                     src="../src/assets/sidebar/user-logo.png"
@@ -140,7 +140,7 @@
                     <!-- <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a> -->
                     <!-- <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a> -->
                     <!-- <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700"> -->
-                    <a @click="logout2()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                    <a @click="logout()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
                       <img
                       src="../src/assets/sidebar/logout.png"
                       class="object-fill mr-3 w-6 h-6"/>
@@ -149,8 +149,8 @@
                 </a>
             </li>
             <li v-else class="mt-auto mb-10" style="width: 296px;">
-              <button @click="redirectLogin()" 
-              class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 ml-15">Se Connecter</button>
+              <button @click="redirectLogin()"
+              class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 mx-auto">Se Connecter</button>
             </li>
 
             <!-- Menu Utilisateur Dropdown -->
@@ -301,7 +301,7 @@ export default {
       location.reload();
     },
 
-    async logout2() {
+    async logout() {
       console.log("test logout")
       this.spinner_text = "Deconnexion en cours..";
       this.loading_logout = true;
@@ -312,6 +312,7 @@ export default {
     },
 
     redirectLogin() {
+      this.isOpen.value = !this.isOpen.value;
       router.push("/login");
     },
 

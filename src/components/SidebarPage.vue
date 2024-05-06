@@ -133,7 +133,7 @@
               </a>
             </li> -->
             <!-- Menu user -->
-            <li v-if="isUserConnected" class="place-content-end mb-10" style="position: absolute; bottom: 0; width: 296px;">
+            <li v-if="isUserConnected" class="mt-auto mb-5" style="width: 296px;">
                 <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../assets/sidebar/user-logo.png"

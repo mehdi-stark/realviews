@@ -16,19 +16,14 @@
       <!-- ... contenu supplémentaire ... -->
       <div class="flex flex-col justify-center items-center h-screen">
         <h1 class="text-4xl justify-center items-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
-        <!-- <iframe
-          class="w-3/4 h-auto md:w-1/2 lg:w-2/3 xl:w-3/4"
-          src="https://www.youtube.com/embed?v=Y2Dps_AMLsQ"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe> -->
-        <iframe width="860" height="515" 
+        <div class="video-container">
+        <iframe 
         src="https://www.youtube.com/embed/Y2Dps_AMLsQ?si=6DppwumiuH7OjWj8" 
         title="YouTube video player" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
       </div>
     </div>
   </div>
@@ -54,4 +49,31 @@ export default {
 
 <style>
 /* ... styles Tailwind personnalisés ... */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Aspect ratio for 16:9 videos */
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 860px) { /* Apply these styles on screens larger than 1024px */
+  .video-container {
+    width: 860px;
+    height: 515px;
+    padding-bottom: 0;
+  }
+
+  .video-container iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

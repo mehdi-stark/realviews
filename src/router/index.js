@@ -37,13 +37,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const token = localStorage.getItem('access_token');
-    if (token) {
+    if (token && store.state.isUserConnected) {
+      console.log('Token is present and user is connected')
       // User is authenticated, proceed to the route
       next();
     } else {
+      console.error('No token or user has been disconnected')
       // User is not authenticated, redirect to login
       store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
-      console.error('No token')
       next('/login');
     }
   } else {
