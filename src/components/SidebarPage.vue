@@ -31,7 +31,7 @@
           <h3 class="text-slate-200">Navigation</h3>
           <ul class="space-y-2">
             <li>
-              <router-link to="/" id="gettingStarted">
+              <router-link @click="$emit('close-sidebar')" to="/" id="gettingStarted">
                 <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../assets/sidebar/home-logo.png"
@@ -41,7 +41,7 @@
               </router-link>
             </li>
             <li>
-              <router-link to="/scrapper" id="gettingStarted">
+              <router-link @click="$emit('close-sidebar')" to="/scrapper" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/scraper-logo.png"
@@ -51,7 +51,7 @@
               </router-link>
             </li>
             <li>
-              <router-link to="/generate" id="gettingStarted">
+              <router-link @click="$emit('close-sidebar')" to="/generate" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/generer-logo.png"
@@ -61,11 +61,15 @@
               </router-link>
             </li>
             <li>
-              <router-link to="/products" id="gettingStarted">
+              <router-link @click="$emit('close-sidebar')"  to="/products" id="gettingStarted">
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
-                <img
+                <!-- <img
                     src="../assets/sidebar/transparent-list-icon.jpg"
-                    class="object-fill mr-2 w-5 h-5"/>
+                    class="object-fill mr-2 w-5 h-5"/> -->
+                <History
+                  color="white"
+                  :size="24"
+                />
                 <span class="ml-3">Historique</span>
               </a>
               </router-link>
@@ -198,11 +202,13 @@
 import router from "@/router";
 import { ref } from 'vue';
 import { mapState } from 'vuex';
+import { History } from "lucide-vue-next";
 
 export default {
   name: 'App',
 
   components: {
+    History
   },
 
   setup() {

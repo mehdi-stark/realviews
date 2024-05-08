@@ -1,16 +1,7 @@
 <template>
   <!-- Header -->
-  <div id="header" class="px-3 md:px-6 lg:px-8">
-    <header class="flex justify-between items-center h-35 bg-slate-100 text-black">
-      <span class="ml-3 flex justify-start font-bold p-3">Generer</span>
-      <div class="logo h-6 w-6 flex justify-end">
-        <img
-          src="../assets/question.png"
-          class="place-items-center mr-8"
-        />
-      </div>
-    </header>
-  </div>
+  <HeaderComponent title="Generate" class="hidden md:block"/>
+  
   <div class="flex flex-col items-center justify-center min-h-screen bg-white px-3 md:px-6 lg:px-8">
     <h1 class="text-5xl font-bold mb-1">Génèrer* des avis <span class="text-purple-600">EN UN CLIC</span> grâce à l’IA</h1>
     <div class="text-lg italic mb-4">*Mettre en ligne des faux avis est illégal, cette section est présentée uniquement à titre éducatif.</div>
@@ -110,9 +101,15 @@
 import api from '@/api';
 import router from '@/router';
 import { mapState } from 'vuex';
+import HeaderComponent from './HeaderComponent.vue';
 
 export default {
   name: 'ScrapperPage',
+
+  components: {
+    HeaderComponent,
+  },
+
   // Vous pouvez ajouter ici la logique de composant nécessaire pour le scraping
   data() {
     return {
