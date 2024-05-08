@@ -44,7 +44,6 @@ router.beforeEach((to, from, next) => {
     } else {
       console.error('No token or user has been disconnected')
       // User is not authenticated, redirect to login
-      store.commit('showSessionExpiredDialog'); // Afficher le dialogue SessionExpiredDialog
       store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
       next('/login');
     }

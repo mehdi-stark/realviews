@@ -25,7 +25,8 @@
     "vue-router": "^4.0.3",
     "vue3-lottie": "^3.3.0",
     "vuetify": "^3.6.4",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "webpack-plugin-vuetify": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

@@ -40,10 +40,18 @@ api.interceptors.response.use(
       const token = store.state.accessToken;
 
       console.error("Error interceptor access token = " + token);
-
       // Supprimez le token du localStorage
       store.commit('logout');
-      console.log("access token after removal = " + token);
+      console.log("access token after removal = " + store.state.accessToken);
+      console.log("error.response.data = " + JSON.stringify(error.response));
+
+      store.commit('showSessionExpiredDialog'); 
+      // if (error.response.data.includes('JWT expired')) {
+      //   console.log("JWT expired");
+      //   // Afficher le dialogue SessionExpiredDialog
+      //   store.commit('showSessionExpiredDialog'); 
+      // }
+
       // Redirigez vers la page de connexion
       router.push('/login');
     }
