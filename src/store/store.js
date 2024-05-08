@@ -3,12 +3,16 @@ import { createStore } from 'vuex';
 const store = createStore({
   state() {
     return {
+      showSessionExpiredDialog: false,
       user: JSON.parse(localStorage.getItem('user')) || null,
       isUserConnected: localStorage.getItem('isUserConnected') === 'true',
       accessToken: localStorage.getItem('access_token') || null,
     };
   },
   mutations: {
+    showSessionExpiredDialog(state) {
+      state.showSessionExpiredDialog = true;
+    },
     loginSuccess(state, { user, accessToken }) {
       state.user = user;
       state.accessToken = accessToken;

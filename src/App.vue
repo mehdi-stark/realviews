@@ -24,10 +24,13 @@
     <div id="main_content" class="flex-1 overflow-auto">
       <router-view :key="$route.fullPath"></router-view>
     </div>
+
+    <SessionExpiredDialog v-if="$store.state.showSessionExpiredDialog" />
   </div>
 </template>
 
 <script>
+import SessionExpiredDialog from "@/components/dialog/SessionExpiredDialog.vue";
 import router from "@/router";
 import { ref, onMounted } from 'vue';
 import { mapState } from 'vuex';
@@ -37,7 +40,8 @@ export default {
   name: 'App',
 
   components: {
-    Sidebar
+    Sidebar,
+    SessionExpiredDialog
   },
 
   data() {

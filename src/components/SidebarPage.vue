@@ -208,7 +208,7 @@ export default {
   name: 'App',
 
   components: {
-    History
+    History,
   },
 
   setup() {
@@ -219,6 +219,16 @@ export default {
     }
 
     return { isOpen, toggleDropdown };
+  },
+
+  data() {
+    return {
+      isMobile: false,
+      loading_logout: false,
+      spinner_text: "",
+      showBar: true,
+      username: "",
+    };
   },
 
   computed: {
@@ -263,15 +273,7 @@ export default {
     window.removeEventListener('storage', this.handleStorageEvent);
   },
 
-  data() {
-    return {
-      isMobile: false,
-      loading_logout: false,
-      spinner_text: "",
-      showBar: true,
-      username: "",
-    };
-  },
+
 
   methods: {
     checkScreenSize() {
