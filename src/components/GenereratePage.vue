@@ -149,7 +149,7 @@ export default {
     if (!this.user || !this.accessToken) {
       console.error("user or token not present ! Login is required !");
       this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
-      router.push("/login");
+      // router.push("/login");
     } else {
       this.current_user = JSON.parse(this.user);
       console.log("Current user in new generate product mounted: " + JSON.stringify(this.current_user));
@@ -188,8 +188,10 @@ export default {
         this.loading = true;
 
         // construct request object
-        console.log('Current User id dans submit: ' + this.current_user.id);
-        this.form.user_id = this.current_user.id
+        if (this.current_user) {
+          console.log('Current User id dans submit: ' + this.current_user.id);
+          this.form.user_id = this.current_user.id
+        }
         this.form.product_name = 'unamed_product'
         this.form.provider = 'amazon'
         try {

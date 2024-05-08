@@ -1,43 +1,40 @@
 <template>
-  <div id="app" :class="isMobile ? 'flex flex-col' : 'flex'">
-    <!-- Sidebar -->
+  <!-- <div id="app" :class="isMobile ? 'flex flex-col' : 'flex'"> -->
+  <div id="app" class="h-full relative">
     <!-- Mobile -->
-    <div id="sidebar" v-if="isMobile" class="fixed top-0 left-0 w-full h-12 bg-custom-purple text-white flex items-center px-2 z-[2]">
-      <button @click="toggleSidebar" class="text-3xl bg-transparent border-none text-white">
-        &#9776; <!-- Unicode character for the burger menu -->
-      </button>
-      <transition name="slide">
-        <div v-if="isOpen" class="menu fixed top-0 left-0 w-3/4 h-full bg-custom-purple text-white transition-transform transform translate-x-0 mb-12">
-          <Sidebar></Sidebar>
-        </div>
-      </transition>
-      <div v-if="isOpen" class="fixed top-0 right-0 w-1/4 h-full flex items-start justify-center bg-black bg-opacity-85">
-          <button @click="toggleSidebar" class="text-4xl bg-transparent border-none text-white mt-5">
-            &times; <!-- Unicode character for the close button -->
-          </button>
-      </div>
+    <div class="hidden h-full md:flex 
+    md:w-80
+    md:flex-col 
+    md:fixed 
+    md:inset-y-0 
+    z-[80] 
+    bg-custom-purple">
+    <Sidebar/>
     </div>
-    <!-- Desktop -->
-    <Sidebar v-else class="h-screen overflow-hidden" />
+  </div>
+  
+  <!-- Contenu principal qui change avec les routes -->
+  <div id="main_content" class="md:pl-80">
+    <Navbar />
 
-    <!-- Contenu principal qui change avec les routes -->
-    <div id="main_content" class="flex-1 overflow-auto">
-      <router-view :key="$route.fullPath"></router-view>
-    </div>
+    <!-- Contenu principal -->
+    <!-- ... -->
   </div>
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
 import router from "@/router";
 import { ref, onMounted } from 'vue';
 import { mapState } from 'vuex';
-import Sidebar from "./components/SidebarPage.vue";
+// import Sidebar from "./components/SidebarPage.vue";
 
 export default {
   name: 'App',
 
   components: {
-    Sidebar
+    // Sidebar,
+    Navbar
   },
 
   data() {
@@ -163,7 +160,11 @@ export default {
 
 <style>
 /* Styliser la sidebar pour qu'elle soit fixe */
-
+.sidebar {
+  position: fixed;
+  z-index: 20; /* Higher z-index */
+  /* autres styles */
+}
 
 /* Styliser le contenu principal pour qu'il ne soit pas caché par la sidebar */
 .main-content {
@@ -187,9 +188,14 @@ export default {
   overflow-y: scroll; /* Permet le défilement vertical si le contenu dépasse */
 }
 
+Sidebar {
+  height: 100vh; /* Hauteur complète de la fenêtre de visualisation */
+  overflow-y: hidden; /* Empêche le défilement de la sidebar */
+}
+
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s;
 }
 
 .slide-enter-from,

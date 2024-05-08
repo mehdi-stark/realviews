@@ -54,7 +54,6 @@ export default {
   width: 100%;
   padding-bottom: 56.25%; /* Aspect ratio for 16:9 videos */
   overflow: hidden;
-  z-index: 10; /* Lower z-index */
 }
 
 .video-container iframe {

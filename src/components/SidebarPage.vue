@@ -1,7 +1,7 @@
 <template>
     <!-- Sidebar -->
     <!-- Laptop -->
-    <aside class="w-80 h-screen bg-custom-purple" aria-label="Sidebar">
+    <aside class="w-80 h-screen bg-custom-purple z-[2]" aria-label="Sidebar">
       <!-- <div class="flex justify-end w-full">
         <button @click="showBar = false">
           <svg
@@ -81,7 +81,7 @@
               <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/affiliate-logo.png"
-                    class="object-fill mr-2 w-6 h-6"/>
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Affiliation</span>
               </a>
             </li>
@@ -89,7 +89,7 @@
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/communaute-logo.png"
-                    class="object-fill mr-2 w-6 h-6"/>
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Communaute</span>
               </a>
             </li>
@@ -104,7 +104,7 @@
               <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/reglages-logo.png"
-                    class="object-fill mr-2 w-6 h-6"/>
+                    class="object-fill mr-2 w-5 h-5"/>
                 <span class="ml-3">Reglages</span>
               </a>
             </li>
