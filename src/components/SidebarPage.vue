@@ -70,7 +70,7 @@
                   color="white"
                   :size="24"
                 />
-                <span class="ml-3">Historique</span>
+                <span class="ml-4">Historique</span>
               </a>
               </router-link>
             </li>
@@ -101,11 +101,11 @@
         </div>
 
         <!-- Parametres element Sidebar -->
-        <div class="parametre_element justify-items-end mt-8">
+        <div class="parametre_element justify-items-end mt-8 flex flex-col h-full">
           <h3 class="text-slate-200">Parametres</h3>
           <ul class="space-y-2">
             <li>
-              <a href="#" class="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
+              <a href="#" class="flex items-center p-2 mt-3 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                 <img
                     src="../assets/sidebar/reglages-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
@@ -137,7 +137,7 @@
               </a>
             </li> -->
             <!-- Menu user -->
-            <li v-if="isUserConnected" class="mt-auto mb-5" style="width: 296px;">
+            <li v-if="isUserConnected" class="mt-auto mb-3" style="width: 296px;">
                 <a href="#" @click="toggleDropdown" class="relative flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-gray-700">
                   <img
                     src="../assets/sidebar/user-logo.png"
@@ -161,9 +161,9 @@
                   </div>
                 </a>
             </li>
-            <li v-else class="mt-auto mb-5" style="width: 296px;">
+            <li v-else class="mt-auto mb-3" style="width: 296px;">
               <button @click="redirectLogin()" 
-              class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5 ml-15">Se Connecter</button>
+              class="bg-purple-600 text-sm text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-10 mt-2 mb-5 ml-15">Se connecter</button>
             </li>
 
             <!-- Menu Utilisateur Dropdown -->
@@ -325,6 +325,7 @@ export default {
     },
 
     redirectLogin() {
+      this.$emit('close-sidebar')
       router.push("/login");
     },
 

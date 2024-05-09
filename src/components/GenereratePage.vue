@@ -20,6 +20,7 @@
     </div>
      <!-- section 2 -->
      <!-- <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 950px"> -->
+      <!-- <div id="description" class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-10 p-8"> -->
       <div id="description" class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5 w-full lg:w-950px" style="max-width: 950px;">
     <!-- <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 950px"> -->
       <h3 type="text" class="text-3xl text-white p-2 font-bold">Depuis une description* produit</h3>

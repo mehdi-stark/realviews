@@ -1,8 +1,9 @@
 <template>
       <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black">
 
-        <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 500px; height: 650px;"
-    @click.stop>
+        <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" 
+        style="width: 500px; height: 650px;"
+        @click.stop>
       <h3 type="text" class="text-3xl text-white p-2 font-bold underline mb-8">Let's go !</h3>
       <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10">
             <div class="form-group">
@@ -158,8 +159,7 @@ export default {
           const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
             responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
           })
-          console.log('test 1');
-
+ 
           this.spinner_text = 'Generation du fichier Excel ..';
           await this.wait(1000);
           const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
@@ -167,12 +167,10 @@ export default {
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          console.log('test 2');
 
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
           link.download = 'comments_gen.xlsx';
           link.click();
-          console.log('test 3');
           this.loading = false;
           router.push("/products");
         }

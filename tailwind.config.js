@@ -19,6 +19,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        'custom-purple-button': '#31284B',
+        'custom-purple-container': '#7864B2',
         'custom-purple': '#170B30',
         'custom-indigo': '#3e1c93',
         'blue-loader-animation': '#3b306f',
