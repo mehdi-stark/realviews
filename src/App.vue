@@ -2,7 +2,8 @@
   <div id="app" :class="isMobile ? 'flex flex-col' : 'flex'">
     <!-- Sidebar -->
     <!-- Mobile -->
-    <div id="sidebar" v-if="isMobile" class="fixed top-0 left-0 w-full h-12 bg-custom-purple text-white flex items-center px-2 z-[2]">
+    <div id="sidebar" v-if="isMobile && $route.path !== '/subscribe' && $route.path !== '/thank-you' && $route.path !== '/login'
+    && $route.path !== '/signup'" class="fixed top-0 left-0 w-full h-12 bg-custom-purple text-white flex items-center px-2 z-[2]">
       <button @click="toggleSidebar" class="text-3xl bg-transparent border-none text-white">
         &#9776; <!-- Unicode character for the burger menu -->
       </button>
@@ -18,7 +19,8 @@
       </div>
     </div>
     <!-- Desktop -->
-    <Sidebar v-else class="h-screen overflow-hidden" />
+    <Sidebar v-else-if="$route.path !== '/subscribe' && $route.path !== '/thank-you' && $route.path !== '/login'
+    && $route.path !== '/signup'" class="h-screen overflow-hidden" />
 
     <!-- Contenu principal qui change avec les routes -->
     <div id="main_content" class="flex-1 overflow-auto">

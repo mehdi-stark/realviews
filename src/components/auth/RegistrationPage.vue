@@ -1,6 +1,11 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-white">
-    <div class="max-w-md w-full p-6 bg-white rounded-lg">
+  <div class="min-h-screen flex flex-col items-center justify-center bg-custom-purple">
+        <!-- LOGO -->
+    <div>
+      <img src="../../assets/sidebar/realview-logo-big.png" alt="Realviews Logo" class="h-64">
+    </div>
+
+    <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-xl">
       <!-- <div class="flex items-center ml-4">
         <img src="../../assets/sidebar/C.png" alt="SprintPro Logo" class="w-full mr-2 mt-2" />
       </div> -->
@@ -8,6 +13,9 @@
       <form>
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+          <v-icon icon="mdi:email-outline"
+          color="green-darken-2">
+        </v-icon>
           <input type="username" id="username" class="mt-1 p-2 w-full border rounded-md" v-model="username"/>
         </div>
         <div class="mb-4">
@@ -46,6 +54,8 @@ export default {
   methods: {
     async signup(e) {
           e.preventDefault();
+
+          // Register
           const response = await fetch(process.env.VUE_APP_ROOT_API + "/api/auth/signup", {
             method: "POST",
             headers: {
@@ -59,6 +69,7 @@ export default {
           });
 
           const test = await response.json();
+          const accessToken = test.access_token;
           console.log("Reponse signup ==> " + JSON.stringify(test));
           console.log("User on signup ==> " + JSON.stringify(test.user));
 
@@ -69,51 +80,27 @@ export default {
               username: test.user.name,
               role: test.user.string
             })
-            localStorage.setItem('user', userTmp);
-            localStorage.setItem('access_token', test.access_token);
-            this.$router.push("/")
+            // Appeler l'action 'login' définie dans le store
+            this.$store.dispatch('login', { user: userTmp, accessToken });
+
+            console.log("User on signup ==> " + JSON.stringify(userTmp));
+            console.log("User ID on signup ==> " + JSON.parse(userTmp).id);
+
+            // Subscribe
+            axios.post(process.env.VUE_APP_ROOT_API + '/api/v1/subscribe' 
+            + '?userId=' + JSON.parse(userTmp).id + '&planType=Basic', {}, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
+            }).then((response) => {
+              console.log("Reponse subscribe ==> " + JSON.stringify(response));
+              this.$router.push("/")
+            }).catch((error) => {
+              console.error("Error subscribe : " + error);
+            });
           }
           else {
             console.error("Access token or user is null");
-          }
-        },
-
-    signu() {
-      localStorage.clear(); // Supprime le token du localStorage
-
-      const data = {
-              "email": "med@med.com",
-              "name": "med",
-              "password": "123"
-          }
-
-          
-          console.log('Signup called');
-          axios.post(process.env.VUE_APP_ROOT_API + '/auth/signup', data) 
-          .then((getResponse) => {
-            console.log("reponse create user : " + getResponse);
-          })
-          .catch((error) =>  {
-            console.error("Error while fetching market updates : " + error);
-            return
-          });
-
-          axios.post(process.env.VUE_APP_ROOT_API + '/auth/login', data) 
-              .then((getResponse) => {
-              console.log("GET Response")
-              console.log("TOKEN : " + getResponse.data.access_token);  
-              // Save the access token in localStorage
-              localStorage.setItem('access_token', getResponse.data.access_token);
-            })
-            .catch((error) =>  {
-              console.error("Error while fetching market updates : " + error);
-            });
-
-          if (localStorage.getItem('access_token')) {
-              this.$router.push("/")
-          }
-          else {
-            console.error("Access token is null");
           }
         },
   }

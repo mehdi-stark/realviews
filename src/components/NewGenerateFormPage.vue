@@ -4,7 +4,7 @@
         <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" 
         style="width: 500px; height: 650px;"
         @click.stop>
-      <h3 type="text" class="text-3xl text-white p-2 font-bold underline mb-8">Let's go !</h3>
+      <h3 type="text" class="text-3xl text-white p-2 font-bold underline mt-8">Let's go !</h3>
       <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10">
             <div class="form-group">
               <label for="amazon_link" class="text-white text-xl font-bold">URL produit</label>

@@ -20,18 +20,18 @@
         <h2 class="text-4xl font-bold underline mb-10">Selectionner la source</h2>
         <div class="flex flex-col justify-around mt-4">
           <button class="bg-custom-purple-button text-white font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full 
-          shadow mb-2 flex justify-center items-center" style="max-width: 350px">
-            <img src="../assets/Amazon-icon.svg" alt="Logo Amazon" class="mr-2" width="24" height="24"> <!-- Ajoutez le chemin vers votre logo Amazon -->
+          shadow mb-2 flex justify-start items-center" style="max-width: 350px">
+            <img src="../assets/Amazon-icon.svg" alt="Logo Amazon" class="mr-3" width="24" height="24"> <!-- Ajoutez le chemin vers votre logo Amazon -->
             <router-link :to="{ name: 'amazon', params: { provider: 'amazon' } }">Lien Amazon</router-link> 
           </button>
           <button class="bg-custom-purple-button text-white font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full 
           shadow mb-2 flex justify-center items-center">
-            <img src="../assets/aliexpress-logo.png" alt="Logo Aliexpress" class="mr-2" width="24" height="24">
+            <img src="../assets/aliexpress-logo.png" alt="Logo Aliexpress" class="mr-3" width="24" height="24">
             <router-link :to="{ name: 'amazon', params: { provider: 'aliexpress' } }">Lien Aliexpress</router-link> 
           </button>
           <button class="bg-custom-purple-button text-white font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full 
-          shadow mb-2 flex justify-center items-center">
-            <img src="../assets/shoping.png" alt="Logo shopify" class="mr-2" width="24" height="24">
+          shadow mb-2 flex justify-start items-center">
+            <img src="../assets/shoping.png" alt="Logo shopify" class="mr-3" width="24" height="24">
             <router-link :to="{ name: 'amazon', params: { provider: 'shopify' } }">Site Shopify</router-link> 
           </button>
         </div>
