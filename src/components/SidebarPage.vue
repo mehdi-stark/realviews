@@ -144,11 +144,13 @@
                     class="object-fill mr-2 w-6 h-6"/>
                   <span class="ml-3">{{ username }}</span>
                   <div v-if="isOpen" class="absolute right-0 mt-2 py-2 w-48 bottom-10 bg-white rounded-lg shadow-xl transform origin-bottom">
-                    <a @click="logout()" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                    <router-link @click="$emit('close-sidebar')"  to="/profile" id="myprofile">
+                    <a href="#" class="flex items-center block px-4 py-2 text-gray-800 hover:bg-gray-200">
                       <img
                       src="../assets/sidebar/profile.png"
                       class="object-fill mr-3 w-6 h-6"/>
                       Mon profil</a>
+                    </router-link>
                     <hr class="my-2">
                     <!-- <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Thème</a> -->
                     <!-- <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Conditions & politiques</a> -->

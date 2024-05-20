@@ -7,6 +7,7 @@ import LoginPage from '@/components/auth/LoginPage.vue'
 import RegistrationPage from '@/components/auth/RegistrationPage.vue'
 import NewGenerateFormPage from '@/components/NewGenerateFormPage.vue'
 import store from '../store/store'
+import MyProfilePage from '@/components/MyProfilePage.vue'
 
 const routes = [
   {
@@ -26,7 +27,8 @@ const routes = [
   },
   { path: '/login', component: LoginPage, props: true,  name: 'Login' },
   { path: '/signup', component: RegistrationPage, name: 'Signup' },
-  { path: '/scrapper/:provider', component: NewGenerateFormPage, name: 'amazon', props: true }
+  { path: '/scrapper/:provider', component: NewGenerateFormPage, name: 'amazon', props: true },
+  { path: '/profile', component: MyProfilePage, name: 'MyProfile', props: true }
 ]
 
 const router = createRouter({

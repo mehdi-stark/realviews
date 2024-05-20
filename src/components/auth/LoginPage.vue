@@ -67,6 +67,7 @@
 import router from "@/router";
 import { mapState } from 'vuex';
 import CryptoJS from 'crypto-js';
+import axios from "axios";
 
     export default {
 
@@ -121,6 +122,8 @@ import CryptoJS from 'crypto-js';
           this.loading_login = true
           e.preventDefault();
           this.encryptPassword();
+
+          // Login
           const response = await fetch(process.env.VUE_APP_ROOT_API + "/api/auth/login", {
             method: "POST",
             headers: {
@@ -135,16 +138,34 @@ import CryptoJS from 'crypto-js';
           const test = await response.json();
           const accessToken = test.access_token;
           console.log('login if(access_token) -> ' + accessToken);
-            const userData = JSON.stringify({
+
+          const userData = JSON.stringify({
               id: test.id,
               email: test.email,
               username: test.username,
               role: this.string
-            })
+          })
+
+
+          // get subscription
+          console.log("Test id " + JSON.stringify(test.id));
+          console.log("Access token " + accessToken);
+          axios.get(process.env.VUE_APP_ROOT_API + '/api/v1/subscription-active' + '?userId=' + test.id, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }).then((response) => {
+            console.log("Reponse get active subscription ==> " + JSON.stringify(response));
             // Appeler l'action 'login' définie dans le store
-            this.$store.dispatch('login', { user: userData, accessToken });
+            this.$store.dispatch('login', { user: userData, accessToken, subscriptionPlan: response.data});
             // this.loading_login = false
             this.$router.push("/")
+
+          }).catch((error) => {
+            console.error("Error get active subscription : " + error);
+          });
+
+
         },
         
         logout() {

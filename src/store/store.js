@@ -4,6 +4,7 @@ const store = createStore({
   state() {
     return {
       showSessionExpiredDialog: false,
+      subscriptionPlan: JSON.parse(localStorage.getItem('subscriptionPlan')) || null,
       user: JSON.parse(localStorage.getItem('user')) || null,
       isUserConnected: localStorage.getItem('isUserConnected') === 'true',
       accessToken: localStorage.getItem('access_token') || null,
@@ -13,11 +14,13 @@ const store = createStore({
     showSessionExpiredDialog(state) {
       state.showSessionExpiredDialog = true;
     },
-    loginSuccess(state, { user, accessToken }) {
+    loginSuccess(state, { user, accessToken, subscriptionPlan }) {
       state.user = user;
       state.accessToken = accessToken;
+      state.subscriptionPlan = subscriptionPlan;
       state.isUserConnected = true;
       localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('subscriptionPlan', JSON.stringify(subscriptionPlan));
       localStorage.setItem('isUserConnected', 'true');
       localStorage.setItem('access_token', accessToken);
     },
@@ -27,12 +30,13 @@ const store = createStore({
       state.isUserConnected = false;
       localStorage.removeItem('user');
       localStorage.removeItem('access_token');
+      localStorage.removeItem('subscriptionPlan');
       localStorage.setItem('isUserConnected', false);
     }
   },
   actions: {
-    login({ commit }, { user, accessToken }) {
-      commit('loginSuccess', { user, accessToken });
+    login({ commit }, { user, accessToken, subscriptionPlan }) {
+      commit('loginSuccess', { user, accessToken, subscriptionPlan });
     }
   }
 });
