@@ -64,7 +64,7 @@
 
             <p class="text-gray-600 text-lg">Vous avez souscrit au plan <span class="font-semibold">{{ subscriptionPlan }}</span>.</p>
             <p class="text-gray-600 text-lg">Depuis le <span class="font-semibold">{{ subscriptionCreationDate }}</span>.</p>
-            <button class="mt-3 tmb-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-xl 
+            <button class="mt-3 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-xl 
           shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
           font-semibold"><router-link to="/pricing">Modifier abonnement</router-link></button>
         </div>
@@ -72,32 +72,41 @@
 </template>
 
 <script>
+import api from '@/api';
 import dateUtils from '../utils/dateUtils';
+import { mapState } from 'vuex';
 
 export default {
     name: 'MyProfile',
     data() {
         return {
           // plan
-            user: {
-                name: 'John Doe',
-                email: 'test'
-            },
             subscriptionPlan: '',
             subscriptionExpiryDate: ''
         };
     },
+    computed: {
+      ...mapState(['user', 'accessToken', 'isUserConnected']),
+    },
     methods: {
         // Your methods go here
+        getActiveSubscription() {
+          console.log('User  : ' + JSON.stringify(this.user));
+          console.log('User id : ' + JSON.parse(this.user).id);
+            // Code to get the active subscription goes here
+            api.get('/api/v1/subscription-active' + '?userId=' + JSON.parse(this.user).id)
+            .then((response) => {
+                this.subscriptionPlan = response.data.plan;
+                this.subscriptionCreationDate = dateUtils.formatDate(response.data.creationDate);
+                this.remainingProducts = 5 - response.data.apiCallsMade;
+            })
+            .catch((error) => {
+                console.error('Error fetching active subscription: ', error);
+            });
+        },
     },
     mounted() {
-        const subscribe = this.$store.state.subscriptionPlan;
-        // Code to run when the component is mounted goes here
-        console.log('Store subscription value : ' + JSON.stringify(subscribe.plan));
-
-        this.subscriptionPlan = subscribe.plan;
-        this.subscriptionCreationDate = dateUtils.formatDate(subscribe.creationDate);
-        this.remainingProducts = 5 - subscribe.apiCallsMade;
+      this.getActiveSubscription();
     },
 };
 </script>

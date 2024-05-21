@@ -8,6 +8,7 @@ import RegistrationPage from '@/components/auth/RegistrationPage.vue'
 import NewGenerateFormPage from '@/components/NewGenerateFormPage.vue'
 import store from '../store/store'
 import MyProfilePage from '@/components/MyProfilePage.vue'
+import PricingPage from '@/components/PricingPage.vue'
 
 const routes = [
   {
@@ -28,7 +29,8 @@ const routes = [
   { path: '/login', component: LoginPage, props: true,  name: 'Login' },
   { path: '/signup', component: RegistrationPage, name: 'Signup' },
   { path: '/scrapper/:provider', component: NewGenerateFormPage, name: 'amazon', props: true },
-  { path: '/profile', component: MyProfilePage, name: 'MyProfile', props: true }
+  { path: '/profile', component: MyProfilePage, name: 'MyProfile', props: true },
+  { path: '/pricing', component: PricingPage, name: 'Pricing', props: true }
 ]
 
 const router = createRouter({
