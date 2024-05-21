@@ -1,0 +1,7 @@
+const PlansDetails = {
+    Basic: 5,
+    Standard: 25,
+    Premium: 100,
+  };
+
+  export default PlansDetails;

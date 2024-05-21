@@ -22,11 +22,11 @@
         <form @submit.prevent="login">
           <div class="mb-4">
             <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-            <input type="text" id="username" class="mt-1 p-2 w-full border rounded-md" v-model="username"/>
+            <input type="text" id="username" class="mt-1 p-2 w-full border rounded-md" v-model="form.username"/>
           </div>
           <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-            <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="password"/>
+            <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="form.password"/>
           </div>
           <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
             Se connecter
@@ -58,6 +58,7 @@
           Pas encore de compte ? <router-link to="/signup" class="text-blue-500" id="gettingStarted">S'inscrire</router-link>
         </p>
       </div>
+      <div v-if="error" class="mt-5 text-red-500">{{ error }}</div>
     </div>
   </div>
 </template>
@@ -68,6 +69,7 @@ import router from "@/router";
 import { mapState } from 'vuex';
 import CryptoJS from 'crypto-js';
 import axios from "axios";
+import api from "@/api";
 
     export default {
 
@@ -79,7 +81,8 @@ import axios from "axios";
         emailMethod: false,
         loading_login: false,
         spinner_text: "",
-        secret: ""
+        secret: "",
+        error: null
         }
       },
 
@@ -121,51 +124,49 @@ import axios from "axios";
           this.spinner_text = "Connexion en cours.."
           this.loading_login = true
           e.preventDefault();
-          this.encryptPassword();
+          // this.encryptPassword();
 
-          // Login
-          const response = await fetch(process.env.VUE_APP_ROOT_API + "/api/auth/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: this.username,
-              password: this.password,
-            }),
-          });
+          api.post(process.env.VUE_APP_ROOT_API + "/api/auth/login", this.form)
+          .then((response) => {
+            console.log('response login -> ' + JSON.stringify(response));
+            const reponse_data = response.data;
+            const accessToken = reponse_data.access_token;
+            console.log('login if(access_token) -> ' + accessToken);
+            const userData = JSON.stringify({
+                      id: reponse_data.id,
+                      email: reponse_data.email,
+                      username: reponse_data.username,
+                      role: this.string
+              })
 
-          const test = await response.json();
-          const accessToken = test.access_token;
-          console.log('login if(access_token) -> ' + accessToken);
+              // get subscription
+              console.log("Test id " + JSON.stringify(reponse_data.id));
+              console.log("Access token " + accessToken);
+              axios.get(process.env.VUE_APP_ROOT_API + '/api/v1/subscription-active' + '?userId=' + reponse_data.id, {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`
+                }
+              }).then((response) => {
+                console.log("Reponse get active subscription ==> " + JSON.stringify(response));
+                // Appeler l'action 'login' définie dans le store
+                this.$store.dispatch('login', { user: userData, accessToken, subscriptionPlan: response.data});
+                // this.loading_login = false
+                this.$router.push("/")
 
-          const userData = JSON.stringify({
-              id: test.id,
-              email: test.email,
-              username: test.username,
-              role: this.string
+              }) 
+              .catch((error) => {
+                console.error("Error get active subscription : " + error);
+                this.error = "Erreur lors de la recuperation de la subscription : " + error.data
+                this.loading_login = false
+              });
+
+
           })
-
-
-          // get subscription
-          console.log("Test id " + JSON.stringify(test.id));
-          console.log("Access token " + accessToken);
-          axios.get(process.env.VUE_APP_ROOT_API + '/api/v1/subscription-active' + '?userId=' + test.id, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          }).then((response) => {
-            console.log("Reponse get active subscription ==> " + JSON.stringify(response));
-            // Appeler l'action 'login' définie dans le store
-            this.$store.dispatch('login', { user: userData, accessToken, subscriptionPlan: response.data});
-            // this.loading_login = false
-            this.$router.push("/")
-
-          }).catch((error) => {
-            console.error("Error get active subscription : " + error);
+          .catch((error) => {
+            console.error("Error login : " + error);
+            this.error = "username ou mot de passe invalide"
+            this.loading_login = false
           });
-
-
         },
         
         logout() {

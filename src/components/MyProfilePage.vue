@@ -46,7 +46,7 @@
           </div>
           <button type="submit" class="mb-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-full 
           shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
-          font-semibold">Edit Profile
+          font-semibold">Modifier profil
           </button>
           <div v-if="error" class="text-red-500">{{ error }}</div>
         </form>
@@ -54,20 +54,31 @@
 
         <!-- Subscription info -->
         <div class="w-1/2 rounded-lg shadow-xl bg-white p-4 border border-gray-200">
-            <h2 class="text-2xl font-bold text-purple-600 mb-4">Subscription</h2>
-            <p class="text-gray-600 text-lg">You are currently subscribed to the 
-                <span class="font-semibold">{{ subscriptionPlan }}</span> plan.</p>
-            <p class="text-gray-600 text-lg">Your subscription will expire on <span class="font-semibold">{{ subscriptionExpiryDate }}</span>.</p>
-            <p class="text-gray-600 text-lg">To upgrade your subscription, please visit the <router-link to="/subscription" class="text-blue-500 hover:underline">subscription page</router-link>.</p>
+            <h2 class="text-2xl font-bold text-purple-600 mb-4">Abonnement</h2>
+            <!-- <div class="rounded-lg shadow-xl bg-white p-4 border border-gray-200 mb-3">
+            </div> -->
+            <p class="text-gray-600 text-lg mb-3">Il vous reste <span class="font-semibold">{{ remainingProducts }}/5</span> produits.<br/></p>
+            
+            <p class="text-gray-600 text-lg">Pour mettre a jour votre abonnement cliquer <router-link 
+              to="/pricing" class="text-blue-500 hover:underline">ici</router-link></p>
+
+            <p class="text-gray-600 text-lg">Vous avez souscrit au plan <span class="font-semibold">{{ subscriptionPlan }}</span>.</p>
+            <p class="text-gray-600 text-lg">Depuis le <span class="font-semibold">{{ subscriptionCreationDate }}</span>.</p>
+            <button class="mt-3 tmb-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-xl 
+          shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+          font-semibold"><router-link to="/pricing">Modifier abonnement</router-link></button>
         </div>
     </div>
 </template>
 
 <script>
+import dateUtils from '../utils/dateUtils';
+
 export default {
     name: 'MyProfile',
     data() {
         return {
+          // plan
             user: {
                 name: 'John Doe',
                 email: 'test'
@@ -85,7 +96,8 @@ export default {
         console.log('Store subscription value : ' + JSON.stringify(subscribe.plan));
 
         this.subscriptionPlan = subscribe.plan;
-        this.subscriptionExpiryDate = subscribe.expiryDate;
+        this.subscriptionCreationDate = dateUtils.formatDate(subscribe.creationDate);
+        this.remainingProducts = 5 - subscribe.apiCallsMade;
     },
 };
 </script>
