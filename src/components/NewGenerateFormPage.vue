@@ -27,7 +27,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis</label>
+              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis <span class="font-thin">(maximum {{ maxComments }})</span></label>
               <input
                 type="number"
                 id="comments"
@@ -35,7 +35,9 @@
                 required
                 class="mt-1 p-2 border rounded-md w-full"
                 min="1"
+                :max="maxComments"
               />
+              <p v-if="form.number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p>
             </div>
             <div class="form-group">
               <div class="mt-4">
@@ -54,13 +56,17 @@
             </div>
 
             <div class="form-group flex flex-col items-center space-y-4">
-              <button type="submit" class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-5">Générer</button>
-              <!-- <button
-                @click="closeForm"
-                class="mt-2 hover:text-gray-700 focus:outline-none mx-auto block submit-button bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 w-20 h-9 py-2 px-4 rounded-md"
-                >
-                Fermer
-              </button> -->
+              <button 
+                type="submit" 
+                class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-8"
+                :class="{
+                  'bg-purple-600 hover:bg-purple-700': form.number && form.language && form.number <= maxComments,
+                  'bg-gray-500 cursor-not-allowed': !form.number || !form.language || form.number > maxComments
+                }"                
+                :disabled="!form.number || !form.language || form.number > maxComments"
+              >
+              Générer
+            </button>
             </div>
       </form>
     </div>
@@ -72,6 +78,7 @@
       <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
     </div>
   </div>
+  <ProductLimitExceededDialog ref="productLimitDialog" />
 </template>
 
 <script>
@@ -80,15 +87,16 @@ import api from '@/api';
 // import Vue3Lottie from 'vue3-lottie';
 import yourAnimationData from '../assets/animation-loader.json';
 import { mapState } from 'vuex';
+import ProductLimitExceededDialog from "@/components/dialog/ProductLimitExceededDialog.vue";
 
 export default {
   name: 'AmazonPage',
   
-  // components: {
-  //   Vue3Lottie,
-  // },
+  components: {
+    ProductLimitExceededDialog
+  },
   computed: {
-    ...mapState(['user', 'accessToken', 'isUserConnected']),
+    ...mapState(['user', 'accessToken', 'isUserConnected', 'subscriptionPlan']),
   },
 
   props: {
@@ -126,6 +134,7 @@ export default {
       result: null,
       showModal: false,
       current_user: null,
+      maxComments: null,
     };
   },
 
@@ -143,7 +152,24 @@ export default {
       console.log("Current user ID in productlist mounted: " + this.current_user.id);
       console.log("Current access-token in productlist mounted: " + this.accessToken);
       console.log("Provider: " + this.form.provider)
+      console.log('Subscription plan in new generate product mounted: ' + this.subscriptionPlan.plan);
+      switch (this.subscriptionPlan.plan) {
+        case 'BASIC':
+          this.maxComments = 25;
+          break;
+        case 'Standard':
+          this.maxComments = 100;
+          break;
+        case 'Premium':
+          this.maxComments = 250;
+          break;
+        default:
+          break;
+      }
     }
+
+    // Get the max number of comments
+    
   },
 
   methods: {
@@ -178,6 +204,13 @@ export default {
         // Handle API error
         this.loading = false; // Set loading to false to hide the modal
         console.error('Error on scrapping : ' + error)
+        console.error('Error data on scrapping : ' + JSON.stringify(error.response))
+        if (error.response && error.response.status === 429) {
+          // Show the dialog
+          console.error('Erreur 429')
+
+          this.$refs.productLimitDialog.openDialog()
+        }
       }
     },
 

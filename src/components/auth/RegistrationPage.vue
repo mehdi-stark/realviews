@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col items-center justify-center bg-custom-purple">
         <!-- LOGO -->
     <div>
-      <img src="../../assets/sidebar/realview-logo-big.png" alt="Realviews Logo" class="h-64">
+      <img src="../../assets/sidebar/C-7.png" alt="Realviews Logo" class="h-48">
     </div>
 
     <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-xl">

@@ -12,7 +12,7 @@
   <div class="min-h-screen flex flex-col items-center justify-center bg-custom-purple">
     <!-- LOGO -->
     <div class="flex justify-center mb-12">
-      <img src="../../assets/sidebar/realview-logo-big.png" alt="Realviews Logo" class="h-64">
+      <img src="../../assets/sidebar/C-7.png" alt="Realviews Logo" class="h-48">
     </div>
     
     <div class="max-w-md w-full bg-white rounded-lg p-10">
@@ -155,9 +155,10 @@ import api from "@/api";
 
               }) 
               .catch((error) => {
-                console.error("Error get active subscription : " + error);
+                console.error("Error get active subscription : " + error.data);
                 this.error = "Erreur lors de la recuperation de la subscription : " + error.data
                 this.loading_login = false
+                window.location.reload()
               });
 
 

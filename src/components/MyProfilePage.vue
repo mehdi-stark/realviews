@@ -100,9 +100,6 @@ export default {
                 this.subscriptionCreationDate = dateUtils.formatDate(response.data.creationDate);
                 this.remainingProducts = 5 - response.data.apiCallsMade;
             })
-            .catch((error) => {
-                console.error('Error fetching active subscription: ', error);
-            });
         },
     },
     mounted() {
