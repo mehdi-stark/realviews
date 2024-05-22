@@ -43,7 +43,7 @@ api.interceptors.response.use(
       // Supprimez le token du localStorage
       store.commit('logout');
       console.log("access token after removal = " + store.state.accessToken);
-      console.log("error.response.data = " + JSON.stringify(error.response));
+      // console.log("error.response.data = " + JSON.stringify(error.response));
 
       if (error.response.data.includes('JWT expired')) {
         console.log("JWT expired");

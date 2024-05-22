@@ -2,7 +2,7 @@
   <div
     :class="[
       'bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center',
-      current ? 'border-2 border-yellow-500' : 'border border-gray-200'
+      current ? 'border-2 border-purple-500' : 'border border-gray-200'
     ]"
   >
   <!-- <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center border border-gray-200"> -->
@@ -11,7 +11,7 @@
     <p class="mt-2 text-sm text-gray-500">{{ description }}</p>
     </div>
     <div id="price" style="height: 200px;">
-      <p class="mt-4 text-black text-2xl font-extrabold">{{ price }}<span class="text-base font-normal">/month</span></p>
+      <p class="mt-4 text-black text-2xl font-extrabold">{{ price }}<span class="text-base font-normal">/mois</span></p>
       <p v-if="popular" class="text-purple-600 font-semibold mt-1">Populaire</p>
       <button class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800">Choisir</button>
     </div>
