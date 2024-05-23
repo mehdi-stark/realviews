@@ -67,7 +67,6 @@
 <script>
 import router from "@/router";
 import { mapState } from 'vuex';
-import CryptoJS from 'crypto-js';
 import axios from "axios";
 import api from "@/api";
 
@@ -81,7 +80,6 @@ import api from "@/api";
         emailMethod: false,
         loading_login: false,
         spinner_text: "",
-        secret: "",
         error: null
         }
       },
@@ -95,36 +93,13 @@ import api from "@/api";
           console.log('User is already connected')
           router.push('/');
         }
-
-        this.secret = process.env.VUE_APP_SECRET_KEY;
       },
 
       methods: {
-        encryptPassword() {
-          if (this.form.password) {
-            // hash the name with any algorithm
-            this.form.password = CryptoJS.AES.encrypt(this.form.password, this.secret).toString();
-          }
-        },
-
-        decryptData() {
-          // get data from localStorage
-          const secretData = localStorage.getItem("secretData");
-
-          // decrypt the data and convert to string
-          const decryptData = CryptoJS.AES.decrypt(
-            secretData,
-            this.secret
-          ).toString(CryptoJS.enc.Utf8);
-
-          alert("Decrypted private data: " + decryptData);
-        },
-
         async login(e) {
           this.spinner_text = "Connexion en cours.."
           this.loading_login = true
           e.preventDefault();
-          // this.encryptPassword();
 
           api.post(process.env.VUE_APP_ROOT_API + "/api/auth/login", this.form)
           .then((response) => {

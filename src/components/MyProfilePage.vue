@@ -117,8 +117,10 @@ export default {
             })
         },
     },
-    mounted() {
+    beforeMount() {
       this.getActiveSubscription();
+    },
+    mounted() {
       JSON.parse(this.$store.state.user)? this.placeholderUsername = JSON.parse(this.$store.state.user).username : this.placeholderUsername
       JSON.parse(this.$store.state.user)? this.placeholderEmail = JSON.parse(this.$store.state.user).email : this.placeholderEmail = 'Email non renseigné';
     },
