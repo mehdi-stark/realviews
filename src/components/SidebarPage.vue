@@ -125,7 +125,7 @@
                 <img
                     src="../assets/sidebar/help-logo.png"
                     class="object-fill mr-2 w-5 h-5"/>
-                <span class="ml-3">Aides & Tutoriels</span>
+                <RouterLink to="/help" class="ml-3">Aides & Tutoriels</RouterLink>
               </a>
             </li>
             <!-- <li @click="logout()" class="flex items-center">

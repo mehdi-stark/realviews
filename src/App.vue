@@ -111,7 +111,10 @@ export default {
       console.log("username on header ====> " + this.userItem.username);
       if (this.userItem.username) {
         this.username = this.userItem.username;
-      } else console.error("No username found");
+      } else {
+        console.error("No username found");
+        this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
+      }
     } else {
       console.error("error user");
     }

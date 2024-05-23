@@ -6,7 +6,8 @@
       <div class="logo h-6 w-6 flex justify-end">
         <img
           src="../assets/question.png"
-          class="place-items-center mr-8"
+          class="place-items-center mr-8 cursor-pointer"
+          onclick="window.location.href = '/help'"
         />
       </div>
     </header>

@@ -13,18 +13,15 @@
       <form>
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-          <v-icon icon="mdi:email-outline"
-          color="green-darken-2">
-        </v-icon>
-          <input type="username" id="username" class="mt-1 p-2 w-full border rounded-md" v-model="username"/>
+          <input type="username" id="username" class="mt-1 p-2 w-full border rounded-md" v-model="username" required/>
         </div>
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
-          <input type="email" id="email" class="mt-1 p-2 w-full border rounded-md" v-model="email"/>
+          <input type="email" id="email" class="mt-1 p-2 w-full border rounded-md" v-model="email" required/>
         </div>
         <div class="mb-4">
           <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-          <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="password"/>
+          <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="password" required/>
         </div>
         <button type="submit" @click="signup" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
           S'inscrire

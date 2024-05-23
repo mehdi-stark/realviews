@@ -33,7 +33,7 @@
           </button>
         </form>
         <p class="mt-4 text-sm text-gray-600">
-          Vous préférez vous connecter avec votre email : <a @click="showEmail()" class="cursor-pointer hover:bg-slate-100 text-blue-500" id="email_link">Cliquer ici</a><br/>
+          <!-- Vous préférez vous connecter avec votre email : <a @click="showEmail()" class="cursor-pointer hover:bg-slate-100 text-blue-500" id="email_link">Cliquer ici</a><br/> -->
           Pas encore de compte ? <router-link to="/signup" class="text-blue-500" id="gettingStarted">S'inscrire</router-link>
         </p>
       </div>

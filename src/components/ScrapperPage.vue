@@ -1,17 +1,6 @@
 <template>
   <!-- Header -->
-  <div id="header">
-    <header class="flex justify-between items-center h-35 bg-slate-100 text-black">
-      <span class="ml-3 flex justify-start font-bold p-3">Scraper</span>
-      <div class="logo h-6 w-6 flex justify-end">
-        <img
-          src="../assets/question.png"
-          alt="SprintPro Logo"
-          class="place-items-center mr-8"
-        />
-      </div>
-    </header>
-  </div>
+  <HeaderComponent title="Scrapper" />
   <div class="flex flex-col items-center justify-center min-h-screen bg-white">
     <h1 class="text-5xl text-center font-bold mb-5">Scraper des avis <span class="text-custom-purple-container">en <br/> un clic</span> grâce à l’IA</h1>
     <div class="flex items-center justify-center" style="width: 450px; height: 400px;">
@@ -41,6 +30,8 @@
 </template>
 
 <script>
+import HeaderComponent from './HeaderComponent.vue';
+
 export default {
   name: 'ScrapperPage',
   // Vous pouvez ajouter ici la logique de composant nécessaire pour le scraping
@@ -48,7 +39,11 @@ export default {
     return {
       shopifyLink: 'Shopify'
     };
-  }
+  },
+
+  components: {
+    HeaderComponent,
+  },  
 };
 </script>
 

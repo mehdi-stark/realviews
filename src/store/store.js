@@ -4,8 +4,8 @@ const store = createStore({
   state() {
     return {
       showSessionExpiredDialog: false,
-      subscriptionPlan: JSON.parse(localStorage.getItem('subscriptionPlan')) || null,
-      user: JSON.parse(localStorage.getItem('user')) || null,
+      subscriptionPlan: localStorage.getItem('subscriptionPlan') && localStorage.getItem('subscriptionPlan') !== 'undefined' ? JSON.parse(localStorage.getItem('subscriptionPlan')) : null,
+      user: localStorage.getItem('user') && localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null,
       isUserConnected: localStorage.getItem('isUserConnected') === 'true',
       accessToken: localStorage.getItem('access_token') || null,
     };
