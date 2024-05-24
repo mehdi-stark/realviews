@@ -3,7 +3,7 @@
     <!-- Content -->
     <div class="flex-1 bg-white text-black">
       <!-- Header -->
-      <HeaderComponent title="TrustAI" />
+      <HeaderComponent title="Acceuil" />
 
       <!-- ... contenu supplémentaire ... -->
       <div class="flex flex-col justify-center items-center h-screen">

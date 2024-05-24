@@ -5,11 +5,8 @@
       <img src="../../assets/sidebar/C-7.png" alt="Realviews Logo" class="h-48">
     </div>
 
-    <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-xl">
-      <!-- <div class="flex items-center ml-4">
-        <img src="../../assets/sidebar/C.png" alt="SprintPro Logo" class="w-full mr-2 mt-2" />
-      </div> -->
-      <h2 class="text-xl font-semibold mb-4 mt-10">Inscription</h2>
+    <div class="max-w-md w-full p-8 bg-white rounded-lg shadow-xl">
+      <h2 class="text-xl font-semibold mb-4">Inscription</h2>
       <form>
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -30,12 +27,14 @@
       <p class="mt-4 text-sm text-gray-600">
         Déjà un compte ? <router-link to="/login" class="text-blue-500">Se connecter</router-link>
       </p>
+      <div v-if="error" class="justify-center mt-5 text-red-500">{{ error }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import api from '@/api';
+// import axios from 'axios';
 
 export default {
   name: 'InscriptionPage',
@@ -44,61 +43,57 @@ export default {
     return {
       username: "",
       email: "",
-      password: ""
+      password: "",
+      error: null
     }
   },
 
   methods: {
     async signup(e) {
           e.preventDefault();
-
           // Register
-          const response = await fetch(process.env.VUE_APP_ROOT_API + "/api/auth/signup", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
+          api.post("/api/auth/signup", JSON.stringify({
               email: this.email,
               username: this.username,
               password: this.password,
             }),
-          });
-
-          const test = await response.json();
-          const accessToken = test.access_token;
-          console.log("Reponse signup ==> " + JSON.stringify(test));
-          console.log("User on signup ==> " + JSON.stringify(test.user));
-
-          if(test.access_token && test.user) {
-            const userTmp = JSON.stringify({
-              id: test.user.id,
-              email: test.user.email,
-              username: test.user.name,
-              role: test.user.string
-            })
-            // Appeler l'action 'login' définie dans le store
-            this.$store.dispatch('login', { user: userTmp, accessToken });
-
-            console.log("User on signup ==> " + JSON.stringify(userTmp));
-            console.log("User ID on signup ==> " + JSON.parse(userTmp).id);
-
-            // Subscribe
-            axios.post(process.env.VUE_APP_ROOT_API + '/api/v1/subscribe' 
-            + '?userId=' + JSON.parse(userTmp).id + '&planType=Basic', {}, {
+            {
               headers: {
-                Authorization: `Bearer ${accessToken}`
-              }
+                "Content-Type": "application/json",
+              },
             }).then((response) => {
-              console.log("Reponse subscribe ==> " + JSON.stringify(response));
-              this.$router.push("/")
+              console.log("Signup success");
+              const data = response.data;
+              const accessToken = data.access_token;
+              if(accessToken && data.user) {
+                const userTmp = JSON.stringify({
+                  id: data.user.id,
+                  email: data.user.email,
+                  username: data.user.name,
+                  role: data.user.string
+                })
+
+                // Subscribe
+                api.post('/api/v1/subscribe' + '?userId=' + JSON.parse(userTmp).id + '&planType=Basic', {}, {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`
+                  }
+                }).then((response) => {
+                  console.log("Subscribe success");
+                  this.$store.dispatch('login', { user: userTmp, accessToken, subscriptionPlan: response.data});
+                  this.$router.push("/")
+                }).catch((error) => {
+                  console.error("Error subscribe : " + error);
+                  this.error = "Erreur lors de la souscription";
+                });
+              }
+              else {
+                console.error("Access token or user is null");
+              }
             }).catch((error) => {
-              console.error("Error subscribe : " + error);
+              console.error("Error signup : " + error);
+              this.error = error.response.data.message;
             });
-          }
-          else {
-            console.error("Access token or user is null");
-          }
         },
   }
 }

@@ -27,7 +27,16 @@
               />
             </div>
             <div class="form-group">
-              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis <span class="font-thin">(maximum {{ maxComments }})</span></label>
+              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis</label>
+              <input
+                type="number"
+                id="comments"
+                v-model="form.number"
+                required
+                class="mt-1 p-2 border rounded-md w-full"
+                min="1"
+              />
+              <!-- <label for="comments" class="text-white text-xl font-bold">Nombre d'avis <span class="font-thin">(maximum {{ maxComments }})</span></label>
               <input
                 type="number"
                 id="comments"
@@ -37,7 +46,7 @@
                 min="1"
                 :max="maxComments"
               />
-              <p v-if="form.number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p>
+              <p v-if="form.number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p> -->
             </div>
             <div class="form-group">
               <div class="mt-4">

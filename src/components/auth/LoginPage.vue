@@ -15,7 +15,7 @@
       <img src="../../assets/sidebar/C-7.png" alt="Realviews Logo" class="h-48">
     </div>
     
-    <div class="max-w-md w-full bg-white rounded-lg p-10">
+    <div class="max-w-md w-full bg-white rounded-lg p-8">
       <!-- Connexion par USERNAME -->
       <div v-if="!emailMethod">
         <h2 class="text-xl font-semibold mb-4">Connexion</h2>

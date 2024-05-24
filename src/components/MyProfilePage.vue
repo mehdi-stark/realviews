@@ -1,17 +1,6 @@
-<template>
-      <!-- Header -->
-  <div id="header">
-    <header class="flex justify-between items-center h-35 bg-slate-100 text-black">
-      <span class="ml-3 flex justify-start font-bold p-3">Mon Profile</span>
-      <div class="logo h-6 w-6 flex justify-end">
-        <img
-          src="../assets/question.png"
-          alt="SprintPro Logo"
-          class="place-items-center mr-8"
-        />
-      </div>
-    </header>
-  </div>
+<template>  
+    <!-- Header -->
+  <HeaderComponent title="Mon profil" />
   <div class="flex items-center justify-around min-h-screen p-5 space-x-10 grow">
         <!-- Profile info -->
     <div class="w-1/2 rounded-lg shadow-xl bg-white p-8 space-y-5 border border-gray-200">
@@ -43,15 +32,23 @@
               </div>
             </div>
           </div>
-          <div class="flex space-x-5">
-            <button type="submit" class="mb-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-lg 
+          <div class="flex flex-1 space-x-5">
+            <!-- <button type="submit" class="mb-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-lg 
           shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
           font-semibold">Modifier profil
-          </button>
-          <button type="submit" class="mb-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-lg 
+          </button> -->
+          <button class="mt-5 bg-purple-600 text-white text-lg 
+          pl-3 pr-3 pt-2 pb-2 
+          rounded-xl w-full shadow-md hover:bg-purple-700 
+          focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+          font-semibold"><router-link to="/pricing">Modifier mot de passe</router-link></button>
+          <!-- <button type="submit" class="w-full mb-5 
+          bg-purple-600 text-white 
+          pl-3 pr-3 pt-1 pb-1 
+          rounded-lg 
           shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
           font-semibold">Modifier mot de passe
-          </button>
+          </button> -->
           </div>
           <div v-if="error" class="text-red-500">{{ error }}</div>
         </form>
@@ -88,7 +85,7 @@
 import api from '@/api';
 import dateUtils from '../utils/dateUtils';
 import { mapState } from 'vuex';
-
+import HeaderComponent from './HeaderComponent.vue';
 export default {
     name: 'MyProfile',
     data() {
@@ -100,6 +97,12 @@ export default {
             placeholderEmail: '',
         };
     },
+
+    components: {
+      // Your components go here
+      HeaderComponent,
+    },
+
     computed: {
       ...mapState(['user', 'accessToken', 'isUserConnected']),
     },
