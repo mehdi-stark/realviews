@@ -62,7 +62,7 @@
             <p class="text-gray-600 text-lg mb-3">Il vous reste <span 
               class="font-semibold"
               :class="{'text-red-500': remainingProducts < 2 || remainingProducts === 0, 'text-green-500': remainingProducts > 2}"
-              >{{ remainingProducts }}</span>/5 produits.<br/></p>
+              >{{ remainingProducts }}</span>/{{ maxProducts }} produits.<br/></p>
             
             <!-- <p class="text-gray-600 text-lg">Pour mettre a jour votre abonnement cliquer <router-link 
               to="/pricing" class="text-blue-500 hover:underline">ici</router-link></p> -->
@@ -95,6 +95,7 @@ export default {
             subscriptionExpiryDate: '',
             placeholderUsername: '',
             placeholderEmail: '',
+            maxProducts: '',
         };
     },
 
@@ -116,7 +117,24 @@ export default {
             .then((response) => {
                 this.subscriptionPlan = response.data.plan;
                 this.subscriptionCreationDate = dateUtils.formatDate(response.data.creationDate);
-                this.remainingProducts = 5 - response.data.apiCallsMade;
+                switch (this.subscriptionPlan) {
+                  case 'BASIC':
+                    console.log('Plan BASIC');
+                    this.maxProducts = 5;
+                    break;
+                  case 'STANDARD':
+                    console.log('Plan STANDARD');
+                    this.maxProducts = 25;
+                    break;
+                  case 'PREMIUM':
+                    console.log('Plan PREMIUM');
+                    this.maxProducts = 100;
+                    break;
+                  default:
+                    console.error('Plan inconnu');
+                    break;
+                }
+                this.remainingProducts = this.maxProducts - response.data.apiCallsMade;
             })
         },
     },

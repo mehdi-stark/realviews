@@ -162,19 +162,21 @@ export default {
       console.log("Current access-token in productlist mounted: " + this.accessToken);
       console.log("Provider: " + this.form.provider)
       console.log('Subscription plan in new generate product mounted: ' + this.subscriptionPlan.plan);
-      switch (this.subscriptionPlan.plan) {
-        case 'BASIC':
-          this.maxComments = 25;
-          break;
-        case 'Standard':
-          this.maxComments = 100;
-          break;
-        case 'Premium':
-          this.maxComments = 250;
-          break;
-        default:
-          break;
-      }
+
+      this.maxComments = 250;
+      // switch (this.subscriptionPlan.plan) {
+      //   case 'BASIC':
+      //     this.maxComments = 25;
+      //     break;
+      //   case 'STANDARD':
+      //     this.maxComments = 100;
+      //     break;
+      //   case 'PREMIUM':
+      //     this.maxComments = 250;
+      //     break;
+      //   default:
+      //     break;
+      // }
     }
 
     // Get the max number of comments
