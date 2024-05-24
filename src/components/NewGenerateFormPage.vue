@@ -27,7 +27,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis</label>
+              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis (maximum 250)</label>
               <input
                 type="number"
                 id="comments"
