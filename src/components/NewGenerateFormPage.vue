@@ -163,20 +163,21 @@ export default {
       console.log("Provider: " + this.form.provider)
       console.log('Subscription plan in new generate product mounted: ' + this.subscriptionPlan.plan);
 
-      this.maxComments = 250;
-      // switch (this.subscriptionPlan.plan) {
-      //   case 'BASIC':
-      //     this.maxComments = 25;
-      //     break;
-      //   case 'STANDARD':
-      //     this.maxComments = 100;
-      //     break;
-      //   case 'PREMIUM':
-      //     this.maxComments = 250;
-      //     break;
-      //   default:
-      //     break;
-      // }
+      switch (this.subscriptionPlan.plan) {
+        case 'BASIC':
+          this.maxComments = 25;
+          break;
+        case 'STANDARD':
+          this.maxComments = 100;
+          break;
+        case 'PREMIUM':
+          this.maxComments = 250;
+          break;
+        default:
+          console.error('Invalid subscription plan');
+          this.maxComments = 25;
+          break;
+      }
     }
 
     // Get the max number of comments
