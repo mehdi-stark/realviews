@@ -1,6 +1,6 @@
 <template>
   <!-- Header -->
-  <HeaderComponent title="Scrapper" />
+  <HeaderComponent title="Scraper" />
   <div class="flex flex-col items-center justify-center min-h-screen bg-white">
     <h1 class="text-5xl text-center font-bold mb-5">Scraper des avis <span class="text-custom-purple-container">en <br/> un clic</span> grâce à l’IA</h1>
     <div class="flex items-center justify-center" style="width: 450px; height: 400px;">

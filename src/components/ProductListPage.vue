@@ -1,4 +1,5 @@
 <template>
+  <HeaderComponent title="Historique"/>
   <div class="bg-white rounded-md mt-10">
     <div class="bg-white p-6 rounded-t-xl p-3">
 
@@ -184,10 +185,13 @@ import router from "@/router";
 import dayjs from "dayjs";
 import api from '../api'
 import { mapState } from 'vuex';
+import HeaderComponent from "./HeaderComponent.vue";
 
 export default {
   // Component logic here
-  components: {  },
+  components: { 
+    HeaderComponent
+   },
   
   computed: {
     ...mapState(['user', 'accessToken', 'isUserConnected']),
@@ -416,7 +420,7 @@ export default {
       const link = document.createElement("a");
       link.href = url;
       link.target = "_blank"; // Ouvre le lien dans une nouvelle fenêtre
-      link.download = product.productName.toLowerCase().replace(" ", "_") + "_comments.xlsx";
+      link.download = product.productHandle.toLowerCase().replace(" ", "_") + "_comments.xlsx";
       link.click();
       this.loading = false;
     },
@@ -432,40 +436,6 @@ export default {
       await this.wait(2000);
       this.fetchProducts();
       this.loading = false;
-    },
-
-    async scrapProduct() {
-      this.spinner_text = 'Recuperation des commentaires ..';
-        this.loading = true;
-        console.log('URL called : ' + process.env.VUE_APP_ROOT_API);
-        // Appelez l'endpoint Spring Boot pour générer le fichier Excel
-
-        // construct request object
-        console.log('Current User id dans submit: ' + this.current_user.id);
-        this.form.user_id = this.current_user.id
-        try {
-          const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
-            responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
-          })
-
-          this.spinner_text = 'Generation du fichier Excel ..';
-          await this.wait(1000);
-          const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
-          const blob = new Blob([excelArrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
-          link.download = 'comments_gen.xlsx';
-          link.click();
-          this.loading = false;
-          this.showModal = false; // Ferme le popup après soumission
-          location.reload();
-        }
-        catch (error) {
-        // Handle API error
-        this.loading = false; // Set loading to false to hide the modal
-      }
     },
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));

@@ -7,7 +7,7 @@
       <h3 type="text" class="text-3xl text-white p-2 font-bold underline mt-8">Let's go !</h3>
       <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10">
             <div class="form-group">
-              <label for="amazon_link" class="text-white text-xl font-bold">URL produit</label>
+              <label for="amazon_link" class="text-white text-xl font-bold">URL {{ provider }}</label>
               <input
                 type="link"
                 id="amazon_link"
@@ -27,7 +27,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis (maximum 250)</label>
+              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
               <input
                 type="number"
                 id="comments"
@@ -36,6 +36,7 @@
                 class="mt-1 p-2 border rounded-md w-full"
                 min="1"
               />
+              <p v-if="form.number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p>
               <!-- <label for="comments" class="text-white text-xl font-bold">Nombre d'avis <span class="font-thin">(maximum {{ maxComments }})</span></label>
               <input
                 type="number"
@@ -194,7 +195,7 @@ export default {
         console.log('Current User id dans submit: ' + this.current_user.id);
         this.form.user_id = this.current_user.id
         try {
-          const response = await api.post(process.env.VUE_APP_ROOT_API + '/api/v1/scrapping-product', this.form, {
+          const response = await api.post('/api/v1/scrapping-product', this.form, {
             responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
           })
  
@@ -207,7 +208,8 @@ export default {
           link.href = url;
 
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
-          link.download = 'comments_gen.xlsx';
+          link.download = this.form.product_handle.toLowerCase().replace(" ", "_") + "_comments.xlsx";
+
           link.click();
           this.loading = false;
           router.push("/products");

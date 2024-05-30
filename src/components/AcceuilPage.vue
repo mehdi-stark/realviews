@@ -10,7 +10,7 @@
         <h1 class="text-4xl justify-center text-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
         <div class="video-container">
         <iframe 
-        src="https://www.youtube.com/embed/Y2Dps_AMLsQ?si=6DppwumiuH7OjWj8" 
+        src="https://www.youtube.com/embed/i4in66EBF9Y?si=pAG1q-7zxUmyzSP4" 
         title="YouTube video player" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -20,7 +20,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import HeaderComponent from './HeaderComponent.vue';
 

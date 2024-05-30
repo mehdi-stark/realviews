@@ -48,7 +48,7 @@
     <div class="flex flex-col items-center space-y-3 pb-8">
         <h2 class="font-bold text-2xl mt-10 text-purple-500">Contact</h2>
         <p class="text-center text-slate-500">Vous ne trouvez pas ce que vous cherchez ? Contactez-nous pour obtenir de l'aide.</p>
-        <button class="bg-purple-600 text-white font-bold text-xl py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer mt-2 mb-8">Nous contacter</button>
+        <a href="mailto:contact@realviews.ai?subject=RealViews - Besoin d'aide" class="bg-purple-600 text-white font-bold text-xl py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer mt-2 mb-8">Nous contacter</a>
     </div>
     </div>
 </template>

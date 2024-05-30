@@ -72,11 +72,11 @@
             <!-- <button class="mt-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-xl 
           shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
           font-semibold"><router-link to="/pricing">Modifier abonnement</router-link></button> -->
-          <button class="mt-5 bg-purple-600 text-white text-lg 
+          <router-link to="/pricing"><button class="mt-5 bg-purple-600 text-white text-lg 
           pl-3 pr-3 pt-2 pb-2 
           rounded-xl w-full shadow-md hover:bg-purple-700 
           focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
-          font-semibold"><router-link to="/pricing">Modifier abonnement</router-link></button>
+          font-semibold">Modifier abonnement</button></router-link>
         </div>
     </div>
 </template>

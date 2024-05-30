@@ -33,7 +33,9 @@
 </template>
 
 <script>
+import router from "@/router";
 import api from '@/api';
+import axios from 'axios';
 // import axios from 'axios';
 
 export default {
@@ -52,7 +54,7 @@ export default {
     async signup(e) {
           e.preventDefault();
           // Register
-          api.post("/api/auth/signup", JSON.stringify({
+          axios.post(process.env.VUE_APP_ROOT_API + "/api/auth/signup", JSON.stringify({
               email: this.email,
               username: this.username,
               password: this.password,
@@ -81,7 +83,7 @@ export default {
                 }).then((response) => {
                   console.log("Subscribe success");
                   this.$store.dispatch('login', { user: userTmp, accessToken, subscriptionPlan: response.data});
-                  this.$router.push("/")
+                  router.push('/');
                 }).catch((error) => {
                   console.error("Error subscribe : " + error);
                   this.error = "Erreur lors de la souscription";

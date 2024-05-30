@@ -68,7 +68,6 @@
 import router from "@/router";
 import { mapState } from 'vuex';
 import axios from "axios";
-import api from "@/api";
 
     export default {
 
@@ -101,7 +100,7 @@ import api from "@/api";
           this.loading_login = true
           e.preventDefault();
 
-          api.post(process.env.VUE_APP_ROOT_API + "/api/auth/login", this.form)
+          axios.post(process.env.VUE_APP_ROOT_API + "/api/auth/login", this.form)
           .then((response) => {
             console.log('response login -> ' + JSON.stringify(response));
             const reponse_data = response.data;

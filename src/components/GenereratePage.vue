@@ -1,6 +1,6 @@
 <template>
   <!-- Header -->
-  <HeaderComponent title="Generate" class="hidden md:block"/>
+  <HeaderComponent title="Generer" class="hidden md:block"/>
   
   <div class="flex flex-col items-center justify-center min-h-screen bg-white px-3 md:px-6 lg:px-8">
     <h1 class="text-5xl font-bold mb-1">Génèrer* des avis <span class="text-purple-600">EN UN CLIC</span> grâce à l’IA</h1>
