@@ -1,9 +1,11 @@
 <template>
   <div id="app" :class="isMobile ? 'flex flex-col' : 'flex'">
     <!-- Sidebar -->
+
     <!-- Mobile -->
     <div id="sidebar" v-if="isMobile && $route.path !== '/subscribe' && $route.path !== '/thank-you' && $route.path !== '/login'
-    && $route.path !== '/signup'" class="fixed top-0 left-0 w-full h-12 bg-custom-purple text-white flex items-center px-2 z-[2]">
+    && $route.path !== '/signup'" 
+    class="fixed top-0 left-0 w-full h-16 bg-custom-purple text-white flex items-center px-2 z-[2]">
       <button @click="toggleSidebar" class="text-3xl bg-transparent border-none text-white">
         &#9776; <!-- Unicode character for the burger menu -->
       </button>

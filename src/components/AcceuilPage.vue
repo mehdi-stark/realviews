@@ -6,7 +6,7 @@
       <HeaderComponent title="Acceuil" />
 
       <!-- ... contenu supplémentaire ... -->
-      <div class="flex flex-col justify-center items-center h-screen">
+      <div class="flex flex-col justify-center items-center h-screen p-3">
         <h1 class="text-4xl justify-center text-center font-bold mb-10">Donner du Trust à votre boutique <span class="text-purple-600">EN <br/> UN CLIC</span> grâce à l’IA</h1>
         <div class="video-container">
         <iframe 

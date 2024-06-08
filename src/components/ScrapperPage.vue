@@ -3,9 +3,17 @@
   <HeaderComponent title="Scraper" />
   <div class="flex flex-col items-center justify-center min-h-screen bg-white">
     <h1 class="text-5xl text-center font-bold mb-5">Scraper des avis <span class="text-custom-purple-container">en <br/> un clic</span> grâce à l’IA</h1>
-    <div class="flex items-center justify-center" style="width: 450px; height: 400px;">
+
+    <div class="flex items-center justify-center
+    p-3
+    w-full
+    md:p-0
+    md:w-[450px]
+    md:h-[400px]">
       <!-- <div class="text-center"> -->
-        <div class="bg-custom-purple-container text-black p-8 rounded-lg w-full h-full flex flex-col justify-center items-center">
+        <div class="bg-custom-purple-container 
+        text-black p-8 rounded-lg 
+        w-full h-full flex flex-col justify-center items-center">
         <h2 class="text-4xl font-bold underline mb-10">Selectionner la source</h2>
         <div class="flex flex-col justify-around mt-4">
           <button class="bg-custom-purple-button text-white font-semibold py-2 px-4 text-2xl border border-purple-600 rounded-full 

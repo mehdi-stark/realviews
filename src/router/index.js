@@ -10,6 +10,7 @@ import store from '../store/store'
 import MyProfilePage from '@/components/MyProfilePage.vue'
 import PricingPage from '@/components/PricingPage.vue'
 import HelpPage from '@/components/HelpPage.vue'
+import ClerkSignin from '@/components/ClerkSignin.vue'
 
 const routes = [
   {
@@ -32,7 +33,8 @@ const routes = [
   { path: '/scrapper/:provider', component: NewGenerateFormPage, name: 'amazon', props: true },
   { path: '/profile', component: MyProfilePage, name: 'MyProfile', props: true },
   { path: '/pricing', component: PricingPage, name: 'Pricing', props: true },
-  { path: '/help', component: HelpPage, name: 'Help', props: true }
+  { path: '/help', component: HelpPage, name: 'Help', props: true },
+  { path: '/clerk', component: ClerkSignin, name: 'ClerkSignin', props: true }
 ]
 
 const router = createRouter({

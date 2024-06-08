@@ -1,11 +1,12 @@
 <template>
-      <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black">
+      <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black p-3 mt-10 mb:mt-0">
 
-        <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" 
-        style="width: 500px; height: 650px;"
+        <div class="flex flex-col items-center justify-center  bg-custom-indigo rounded-lg 
+        md:w-[500px]
+        md:h-[650px]" 
         @click.stop>
       <h3 type="text" class="text-3xl text-white p-2 font-bold underline mt-8">Let's go !</h3>
-      <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10">
+      <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10 p-5">
             <div class="form-group">
               <label for="amazon_link" class="text-white text-xl font-bold">URL {{ provider }}</label>
               <input
@@ -13,7 +14,7 @@
                 id="amazon_link"
                 v-model="form.product_link"
                 required
-                class="mt-1 p-2 border rounded-md w-full"
+                class="mt-1 p-2 border rounded-md w-full p-3"
               />
             </div>
             <div class="form-group">

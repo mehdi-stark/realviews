@@ -1,3 +1,8 @@
+<!-- <script setup>
+import { SignInButton, UserButton, useAuth } from 'vue-clerk'
+const { isSignedIn } = useAuth()
+</script> -->
+
 <template>
     <!-- Sidebar -->
     <!-- Laptop -->
@@ -193,6 +198,7 @@ import router from "@/router";
 import { ref } from 'vue';
 import { mapState } from 'vuex';
 import { History } from "lucide-vue-next";
+// import { useUser } from 'vue-clerk'
 
 export default {
   name: 'App',
@@ -213,6 +219,7 @@ export default {
 
   data() {
     return {
+      // user: useUser(),
       isMobile: false,
       loading_logout: false,
       spinner_text: "",
