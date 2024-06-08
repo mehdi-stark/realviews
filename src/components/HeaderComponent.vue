@@ -1,6 +1,6 @@
 <template>          
 <!-- Header -->
-  <div id="header">
+  <div id="header" class="mb-5 hidden md:block">
     <header class="flex justify-between items-center h-35 bg-slate-100 text-black">
       <span class="ml-3 flex justify-start font-bold p-3">{{ title }}</span>
       <div class="logo h-6 w-6 flex justify-end">

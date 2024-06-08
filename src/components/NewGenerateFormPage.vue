@@ -1,24 +1,34 @@
 <template>
-      <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black p-3 mt-10 mb:mt-0">
+      <div class="inset-0 flex items-center justify-center h-full w-full mx-auto text-black p-3 
+      mt-10 
+      mb:mt-0">
 
         <div class="flex flex-col items-center justify-center  bg-custom-indigo rounded-lg 
         md:w-[500px]
         md:h-[650px]" 
         @click.stop>
-      <h3 type="text" class="text-3xl text-white p-2 font-bold underline mt-8">Let's go !</h3>
-      <form @submit.prevent="scrapProduct()" class="space-y-10 mt-10 p-5">
+      <h3 type="text" class="
+      text-2xl
+      md:text-3xl text-white p-2 font-bold underline 
+      mt-4
+      md:mt-8">Let's go !</h3>
+      <form @submit.prevent="scrapProduct()" class="
+      space-y-5
+      md:space-y-10 
+      mt-3
+      md:mt-10 p-5">
             <div class="form-group">
-              <label for="amazon_link" class="text-white text-xl font-bold">URL {{ provider }}</label>
+              <label for="amazon_link" class="text-white text-lg md:text-xl font-bold">URL {{ provider }}</label>
               <input
                 type="link"
                 id="amazon_link"
                 v-model="form.product_link"
                 required
-                class="mt-1 p-2 border rounded-md w-full p-3"
+                class="mt-1 p-2 border rounded-md w-full"
               />
             </div>
             <div class="form-group">
-              <label for="amazon_link" class="text-white text-xl font-bold">Product handle</label>
+              <label for="amazon_link" class="text-white text-lg md:text-xl font-bold">Product handle</label>
               <input
                 type="link"
                 id="amazon_link"
@@ -28,7 +38,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
+              <label for="comments" class="text-white text-lg md:text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
               <input
                 type="number"
                 id="comments"
@@ -52,7 +62,7 @@
             </div>
             <div class="form-group">
               <div class="mt-4">
-                <label for="language" class="text-white text-xl font-bold">Langue des avis</label>
+                <label for="language" class="text-white text-lg md:text-xl font-bold">Langue des avis</label>
                 <select
                   id="language"
                   v-model="form.language"
@@ -69,7 +79,15 @@
             <div class="form-group flex flex-col items-center space-y-4">
               <button 
                 type="submit" 
-                class="bg-purple-600 text-xl text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-32 h-12 mt-2 mb-8"
+                class="bg-purple-600 
+                text-lg
+                md:text-xl 
+                text-white font-bold py-2 px-4 rounded-full 
+                hover:bg-purple-700 cursor-pointer 
+                w-32 h-12 
+                mt-2 
+                mb-2
+                md:mb-8"
                 :class="{
                   'bg-purple-600 hover:bg-purple-700': form.number && form.language && form.number <= maxComments,
                   'bg-gray-500 cursor-not-allowed': !form.number || !form.language || form.number > maxComments

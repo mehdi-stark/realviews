@@ -25,7 +25,7 @@
     && $route.path !== '/signup'" class="h-screen overflow-hidden" />
 
     <!-- Contenu principal qui change avec les routes -->
-    <div id="main_content" class="flex-1 overflow-auto">
+    <div id="main_content" class="flex-1 overflow-auto mt-5  md:mt-0">
       <router-view :key="$route.fullPath"></router-view>
     </div>
 

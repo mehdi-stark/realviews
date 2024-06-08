@@ -13,7 +13,8 @@
     <div id="price" style="height: 200px;">
       <p class="mt-4 text-black text-2xl font-extrabold">{{ price }}<span class="text-base font-normal">/mois</span></p>
       <p v-if="popular" class="text-purple-600 font-semibold mt-1">Populaire</p>
-      <button class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800">Choisir</button>
+      <p v-if="current" class="mt-4 text-purple-600 font-semibold">Plan actuel</p>
+      <button v-else class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800">Choisir</button>
     </div>
     <div id="features">
       <ul class="mt-4 space-y-2 text-left">
@@ -28,7 +29,6 @@
         </li>
       </ul>
     </div>
-    <p v-if="current" class="mt-4 text-purple-600 font-semibold">Plan actuel</p>
   </div>
 </template>
 

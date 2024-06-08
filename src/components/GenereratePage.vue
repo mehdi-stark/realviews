@@ -1,6 +1,6 @@
 <template>
   <!-- Header -->
-  <HeaderComponent title="Generer" class="hidden md:block"/>
+  <HeaderComponent title="Generer"/>
   
   <div class="flex flex-col items-center justify-center min-h-screen bg-white 
   px-3
@@ -25,14 +25,14 @@
 
       <!-- Lien Amazon -->
       <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-10 p-5 md:p-8">
-        <h3 type="text" class="text-2xl text-white p-2 mb-2 font-bold">Depuis un lien Amazon</h3>
+        <h3 type="text" class="text-xl md:text-2xl text-white p-2 mb-2 font-bold">Depuis un lien Amazon</h3>
         <input type="text" class="bg-white border md:ml-4 border-gray-300 rounded-full p-4 w-full md:w-96" v-model="amazonLink" autocomplete="on">
         <button @click="generateAmazon()" class="bg-purple-600 text-white font-bold text-xl py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-full md:w-32 h-14">Générer</button>
       </div>
 
       <!-- Lien Aliexpress -->
       <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-10 p-8">
-        <h3 type="text" class="text-2xl text-white p-2 mb-2 font-bold">Depuis un lien Aliexpress</h3>
+        <h3 type="text" class="text-xl md:text-2xl text-white p-2 mb-2 font-bold">Depuis un lien Aliexpress</h3>
         <input type="text" class="g-white border md:ml-4 border-gray-300 rounded-full p-4 w-full md:w-96" v-model="aliexpressLink">
         <button @click="generateAliexpress()" class="bg-purple-600 text-white text-xl font-bold py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer w-full md:w-32 h-14">Générer</button>
       </div>
@@ -52,7 +52,7 @@
     <!-- <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5" style="width: 950px"> -->
       <h3 type="text" class="text-2xl
       md:text-3xl text-white p-2 font-bold">Depuis une description* produit</h3>
-      <p class="text-md mb-6 text-white">*Plus votre description sera précise, plus les avis seront pertinents</p>
+      <p class="text-md mb-6 text-white p-2">* Plus votre description sera précise, plus les avis seront pertinents</p>
       <textarea class="bg-white border-double border-8 border-gray-400 rounded-xl p-2 mb-2 
       md:max-w-[750px]
       md:max-h-[200px]
