@@ -126,7 +126,6 @@ export default {
     if (!this.user || !this.accessToken) {
       console.error("user or token not present ! Login is required !");
       this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
-      // router.push("/login");
     } else {
       this.current_user = JSON.parse(this.user);
       console.log("Current user in new generate product mounted: " + JSON.stringify(this.current_user));
@@ -171,7 +170,7 @@ export default {
           // console.log(response.data);
           this.spinner_text = "Interrogation de l'IA pour générer des avis";
           this.loading = true;
-          this.wait(5000).then(() => {
+          this.wait(1000).then(() => {
             this.loading = false;
             this.products = response.data;
             this.showSuggestion = true;
@@ -189,9 +188,11 @@ export default {
     },
 
     closeForm() {
-      this.amazonLink = null
-      this.aliexpressLink = null
-      this.showModal = false
+      console.log("close form called");
+      if (this.showSuggestion)
+        this.showSuggestion = false;
+      // else
+      //   this.showModal = false
     },
     
     handleEsc(event) {

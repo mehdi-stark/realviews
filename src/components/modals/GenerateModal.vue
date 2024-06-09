@@ -3,10 +3,10 @@
     @click="closeForm">
     <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5 w-3/4 md:w-1/2 lg:w-1/3"
     @click.stop>
-      <h3 type="text" class="text-3xl text-white p-2 font-bold underline mb-8">Let's go !</h3>
+      <h3 type="text" class="text-2xl md:text-3xl text-white p-2 font-bold underline mb-8">Let's go !</h3>
       <form @submit.prevent="generateProduct()" class="space-y-10 mt-10 w-full px-3 md:px-6 lg:px-8">
-            <div class="form-group">
-              <label for="comments" class="text-white text-xl font-bold">Nombre d'avis</label>
+        <div class="form-group">
+              <label for="comments" class="text-white text-lg md:text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
               <input
                 type="number"
                 id="comments"
@@ -15,10 +15,11 @@
                 class="mt-1 p-2 border rounded-md w-full"
                 min="1"
               />
+              <p v-if="form.number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p>
             </div>
             <div class="form-group">
               <div class="mt-4">
-                <label for="language" class="text-white text-xl font-bold">Langue des avis</label>
+                <label for="language" class="text-white text-lg md:text-xl font-bold">Langue des avis</label>
                 <select
                   id="language"
                   v-model="form.language"
@@ -33,7 +34,10 @@
             </div>
 
             <div class="form-group flex flex-col items-center space-y-4">
-              <button type="submit" class="bg-purple-600 text-xl text-white font-bold 
+              <button type="submit" class="bg-purple-600 
+              text-lg
+              md:text-xl text-white 
+              font-bold 
               py-2 px-4 
               rounded-full 
               hover:bg-purple-700 cursor-pointer 
@@ -50,12 +54,26 @@
 <script>
 import api from '@/api';
 import router from '@/router';
+import { mapState } from 'vuex';
 export default {
     name: 'MyComponent',
+
+    computed: {
+      ...mapState(['user', 'accessToken', 'isUserConnected', 'subscriptionPlan']),
+    },
+
+    props: {
+        product: {
+            type: Object,
+            required: true,
+        },
+    },
+
     data() {
         return {
             // Your data properties go here
             showModal: null,
+            maxComments: 25,
             productDescription: "",
             form: {
               user_id: "",
@@ -71,6 +89,33 @@ export default {
             loading: false
         };
     },
+
+    mounted() {
+        // Code to run when the component is mounted goes here
+        // window.addEventListener('keydown', this.handleEsc);
+        console.log("product on generate modal : " + JSON.stringify(this.product));
+        switch (this.subscriptionPlan.plan) {
+        case 'BASIC':
+          this.maxComments = 25;
+          break;
+        case 'STANDARD':
+          this.maxComments = 100;
+          break;
+        case 'PREMIUM':
+          this.maxComments = 250;
+          break;
+        default:
+          console.error('Invalid subscription plan');
+          this.maxComments = 25;
+          break;
+      }
+    },
+
+    beforeUnmount() {
+        // Code to run before the component is unmounted goes here
+        // window.removeEventListener('keydown', this.handleEsc);
+    },
+
     methods: {
         // Your methods go here
             // API Call to insert a new product on the DB
@@ -110,10 +155,21 @@ export default {
         console.error('Error on scrapping : ' + error)
       }
     },
-    },
-    mounted() {
-        // Code to run when the component is mounted goes here
-    },
+
+    // closeForm() {
+    //   this.amazonLink = null
+    //   this.aliexpressLink = null
+    //   this.showModal = false
+    // },
+    
+    // handleEsc(event) {
+    //   // Fermez la modale si la touche Esc est pressée
+    //   if (event.key === 'Escape') {
+    //     this.closeForm();
+    //   }
+    // },
+
+  },
 };
 </script>
 
