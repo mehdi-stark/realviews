@@ -68,6 +68,8 @@
   <!-- Modale  -->
   <GenerateModal v-if="showModal"></GenerateModal>
 
+  <ProductSuggestion v-if="showSuggestion" :products="products"></ProductSuggestion>
+
   <!-- Spinner -->
   <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95">
     <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
@@ -81,6 +83,8 @@
 import { mapState } from 'vuex';
 import GenerateModal from '@/components/modals/GenerateModal.vue';
 import HeaderComponent from './HeaderComponent.vue';
+import api from '@/api';
+import ProductSuggestion from '@/components/modals/ProductSuggestion.vue';
 
 export default {
   name: 'ScrapperPage',
@@ -88,6 +92,7 @@ export default {
   components: {
     GenerateModal,
     HeaderComponent,
+    ProductSuggestion
   },
 
   data() {
@@ -99,12 +104,14 @@ export default {
       aliexpressLinkFilled: false,
       productDescription: "",
       form: {
-        product_link: ""
+        product_link: "",
+        description: "",
       },
       current_user: null,
       access_token: "",
       spinner_text: null,
-      loading: false
+      loading: false,
+      showSuggestion: false,
     };
   },
 
@@ -157,8 +164,28 @@ export default {
         alert("Veuillez entrer une description de produit avant de générer !");
         return;
       }
-      this.showModal = true
+      // this.showModal = true
       this.form.description = this.productDescription;
+      api.post('/api/v1/generate', this.form)
+        .then((response) => {
+          // console.log(response.data);
+          this.spinner_text = "Interrogation de l'IA pour générer des avis";
+          this.loading = true;
+          this.wait(5000).then(() => {
+            this.loading = false;
+            this.products = response.data;
+            this.showSuggestion = true;
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          this.spinner_text = "Une erreur s'est produite lors de la génération des avis";
+          this.loading = true;
+          this.wait(5000).then(() => {
+            this.loading = false;
+          });
+        });
+
     },
 
     closeForm() {
