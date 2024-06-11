@@ -23,7 +23,7 @@
         le produit qui correspond le plus a votre description</h3>
       </div>
       <div class="flex flex-wrap justify-center">
-        <div class="p-2">
+        <div class="p-2 space">
           <div v-for="product in products"
               :key="product.id"
               class="product-item flex items-center mt-2 md:mt-5">

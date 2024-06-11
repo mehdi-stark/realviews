@@ -107,7 +107,7 @@
       <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
     </div>
   </div>
-  <ProductLimitExceededDialog ref="productLimitDialog" />
+  <ProductLimitExceededDialog  v-if="productLimitReached" ref="productLimitDialog" />
 </template>
 
 <script>
@@ -164,6 +164,7 @@ export default {
       showModal: false,
       current_user: null,
       maxComments: null,
+      productLimitReached: false,
     };
   },
 
@@ -242,7 +243,7 @@ export default {
           // Show the dialog
           console.error('Erreur 429')
 
-          this.$refs.productLimitDialog.openDialog()
+          this.productLimitReached = true;
         }
       }
     },

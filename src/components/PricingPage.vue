@@ -1,8 +1,10 @@
 <template>
   <HeaderComponent title="Abonnements" />
-  <div class="flex flex-col justify-center items-center space-y-2">
-    <h1 class="font-bold text-4xl mt-8">Des prix totalement <span class="text-purple-600">transparents</span></h1>
-    <h3 class="font-bold text-xl text-slate-500">Aucuns frais cachés. Annulez quand vous voulez.</h3>
+  <div class="flex flex-col mt-12 
+  md:mt-0
+  p-1 justify-center items-center md:space-y-2">
+    <h1 class="font-bold text-2xl md:text-4xl mt-8">Des prix totalement <span class="text-purple-600">transparents</span></h1>
+    <h3 class="font-bold text-lg md:text-xl text-slate-500 text-center">Aucuns frais cachés. <br/>Annulez quand vous voulez.</h3>
   </div>
   <div class="flex flex-col md:flex-row justify-center items-strech ml-2 mr-2 py-12 space-y-6 md:space-y-0 md:space-x-6">
     <PricingCard

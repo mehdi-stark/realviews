@@ -28,13 +28,13 @@
             <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
             <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="form.password"/>
           </div>
-          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+          <button type="submit" class="w-full bg-custom-purple-container text-white py-2 rounded-md hover:bg-blue-600">
             Se connecter
           </button>
         </form>
         <p class="mt-4 text-sm text-gray-600">
           <!-- Vous préférez vous connecter avec votre email : <a @click="showEmail()" class="cursor-pointer hover:bg-slate-100 text-blue-500" id="email_link">Cliquer ici</a><br/> -->
-          Pas encore de compte ? <router-link to="/signup" class="text-blue-500" id="gettingStarted">S'inscrire</router-link>
+          Pas encore de compte ? <router-link to="/signup" class="text-custom-purple-container" id="gettingStarted">S'inscrire</router-link>
         </p>
       </div>
       <!-- Connexion par EMAIL -->
@@ -49,13 +49,13 @@
             <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
             <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md"/>
           </div>
-          <button @click="login" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+          <button @click="login" class="w-full bg-custom-purple-container text-white py-2 rounded-md hover:bg-blue-600">
             Se connecter
           </button>
         </form>
         <p class="mt-4 text-sm text-gray-600">
           Vous préférez vous connecter avec votre username : <a @click="showUsername()" class="cursor-pointer text-blue-500 hover:bg-slate-200" id="username_link">Cliquer ici</a><br/>
-          Pas encore de compte ? <router-link to="/signup" class="text-blue-500" id="gettingStarted">S'inscrire</router-link>
+          Pas encore de compte ? <router-link to="/signup" class="text-custom-purple-container" id="gettingStarted">S'inscrire</router-link>
         </p>
       </div>
       <div v-if="error" class="mt-5 text-red-500">{{ error }}</div>

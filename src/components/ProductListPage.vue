@@ -84,12 +84,12 @@
                 :src="product.logo"
                 @click="onPickFile(product)"
                 :alt="product.name"
-                class="w-20 h-14 object-cover rounded-md mr-4 flex justify-start"
+                class="w-20 h-14 object-cover rounded-md mr-4 flex justify-start hover:cursor-pointer"
               />
               <button
                 v-else
                 @click="onPickFile(product)"
-                class="btn btn-info h-14 bg-slate-200 text-white rounded-md hover:bg-slate-300 flex items-center justify-center mr-4"
+                class="btn btn-info h-14 w-20 bg-slate-200 text-white rounded-md hover:bg-slate-300 flex items-center justify-center mr-4"
               >
               <span class="text-xl w-20">+</span>
 

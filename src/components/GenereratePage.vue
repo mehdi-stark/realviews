@@ -84,7 +84,7 @@ import { mapState } from 'vuex';
 import GenerateModal from '@/components/modals/GenerateModal.vue';
 import HeaderComponent from './HeaderComponent.vue';
 import api from '@/api';
-import ProductSuggestion from '@/components/modals/ProductSuggestion.vue';
+import ProductSuggestion from '@/components/modals/ProductSuggestionModal.vue';
 
 export default {
   name: 'ScrapperPage',

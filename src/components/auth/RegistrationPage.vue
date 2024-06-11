@@ -20,12 +20,12 @@
           <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
           <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="password" required/>
         </div>
-        <button type="submit" @click="signup" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+        <button type="submit" @click="signup" class="w-full bg-custom-purple-container text-white py-2 rounded-md hover:bg-blue-600">
           S'inscrire
         </button>
       </form>
       <p class="mt-4 text-sm text-gray-600">
-        Déjà un compte ? <router-link to="/login" class="text-blue-500">Se connecter</router-link>
+        Déjà un compte ? <router-link to="/login" class="text-custom-purple-container">Se connecter</router-link>
       </p>
       <div v-if="error" class="justify-center mt-5 text-red-500">{{ error }}</div>
     </div>
