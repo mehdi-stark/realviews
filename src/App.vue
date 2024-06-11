@@ -12,13 +12,13 @@
       </button>
       <transition name="slide">
         <div v-if="isOpen" class="menu fixed overflow-hidden top-0 left-0 w-3/4 
-        h-full bg-custom-purple text-white transition-transform transform 
-        translate-x-0 
+        h-full bg-custom-purple text-white 
         mb-12
         overflow-y-auto">
           <Sidebar @close-sidebar="toggleSidebar"></Sidebar>
         </div>
       </transition>
+      <!-- Close sidebar button -->
       <div v-if="isOpen" class="fixed top-0 right-0 w-1/4 h-full flex items-start justify-center bg-black bg-opacity-85">
           <button @click="toggleSidebar" class="text-4xl bg-transparent border-none text-white mt-5">
             &times; <!-- Unicode character for the close button -->
@@ -212,7 +212,7 @@ export default {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
 .slide-enter-from,
