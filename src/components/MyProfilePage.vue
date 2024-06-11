@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <UpdatePasswordModal v-if="udpatePassword" @close="udpatePassword = false"></UpdatePasswordModal>
+    <UpdatePasswordModal v-if="updatePassword"></UpdatePasswordModal>
 </template>
 
 <script>
@@ -98,6 +98,8 @@ import api from '@/api';
 import dateUtils from '../utils/dateUtils';
 import { mapState } from 'vuex';
 import HeaderComponent from './HeaderComponent.vue';
+import UpdatePasswordModal from './modals/UpdatePasswordModal.vue';
+
 export default {
     name: 'MyProfile',
     data() {
@@ -108,13 +110,14 @@ export default {
             placeholderUsername: '',
             placeholderEmail: '',
             maxProducts: '',
-            udpatePassword: false,
+            updatePassword: false,
         };
     },
 
     components: {
       // Your components go here
       HeaderComponent,
+      UpdatePasswordModal,
     },
 
     computed: {
@@ -152,7 +155,8 @@ export default {
         },
 
         showUdpatePassword() {
-          this.udpatePassword = true;
+          console.log('Update password');
+          this.updatePassword = true;
         },
     },
     beforeMount() {
