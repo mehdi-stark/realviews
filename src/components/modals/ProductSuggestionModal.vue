@@ -22,7 +22,7 @@
         <button v-if="selectedProduct === null" 
         class="hover:text-grey-100 text-grey-500 font-light font-bold py-2 px-4 mx-2"
         @click="showModalFunc">
-          Passer
+          Passer cette etape
         </button>
         <button v-else @click="showModalFunc" class="bg-custom-purple hover:bg-blue-700 text-white font-bold py-1 px-3 mx-2 rounded-xl">
           Suivant

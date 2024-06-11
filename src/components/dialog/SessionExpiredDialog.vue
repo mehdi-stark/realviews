@@ -7,7 +7,8 @@
       <div class="modal-action">
       <form method="dialog">
         <!-- if there is a button, it will close the modal -->
-        <button class="btn">Ok</button>
+        <button class="btn"
+        @click="$emit('close-session-expired')">Ok</button>
       </form>
     </div>
   </div>
@@ -30,7 +31,7 @@ export default {
     mounted() {
         // Code to run when the component is mounted goes here
         document.getElementById('my_modal_1').showModal();
-    },
+    }
 };
 </script>
 

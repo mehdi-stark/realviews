@@ -107,7 +107,7 @@
       <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
     </div>
   </div>
-  <ProductLimitExceededDialog  v-if="productLimitReached" ref="productLimitDialog" />
+  <ProductLimitExceededDialog  v-if="productLimitReached" ref="productLimitDialog" @close-dialog="closeDialog"/>
 </template>
 
 <script>
@@ -253,7 +253,12 @@ export default {
     },
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
-    }
+    },
+
+    closeDialog() {
+      console.log('Closing dialog');
+      this.productLimitReached = false;
+    },
 }
 
 };

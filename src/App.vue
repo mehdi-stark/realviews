@@ -35,7 +35,7 @@
       <router-view :key="$route.fullPath"></router-view>
     </div>
 
-    <SessionExpiredDialog v-if="$store.state.showSessionExpiredDialog" />
+    <SessionExpiredDialog v-if="$store.state.showSessionExpiredDialog" @close-session-expired="closeDialog"/>
   </div>
 </template>
 
@@ -164,6 +164,10 @@ export default {
       this.loading_logout = false;
       this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
       router.push("/");
+    },
+
+    closeDialog() {
+      this.$store.commit('closeSessionExpiredDialog');
     },
 
     redirectLogin() {

@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <UpdatePasswordModal v-if="updatePassword"></UpdatePasswordModal>
+    <UpdatePasswordModal v-if="updatePassword" @close-udpate-password="closeDialog"></UpdatePasswordModal>
 </template>
 
 <script>
@@ -157,6 +157,10 @@ export default {
         showUdpatePassword() {
           console.log('Update password');
           this.updatePassword = true;
+        },
+
+        closeDialog() {
+          this.updatePassword = false;
         },
     },
     beforeMount() {

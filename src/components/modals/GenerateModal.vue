@@ -83,7 +83,6 @@ export default {
               language: "francais",
               number: null,
             },
-            current_user: null,
             access_token: "",
             spinner_text: null,
             loading: false
@@ -120,28 +119,45 @@ export default {
         // Your methods go here
             // API Call to insert a new product on the DB
     async generateProduct() {
+      console.log("Current user in generated mounted: " + this.user);
+      console.log("Current user ID in generated mounted: " + JSON.parse(this.user).id);
+
         this.spinner_text = 'Generation des commentaires .. <br/>Veuillez patientez cela peut prendre plusieurs minutes';
         this.loading = true;
 
         // construct request object
-        if (this.current_user) {
-          console.log('Current User id dans submit: ' + this.current_user.id);
-          this.form.user_id = this.current_user.id
+        if (this.user) {
+          console.log('Current User id dans submit: ' + JSON.parse(this.user).id);
+          this.form.user_id = JSON.parse(this.user).id
         }
         this.form.product_name = 'unamed_product'
         this.form.provider = 'amazon'
+        let response = null;
         try {
-          const response = await api.post('/api/v1/scrapping-product', this.form, {
+
+          // If the product link is not provided, generate comments without scrapping
+          if (this.form.product_link === null || this.form.product_link === '') {
+            response = await api.post('/api/v1/comments', this.form, {
+            responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
+          })          
+        }
+        // If the product link is provided, generate comments by scrapping the product
+        else {
+           response = await api.post('/api/v1/scrapping-product', this.form, {
             responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
           })
+        }
+        
+
           this.spinner_text = 'Generation du fichier Excel ..';
           await this.wait(1000);
+
+
           const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
           const blob = new Blob([excelArrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
           link.download = 'comments_gen.xlsx';
           link.click();
