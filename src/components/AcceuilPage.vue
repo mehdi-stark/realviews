@@ -37,6 +37,7 @@ export default {
   },
 
   mounted() {
+    document.title = 'RealViews - Acceuil';
   },
 
   beforeUnmount() {

@@ -1,9 +1,19 @@
 <template>  
     <!-- Header -->
   <HeaderComponent title="Mon profil" />
-  <div class="flex items-center justify-around min-h-screen p-5 space-x-10 grow">
-        <!-- Profile info -->
-    <div class="w-1/2 rounded-lg shadow-xl bg-white p-8 space-y-5 border border-gray-200">
+  <div class="flex md:flex-row flex-col items-center 
+  space-y-8
+  justify-center
+  md:justify-around 
+  min-h-screen p-5 
+  md:space-x-10 
+  grow
+  md:mt-0
+  overflow-y-hidden 
+  md:overflow-auto">
+
+    <!-- Profile info -->
+    <div class="w-full md:w-1/2 rounded-lg shadow-xl bg-white p-8 space-y-5 border border-gray-200">
         <h2 class="text-2xl font-bold text-purple-600 mb-4">Mon profile</h2>
         <form @submit.prevent="handleSubmit" class="flex flex-col justify-between items-center h-full space-y-8">
           <div class="flex flex-col justify-center items-center flex-grow">
@@ -37,11 +47,11 @@
           shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
           font-semibold">Modifier profil
           </button> -->
-          <button class="mt-5 bg-purple-600 text-white text-lg 
+          <button @click="showUdpatePassword" class="mt-5 bg-purple-600 text-white text-lg 
           pl-3 pr-3 pt-2 pb-2 
           rounded-xl w-full shadow-md hover:bg-purple-700 
           focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
-          font-semibold"><router-link to="/pricing">Modifier mot de passe</router-link></button>
+          font-semibold">Modifier mot de passe</button>
           <!-- <button type="submit" class="w-full mb-5 
           bg-purple-600 text-white 
           pl-3 pr-3 pt-1 pb-1 
@@ -55,7 +65,7 @@
         </div>
 
         <!-- Subscription info -->
-        <div class="w-1/2 rounded-lg shadow-xl bg-white p-8 border border-gray-200">
+        <div class="w-full md:w-1/2 rounded-lg shadow-xl bg-white p-8 border border-gray-200">
             <h2 class="text-2xl font-bold text-purple-600 mb-4">Abonnement</h2>
             <!-- <div class="rounded-lg shadow-xl bg-white p-4 border border-gray-200 mb-3">
             </div> -->
@@ -79,6 +89,8 @@
           font-semibold">Modifier abonnement</button></router-link>
         </div>
     </div>
+
+    <UpdatePasswordModal v-if="udpatePassword" @close="udpatePassword = false"></UpdatePasswordModal>
 </template>
 
 <script>
@@ -96,6 +108,7 @@ export default {
             placeholderUsername: '',
             placeholderEmail: '',
             maxProducts: '',
+            udpatePassword: false,
         };
     },
 
@@ -137,11 +150,16 @@ export default {
                 this.remainingProducts = this.maxProducts - response.data.apiCallsMade;
             })
         },
+
+        showUdpatePassword() {
+          this.udpatePassword = true;
+        },
     },
     beforeMount() {
       this.getActiveSubscription();
     },
     mounted() {
+      document.title = 'RealViews - Mon profil';
       JSON.parse(this.$store.state.user)? this.placeholderUsername = JSON.parse(this.$store.state.user).username : this.placeholderUsername
       JSON.parse(this.$store.state.user)? this.placeholderEmail = JSON.parse(this.$store.state.user).email : this.placeholderEmail = 'Email non renseigné';
     },

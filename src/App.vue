@@ -3,13 +3,19 @@
     <!-- Sidebar Mobile -->
     <div id="sidebar" v-if="isMobile && $route.path !== '/subscribe' && $route.path !== '/thank-you' && $route.path !== '/login'
     && $route.path !== '/signup'" 
-    class="fixed top-0 left-0 w-full h-16 bg-custom-purple text-white flex items-center 
+    class="fixed 
+    top-0 left-0 w-full h-16 
+    bg-custom-purple text-white flex items-center 
     px-2 z-[2]">
       <button @click="toggleSidebar" class="text-3xl bg-transparent border-none text-white">
         &#9776; <!-- Unicode character for the burger menu -->
       </button>
       <transition name="slide">
-        <div v-if="isOpen" class="menu fixed overflow-hidden top-0 left-0 w-3/4 h-full bg-custom-purple text-white transition-transform transform translate-x-0 mb-12">
+        <div v-if="isOpen" class="menu fixed overflow-hidden top-0 left-0 w-3/4 
+        h-full bg-custom-purple text-white transition-transform transform 
+        translate-x-0 
+        mb-12
+        overflow-y-auto">
           <Sidebar @close-sidebar="toggleSidebar"></Sidebar>
         </div>
       </transition>
@@ -25,7 +31,7 @@
     && $route.path !== '/signup'" class="h-screen overflow-hidden" />
 
     <!-- Contenu principal qui change avec les routes -->
-    <div id="main_content" class="flex-1 overflow-auto mt-5  md:mt-0">
+    <div id="main_content" class="flex-1 overflow-auto">
       <router-view :key="$route.fullPath"></router-view>
     </div>
 

@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div class="min-h-screen flex flex-col items-center justify-center bg-custom-purple">
+  <div class="min-h-screen flex flex-col items-center justify-center bg-custom-purple p-3">
     <!-- LOGO -->
     <div class="flex justify-center mb-12">
       <img src="../../assets/sidebar/C-7.png" alt="Realviews Logo" class="h-48">

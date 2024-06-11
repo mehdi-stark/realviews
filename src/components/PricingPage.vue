@@ -49,6 +49,10 @@ export default {
     HeaderComponent,
     PricingCard,
   },
+
+  mounted() {
+    document.title = 'RealViews - Abonnements';
+  },
 };
 </script>
 

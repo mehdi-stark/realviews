@@ -1,6 +1,6 @@
 <template>
   <HeaderComponent title="Historique"/>
-  <div class="bg-white rounded-md mt-10">
+  <div class="bg-white rounded-md mt-16 md:mt-10">
     <div class="bg-white p-6 rounded-t-xl p-3">
 
       <!-- Spinner de chargement -->

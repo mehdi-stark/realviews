@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-center bg-custom-purple">
-        <!-- LOGO -->
+  <div class="min-h-screen flex flex-col items-center p-3 justify-center bg-custom-purple mt-0 overflow-hidden md:overflow-auto">
+    <!-- LOGO -->
     <div>
       <img src="../../assets/sidebar/C-7.png" alt="Realviews Logo" class="h-48">
     </div>

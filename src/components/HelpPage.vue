@@ -62,6 +62,10 @@ export default {
         HelpCard,
         HeaderComponent,
     },
+
+    mounted() {
+        document.title = 'RealViews - Aide';
+    },
 };
 </script>
 
