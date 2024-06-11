@@ -32,11 +32,17 @@ const store = createStore({
       localStorage.removeItem('access_token');
       localStorage.removeItem('subscriptionPlan');
       localStorage.setItem('isUserConnected', false);
+    },
+    closeSessionExpiredDialog(state) {
+      state.showSessionExpiredDialog = false;
     }
   },
   actions: {
     login({ commit }, { user, accessToken, subscriptionPlan }) {
       commit('loginSuccess', { user, accessToken, subscriptionPlan });
+    },
+    closeSessionExpiredDialog({ commit }) {
+      commit('closeSessionExpiredDialog');
     }
   }
 });
