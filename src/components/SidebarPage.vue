@@ -75,13 +75,13 @@ const { isSignedIn } = useAuth()
           md:space-y-2">   
             <div class="flex flex-col md:flex-row justify-between">
               <p class="text-lg"><span class="font-semibold">{{ subscriptionPlan.plan }}</span></p>
-              <p @click="this.$router.push('/pricing')" 
+              <p @click="this.$router.push('/pricing') && $emit('close-sidebar')" 
               class="text-purple-500 font-semibold hover:text-purple-800 cursor-pointer ">
               Mettre a niveau
               </p>
             </div>       
 
-            <p class="text-black text-lg md:mb-3 cursor-pointer" @click="this.$router.push('/products')"><span 
+            <p class="text-black text-lg md:mb-3 cursor-pointer" @click="this.$router.push('/products') && $emit('close-sidebar')"><span 
               class="font-semibold"
               :class="{'text-red-500': remainingProducts < 2 || remainingProducts === 0, 'text-green-500': remainingProducts > 2}"
               >{{ remainingProducts }}</span>/{{ maxProducts }} <br class="md:hidden"/> produits<br/>

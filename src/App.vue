@@ -216,7 +216,7 @@ export default {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
 }
 
 .slide-enter-from,
