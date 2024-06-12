@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-85 z-[20]"
+    <div class="fixed inset-0 flex items-center justify-center bg-gray-800  bg-opacity-85 z-[20]"
     @click="closeForm">
     <div class="flex flex-col items-center justify-center mt-3 bg-custom-indigo rounded-lg mb-5 w-3/4 md:w-1/2 lg:w-1/3"
     @click.stop>
@@ -49,17 +49,26 @@
       </form>
     </div>
   </div>
+
+  <SpinnerComponent v-if="loading" :spinner_text="spinner_text"></SpinnerComponent>
 </template>
 
 <script>
 import api from '@/api';
 import router from '@/router';
 import { mapState } from 'vuex';
+import SpinnerComponent from '@/components/SpinnerComponent.vue';
+import subscriptionService from '@/services/subscriptionService';
+
 export default {
     name: 'MyComponent',
 
     computed: {
       ...mapState(['user', 'accessToken', 'isUserConnected', 'subscriptionPlan']),
+    },
+
+    components: {
+      SpinnerComponent,
     },
 
     props: {
@@ -93,21 +102,9 @@ export default {
         // Code to run when the component is mounted goes here
         // window.addEventListener('keydown', this.handleEsc);
         console.log("product on generate modal : " + JSON.stringify(this.product));
-        switch (this.subscriptionPlan.plan) {
-        case 'BASIC':
-          this.maxComments = 25;
-          break;
-        case 'STANDARD':
-          this.maxComments = 100;
-          break;
-        case 'PREMIUM':
-          this.maxComments = 250;
-          break;
-        default:
-          console.error('Invalid subscription plan');
-          this.maxComments = 25;
-          break;
-      }
+
+        // Set the maximum number of comments based on the subscription plan
+        this.maxComments = subscriptionService.getMaxProducts(this.subscriptionPlan);
     },
 
     beforeUnmount() {
@@ -122,8 +119,8 @@ export default {
       console.log("Current user in generated mounted: " + this.user);
       console.log("Current user ID in generated mounted: " + JSON.parse(this.user).id);
 
-        this.spinner_text = 'Generation des commentaires .. <br/>Veuillez patientez cela peut prendre plusieurs minutes';
-        this.loading = true;
+      this.loading = true;
+      this.spinner_text = 'Generation des commentaires .. <br/>Veuillez patientez cela peut prendre plusieurs minutes';
 
         // construct request object
         if (this.user) {

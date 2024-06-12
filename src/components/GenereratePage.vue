@@ -163,13 +163,13 @@ export default {
         alert("Veuillez entrer une description de produit avant de générer !");
         return;
       }
+      this.spinner_text = "Interrogation de l'IA pour générer des avis";
+      this.loading = true;
       // this.showModal = true
       this.form.description = this.productDescription;
       api.post('/api/v1/generate', this.form)
         .then((response) => {
-          // console.log(response.data);
-          this.spinner_text = "Interrogation de l'IA pour générer des avis";
-          this.loading = true;
+          console.log('reponse generate API : ' + response.data);
           this.wait(1000).then(() => {
             this.loading = false;
             this.products = response.data;
@@ -184,7 +184,6 @@ export default {
             this.loading = false;
           });
         });
-
     },
 
     closeForm() {
