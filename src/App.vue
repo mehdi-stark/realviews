@@ -110,7 +110,7 @@ export default {
     }
   },
 
-  mounted() {
+  beforeMount() {
     window.addEventListener("resize", this.checkScreenSize);
 
     this.userItem = JSON.parse(this.user);
@@ -122,9 +122,13 @@ export default {
       } else {
         console.error("No username found");
         this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
+        this.$router.push("/login");
       }
     } else {
       console.error("error user");
+      this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
+      this.$router.push("/login");
+
     }
 
     if (window.innerWidth < window.innerHeight) {
@@ -163,7 +167,7 @@ export default {
       await this.wait(1000);
       this.loading_logout = false;
       this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
-      router.push("/");
+      router.push("/login");
     },
 
     closeDialog() {

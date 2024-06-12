@@ -13,7 +13,7 @@
       price="€0"
       description="Try it for free, every month"
       features="5 produits / mois, 25 commentaires / produit, Format Excel"
-      current
+      :current="subscriptionPlan.plan === 'Basic' || subscriptionPlan.plan === 'BASIC'"
     />
     <PricingCard
       class="flex-1"
@@ -21,6 +21,7 @@
       price="€15"
       description="Add professional quality subtitles to your shorts, very quickly"
       features="10 produits / mois, 100 commentaires / produit, Choix du format"
+      :current="subscriptionPlan.plan === 'Standard' || subscriptionPlan.plan === 'STANDARD'"
     />
     <PricingCard
       class="flex-1"
@@ -29,6 +30,7 @@
       description="Your shorts from long-form videos in just a few clicks"
       features="100 produits / mois, 250 commentaires / produit, Choix du format, Assistance VIP"
       popular
+      :current="subscriptionPlan.plan === 'Premium' || subscriptionPlan.plan === 'PREMIUM'"
     />
     <PricingCard
       class="flex-1"
@@ -41,6 +43,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import HeaderComponent from './HeaderComponent.vue';
 import PricingCard from './PricingCard.vue';
 
@@ -50,8 +53,13 @@ export default {
     PricingCard,
   },
 
+  computed: {
+    ...mapState(['user', 'isUserConnected', 'subscriptionPlan'])
+  },
+
   mounted() {
     document.title = 'RealViews - Abonnements';
+    console.log('PRICINF subscriptionPlan', this.subscriptionPlan.plan);
   },
 };
 </script>
