@@ -1,29 +1,7 @@
-<!-- <script setup>
-import { SignInButton, UserButton, useAuth } from 'vue-clerk'
-const { isSignedIn } = useAuth()
-</script> -->
-
 <template>
     <!-- Sidebar -->
     <!-- Laptop -->
     <aside class="w-80 h-screen bg-custom-purple z-[2]" aria-label="Sidebar">
-      <!-- <div class="flex justify-end w-full">
-        <button @click="showBar = false">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div> -->
       <!-- logo sidebar -->
       <div id="logo_sidebar" class="logo h-24 mt-5" style="display: flex; align-items: center; justify-content: center; height: 120px;">
         <img
@@ -199,7 +177,7 @@ const { isSignedIn } = useAuth()
         </div>
       </div>
     </aside>  
-  <SpinnerComponent v-if="loading_logout" :text="spinner_text" />
+  <SpinnerComponent v-if="loading_logout" :spinner_text="spinner_text" />
 </template>
 
 <script>
@@ -208,12 +186,13 @@ import { ref } from 'vue';
 import { mapState } from 'vuex';
 // import { useUser } from 'vue-clerk'
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
-import api from "@/api";
+// import api from "@/api";
+import subscriptionService from "@/services/subscriptionService";
+
 export default {
   name: 'App',
 
   components: {
-    // History,
     SpinnerComponent
   },
 
@@ -255,22 +234,21 @@ export default {
     }
   },
 
-
   mounted() {
+    console.log('User subscription plan : ' + this.subscriptionPlan.plan);
+
     window.addEventListener("resize", this.checkScreenSize);
     this.userItem = JSON.parse(this.user);
     if (this.userItem) {
-      console.log("user on header exist");
-      console.log("username on header ====> " + this.userItem.username);
       if (this.userItem.username) {
         this.username = this.userItem.username;
       } else {
-        console.error("No username found");
+        console.error("No username found on Sidebar");
         this.$store.commit('logout');
         this.$router.push("/login");
       } 
     } else {
-      console.error("error user");
+      console.error("error user on Sidebar");
       this.$store.commit('logout');
       this.$router.push("/login");
     }
@@ -293,7 +271,6 @@ export default {
 
   methods: {
     checkScreenSize() {
-      console.log("check screen size");
       this.isMobile = window.innerWidth < 768;
     },
 
@@ -305,41 +282,17 @@ export default {
   },
 
     reloadSidebar() {
-      // Méthode pour recharger la barre latérale
-      // Vous pouvez forcer la mise à jour du composant ou effectuer des actions spécifiques ici
       location.reload();
     },
 
     getActiveSubscription() {
-          console.log('User sidebar  : ' + JSON.stringify(this.user));
-          console.log('User id : ' + JSON.parse(this.user).id);
-            // Code to get the active subscription goes here
-            api.get('/api/v1/subscription-active' + '?userId=' + JSON.parse(this.user).id)
-            .then((response) => {
-                console.log('Subscription test plan : ' +  response.data.plan);
-                switch (response.data.plan) {
-                  case 'BASIC' || 'Basic':
-                    console.log('Plan BASIC');
-                    this.maxProducts = 5;
-                    break;
-                  case 'STANDARD' || 'Standard':
-                    console.log('Plan STANDARD');
-                    this.maxProducts = 25;
-                    break;
-                  case 'PREMIUM' || 'Premium':
-                    console.log('Plan PREMIUM');
-                    this.maxProducts = 100;
-                    break;
-                  default:
-                    console.error('Plan inconnu');
-                    break;
-                }
-                this.remainingProducts = this.maxProducts - response.data.apiCallsMade;
-            })
-            .catch((error) => {
-              console.error("Error get active subscription : " + error);
-            });
-        },
+      const subscription = subscriptionService.getActiveSubscriptionFromStore();
+      console.log('Subscription test plan : ' +  JSON.stringify(subscription));
+      if (subscription) {
+        this.maxProducts = subscriptionService.getMaxProducts(subscription);
+        this.remainingProducts = subscription.apiCallsMade;
+      }
+    },
 
     async logout2() {
       console.log("test logout")
@@ -386,3 +339,4 @@ export default {
 <style>
 /* ... styles Tailwind personnalisés ... */
 </style>
+@/services/subscriptionService

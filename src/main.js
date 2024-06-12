@@ -7,7 +7,6 @@ import { clerkPlugin } from 'vue-clerk'
 import './globals.css'
 
 
-console.log('key ===> ' + process.env.VUE_APP_CLERK_PUBLISHABLE_KEY)
 const app = createApp(App);
 
 app.use(router)

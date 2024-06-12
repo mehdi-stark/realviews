@@ -68,7 +68,7 @@
   <!-- Modale  -->
   <GenerateModal v-if="showModal"></GenerateModal>
 
-  <ProductSuggestion v-if="showSuggestion" :products="products"></ProductSuggestion>
+  <ProductSuggestion v-if="showSuggestion" :products="products" @emit-close-suggestion="showSuggestion === false"></ProductSuggestion>
 
   <!-- Spinner -->
   <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95">

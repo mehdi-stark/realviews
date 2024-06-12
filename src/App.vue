@@ -45,6 +45,7 @@ import router from "@/router";
 import { ref, onMounted } from 'vue';
 import { mapState } from 'vuex';
 import Sidebar from "./components/SidebarPage.vue";
+// import userService from "@/services/userService";
 
 export default {
   name: 'App',
@@ -113,23 +114,8 @@ export default {
   beforeMount() {
     window.addEventListener("resize", this.checkScreenSize);
 
-    this.userItem = JSON.parse(this.user);
-    if (this.userItem) {
-      console.log("user on header exist");
-      console.log("username on header ====> " + this.userItem.username);
-      if (this.userItem.username) {
-        this.username = this.userItem.username;
-      } else {
-        console.error("No username found");
-        this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
-        this.$router.push("/login");
-      }
-    } else {
-      console.error("error user");
-      this.$store.commit('logout'); // Utiliser une mutation pour déconnecter l'utilisateur
-      this.$router.push("/login");
-
-    }
+    // this.userItem = JSON.parse(this.user);
+    // this.username = userService.getUsername(this.userItem);
 
     if (window.innerWidth < window.innerHeight) {
       this.showBar = false;
@@ -144,8 +130,6 @@ export default {
     window.removeEventListener("resize", this.checkScreenSize);
     window.removeEventListener('storage', this.handleStorageEvent);
   },
-
-
 
   methods: {
     handleStorageEvent(e) {
@@ -172,11 +156,6 @@ export default {
 
     closeDialog() {
       this.$store.commit('closeSessionExpiredDialog');
-    },
-
-    redirectLogin() {
-      this.isOpen.value = !this.isOpen.value;
-      router.push("/login");
     },
 
     wait(ms) {

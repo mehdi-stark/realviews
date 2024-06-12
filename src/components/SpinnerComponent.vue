@@ -2,10 +2,10 @@
   <!-- Spinner -->
   <div
     class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 duration-3000 z-[99]">
-    <div class="bg-black p-6 rounded-lg shadow-lg">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
       <div class="flex flex-col items-center">
         <div class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
-        <p class="text-white mt-2">{{ spinner_text }}</p>
+        <p class="text-slate-600 mt-2">{{ spinner_text }}</p>
       </div>
     </div>
   </div>

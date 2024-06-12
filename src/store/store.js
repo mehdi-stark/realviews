@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 
 const store = createStore({
+  
   state() {
     return {
       showSessionExpiredDialog: false,
@@ -10,6 +11,7 @@ const store = createStore({
       accessToken: localStorage.getItem('access_token') || null,
     };
   },
+
   mutations: {
     showSessionExpiredDialog(state) {
       state.showSessionExpiredDialog = true;
@@ -37,9 +39,13 @@ const store = createStore({
       state.showSessionExpiredDialog = false;
     }
   },
+
   actions: {
     login({ commit }, { user, accessToken, subscriptionPlan }) {
       commit('loginSuccess', { user, accessToken, subscriptionPlan });
+    },
+    logout({ commit }) {
+      commit('logout');
     },
     closeSessionExpiredDialog({ commit }) {
       commit('closeSessionExpiredDialog');
