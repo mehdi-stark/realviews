@@ -117,6 +117,7 @@ import api from '@/api';
 import yourAnimationData from '../assets/animation-loader.json';
 import { mapState } from 'vuex';
 import ProductLimitExceededDialog from "@/components/dialog/ProductLimitExceededDialog.vue";
+import subscriptionService from '@/services/subscriptionService';
 
 export default {
   name: 'AmazonPage',
@@ -183,22 +184,8 @@ export default {
       console.log("Current access-token in productlist mounted: " + this.accessToken);
       console.log("Provider: " + this.form.provider)
       console.log('Subscription plan in new generate product mounted: ' + this.subscriptionPlan.plan);
-
-      switch (this.subscriptionPlan.plan) {
-        case 'BASIC':
-          this.maxComments = 25;
-          break;
-        case 'STANDARD':
-          this.maxComments = 100;
-          break;
-        case 'PREMIUM':
-          this.maxComments = 250;
-          break;
-        default:
-          console.error('Invalid subscription plan');
-          this.maxComments = 25;
-          break;
-      }
+      // Set the maximum number of comments based on the subscription plan
+      this.maxComments = subscriptionService.getMaxComments(this.subscriptionPlan);
     }
 
     // Get the max number of comments

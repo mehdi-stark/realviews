@@ -1,19 +1,17 @@
 <template>
   <!-- Spinner -->
-  <div
-    class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 duration-3000 z-[99]">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-      <div class="flex flex-col items-center">
-        <div class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
-        <p class="text-slate-600 text-center mt-2" v-html="spinner_text"></p>
-      </div>
+    <div 
+    class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95 z-[99]">
+    <div class="flex flex-col bg-white p-6 rounded-lg shadow-lg">
+      <iframe class="p-6" src="https://lottie.host/embed/ab95f673-b879-48e7-a7d1-6ae2d3425e4d/Pnh6UZfIwU.json"></iframe>
+      <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'SpinnerComponent',
+    name: 'SpinnerLottieComponent',
     props: {
         // Your component props go here
         spinner_text: {
@@ -31,7 +29,7 @@ export default {
     },
     mounted() {
         // Code to run when the component is mounted goes here
-        console.log('SpinnerComponent mounted');
+        console.log('SpinnerLottieComponent mounted');
     },
 };
 </script>

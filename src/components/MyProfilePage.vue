@@ -73,20 +73,15 @@
               class="font-semibold"
               :class="{'text-red-500': remainingProducts < 2 || remainingProducts === 0, 'text-green-500': remainingProducts > 2}"
               >{{ remainingProducts }}</span>/{{ maxProducts }} produits.<br/></p>
-            
-            <!-- <p class="text-gray-600 text-lg">Pour mettre a jour votre abonnement cliquer <router-link 
-              to="/pricing" class="text-blue-500 hover:underline">ici</router-link></p> -->
-
             <p class="text-gray-600 text-lg">Vous avez souscrit au plan <span class="font-semibold">{{ subscriptionPlan }}</span>.</p>
             <p class="text-gray-600 text-lg">Depuis le <span class="font-semibold">{{ subscriptionCreationDate }}</span>.</p>
-            <!-- <button class="mt-5 bg-purple-600 text-white pl-3 pr-3 pt-1 pb-1 rounded-xl 
-          shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
-          font-semibold"><router-link to="/pricing">Modifier abonnement</router-link></button> -->
-          <router-link to="/pricing"><button class="mt-5 bg-purple-600 text-white text-lg 
-          pl-3 pr-3 pt-2 pb-2 
-          rounded-xl w-full shadow-md hover:bg-purple-700 
-          focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
-          font-semibold">Modifier abonnement</button></router-link>
+
+            <router-link to="/pricing">
+            <button class="mt-5 bg-purple-600 text-white text-lg 
+            pl-3 pr-3 pt-2 pb-2 
+            rounded-xl w-full shadow-md hover:bg-purple-700 
+            focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 
+            font-semibold">Modifier abonnement</button></router-link>
         </div>
     </div>
 
@@ -99,6 +94,7 @@ import dateUtils from '../utils/dateUtils';
 import { mapState } from 'vuex';
 import HeaderComponent from './HeaderComponent.vue';
 import UpdatePasswordModal from './modals/UpdatePasswordModal.vue';
+import subscribeService from '@/services/subscriptionService';
 
 export default {
     name: 'MyProfile',
@@ -131,25 +127,10 @@ export default {
             // Code to get the active subscription goes here
             api.get('/api/v1/subscription-active' + '?userId=' + JSON.parse(this.user).id)
             .then((response) => {
+                const subscription = response.data;
                 this.subscriptionPlan = response.data.plan;
                 this.subscriptionCreationDate = dateUtils.formatDate(response.data.creationDate);
-                switch (this.subscriptionPlan) {
-                  case 'BASIC':
-                    console.log('Plan BASIC');
-                    this.maxProducts = 5;
-                    break;
-                  case 'STANDARD':
-                    console.log('Plan STANDARD');
-                    this.maxProducts = 25;
-                    break;
-                  case 'PREMIUM':
-                    console.log('Plan PREMIUM');
-                    this.maxProducts = 100;
-                    break;
-                  default:
-                    console.error('Plan inconnu');
-                    break;
-                }
+                this.maxProducts = subscribeService.getMaxProducts(subscription);
                 this.remainingProducts = this.maxProducts - response.data.apiCallsMade;
             })
         },

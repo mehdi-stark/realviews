@@ -122,8 +122,16 @@ export default {
     }
  },
 
+ mounted() {
+  },
+
   created() {
     window.addEventListener('storage', this.handleStorageEvent);
+
+    setInterval(() => {
+      console.log("Checking token expiration");
+      this.$store.dispatch('checkTokenExpiration');
+    }, 60000); // Vérifiez toutes les minutes
   },
 
   beforeUnmount() {

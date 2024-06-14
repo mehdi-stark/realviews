@@ -50,14 +50,14 @@
     </div>
   </div>
 
-  <SpinnerComponent v-if="loading" :spinner_text="spinner_text"></SpinnerComponent>
+  <SpinnerLottieComponent v-if="loading" :spinner_text="spinner_text"></SpinnerLottieComponent>
 </template>
 
 <script>
 import api from '@/api';
 import router from '@/router';
 import { mapState } from 'vuex';
-import SpinnerComponent from '@/components/SpinnerComponent.vue';
+import SpinnerLottieComponent from '@/components/SpinnerLottieComponent.vue';
 import subscriptionService from '@/services/subscriptionService';
 
 export default {
@@ -68,7 +68,7 @@ export default {
     },
 
     components: {
-      SpinnerComponent,
+      SpinnerLottieComponent,
     },
 
     props: {
@@ -104,7 +104,7 @@ export default {
         console.log("product on generate modal : " + JSON.stringify(this.product));
 
         // Set the maximum number of comments based on the subscription plan
-        this.maxComments = subscriptionService.getMaxProducts(this.subscriptionPlan);
+        this.maxComments = subscriptionService.getMaxComments(this.subscriptionPlan);
     },
 
     beforeUnmount() {
@@ -113,8 +113,8 @@ export default {
     },
 
     methods: {
-        // Your methods go here
-            // API Call to insert a new product on the DB
+    // Your methods go here
+    // API Call to insert a new product on the DB
     async generateProduct() {
       console.log("Current user in generated mounted: " + this.user);
       console.log("Current user ID in generated mounted: " + JSON.parse(this.user).id);

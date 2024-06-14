@@ -68,7 +68,7 @@
 <script>
 import router from "@/router";
 import { mapState } from 'vuex';
-import axios from "axios";
+import authService from "@/services/authService";
 
     export default {
 
@@ -101,48 +101,8 @@ import axios from "axios";
           this.loading_login = true
           e.preventDefault();
 
-          axios.post(process.env.VUE_APP_ROOT_API + "/api/auth/login", this.form)
-          .then((response) => {
-            console.log('response login -> ' + JSON.stringify(response));
-            const reponse_data = response.data;
-            const accessToken = reponse_data.access_token;
-            console.log('login if(access_token) -> ' + accessToken);
-            const userData = JSON.stringify({
-                      id: reponse_data.id,
-                      email: reponse_data.email,
-                      username: reponse_data.username,
-                      role: this.string
-              })
-
-              // get subscription
-              console.log("Test id " + JSON.stringify(reponse_data.id));
-              console.log("Access token " + accessToken);
-              axios.get(process.env.VUE_APP_ROOT_API + '/api/v1/subscription-active' + '?userId=' + reponse_data.id, {
-                headers: {
-                  Authorization: `Bearer ${accessToken}`
-                }
-              }).then((response) => {
-                console.log("Reponse get active subscription ==> " + JSON.stringify(response));
-                // Appeler l'action 'login' définie dans le store
-                this.$store.dispatch('login', { user: userData, accessToken, subscriptionPlan: response.data});
-                // this.loading_login = false
-                this.$router.push("/")
-
-              }) 
-              .catch((error) => {
-                console.error("Error get active subscription : " + error.data);
-                this.error = "Erreur lors de la recuperation de la subscription : " + error.data
-                this.loading_login = false
-                window.location.reload()
-              });
-
-
-          })
-          .catch((error) => {
-            console.error("Error login : " + error);
-            this.error = "username ou mot de passe invalide"
-            this.loading_login = false
-          });
+          // Login
+          authService.login(this.form)
         },
         
         logout() {

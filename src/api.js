@@ -36,29 +36,46 @@ api.interceptors.response.use(
     return Promise.resolve(response);
   },
   error => {
-    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-      const token = store.state.accessToken;
-
-      console.error("Error interceptor access token = " + token);
-
-      // Redirigez vers la page de connexion
-      router.push('/login');
-
-      // Supprimez le token du localStorage
-      store.commit('logout');
-      console.log("access token after removal = " + store.state.accessToken);
-      // console.log("error.response.data = " + JSON.stringify(error.response));
+    const originalRequest = error.config;
+  
+    if ((error.response.status === 401 || error.response.status === 403) && !originalRequest._retry) {
+      originalRequest._retry = true;
       
-      if (error.response.data.includes('JWT expired')) {
-        console.log("JWT expired");
-        // Afficher le dialogue SessionExpiredDialog
-        store.commit('showSessionExpiredDialog'); 
-        // this.$refs.sessionExpiredDialog.open();
+      try {
+        const newAccessToken = store.dispatch('refreshToken');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        router.push('/login');
+
+        return axios(originalRequest);
+      } catch (e) {
+        store.dispatch('logout');
+        return Promise.reject(e);
       }
-      // Retournez une réponse rejetée avec un message d'erreur personnalisé
-      return Promise.reject('Unauthorized or Forbidden');
     }
-    return Promise.reject(error);
+    // if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+    //   const token = store.state.accessToken;
+
+    //   console.error("Error interceptor access token = " + token);
+
+    //   // Redirigez vers la page de connexion
+    //   router.push('/login');
+
+    //   // Supprimez le token du localStorage
+    //   store.commit('logout');
+    //   console.log("access token after removal = " + store.state.accessToken);
+    //   // console.log("error.response.data = " + JSON.stringify(error.response));
+      
+    //   if (error.response.data.includes('JWT expired')) {
+    //     console.log("JWT expired");
+    //     // Afficher le dialogue SessionExpiredDialog
+    //     store.commit('showSessionExpiredDialog'); 
+    //     // this.$refs.sessionExpiredDialog.open();
+    //   }
+    //   // Retournez une réponse rejetée avec un message d'erreur personnalisé
+    //   return Promise.reject('Unauthorized or Forbidden');
+    // }
+    // return Promise.reject(error);
   }
 );
 

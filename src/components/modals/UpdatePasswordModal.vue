@@ -1,5 +1,5 @@
 <template>
-<div class="fixed inset-0 flex items-center bg-black justify-center opacity-70">
+<div class="fixed inset-0 flex items-center bg-black justify-center opacity-70 z-[3]">
     <dialog id="my_modal_1" class="modal">
         <div v-if="successMessage === null" class="modal-box bg-white flex flex-col items-center justify-center">
             <h3 class="font-bold text-lg">Modifier mot de passe</h3>
@@ -86,7 +86,7 @@ export default {
 
         updatePassword() {
             this.loading = true;
-            this.spinner_text = "Mise à jour de votre mot de passe en cours...";
+            this.spinner_text = "Mise à jour de votre mot de passe ...";
             // Appel à l'API pour mettre à jour le mot de passe
             // Remplacez l'URL de l'API par celle que vous souhaitez utiliser
             this.form.userId = JSON.parse(this.user).id

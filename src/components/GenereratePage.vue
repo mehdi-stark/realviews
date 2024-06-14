@@ -77,6 +77,8 @@
       <p class="text-blue-loader-animation mt-2 text-center text-lg" v-html="spinner_text"></p>
     </div>
   </div>
+
+  <SpinnerComponent v-if="loadingSpinner" :spinner_text="spinner_text"></SpinnerComponent>
 </template>
 
 <script>
@@ -85,6 +87,7 @@ import GenerateModal from '@/components/modals/GenerateModal.vue';
 import HeaderComponent from './HeaderComponent.vue';
 import api from '@/api';
 import ProductSuggestion from '@/components/modals/ProductSuggestionModal.vue';
+import SpinnerComponent from '@/components/SpinnerComponent.vue';
 
 export default {
   name: 'ScrapperPage',
@@ -92,7 +95,8 @@ export default {
   components: {
     GenerateModal,
     HeaderComponent,
-    ProductSuggestion
+    ProductSuggestion,
+    SpinnerComponent,
   },
 
   data() {
@@ -112,6 +116,7 @@ export default {
       spinner_text: null,
       loading: false,
       showSuggestion: false,
+      loadingSpinner: false,
     };
   },
 
@@ -163,17 +168,20 @@ export default {
         alert("Veuillez entrer une description de produit avant de générer !");
         return;
       }
-      this.spinner_text = "Interrogation de l'IA pour générer des avis";
-      this.loading = true;
-      // this.showModal = true
+      this.spinner_text = "Initialisation de l'IA ..";
+      this.loadingSpinner = true;
       this.form.description = this.productDescription;
       api.post('/api/v1/generate', this.form)
         .then((response) => {
           console.log('reponse generate API : ' + response.data);
           this.wait(1000).then(() => {
-            this.loading = false;
+            this.loadingSpinner = false;
             this.products = response.data;
-            this.showSuggestion = true;
+            if(this.products !== null && this.products.length > 0) {
+              this.showSuggestion = true;
+            } else {
+              this.showModal = true    
+            }
           });
         })
         .catch((error) => {
