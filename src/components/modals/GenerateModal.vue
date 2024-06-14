@@ -100,7 +100,7 @@ export default {
 
     mounted() {
         // Code to run when the component is mounted goes here
-        // window.addEventListener('keydown', this.handleEsc);
+        window.addEventListener('keydown', this.handleEsc);
         console.log("product on generate modal : " + JSON.stringify(this.product));
 
         // Set the maximum number of comments based on the subscription plan
@@ -109,7 +109,7 @@ export default {
 
     beforeUnmount() {
         // Code to run before the component is unmounted goes here
-        // window.removeEventListener('keydown', this.handleEsc);
+        window.removeEventListener('keydown', this.handleEsc);
     },
 
     methods: {
@@ -169,18 +169,18 @@ export default {
       }
     },
 
-    // closeForm() {
-    //   this.amazonLink = null
-    //   this.aliexpressLink = null
-    //   this.showModal = false
-    // },
+    closeForm() {
+      this.amazonLink = null
+      this.aliexpressLink = null
+      this.showModal = false
+    },
     
-    // handleEsc(event) {
-    //   // Fermez la modale si la touche Esc est pressée
-    //   if (event.key === 'Escape') {
-    //     this.closeForm();
-    //   }
-    // },
+    handleEsc(event) {
+      // Fermez la modale si la touche Esc est pressée
+      if (event.key === 'Escape') {
+        this.closeForm();
+      }
+    },
 
   },
 };

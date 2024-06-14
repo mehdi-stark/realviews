@@ -103,6 +103,12 @@ import authService from "@/services/authService";
 
           // Login
           authService.login(this.form)
+          .catch((error) => {
+            // Le login a échoué
+            this.error = error; // Affichez le message d'erreur sur la page
+          });
+
+          this.loading_login = false
         },
         
         logout() {

@@ -60,7 +60,7 @@ const store = createStore({
   actions: {
     refreshToken({ commit, state }) {
       try {
-        const response = api.post('/auth/refresh-token', {
+        const response = api.get('/api/auth/refresh-token', {
           refreshToken: state.refreshToken,
         });
         commit('setAccessToken', response.data.accessToken);

@@ -171,7 +171,7 @@ export default {
       this.spinner_text = "Initialisation de l'IA ..";
       this.loadingSpinner = true;
       this.form.description = this.productDescription;
-      api.post('/api/v1/generate', this.form)
+      api.post('/api/v1/suggestion-product', this.form)
         .then((response) => {
           console.log('reponse generate API : ' + response.data);
           this.wait(1000).then(() => {
@@ -186,11 +186,7 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          this.spinner_text = "Une erreur s'est produite lors de la génération des avis";
-          this.loading = true;
-          this.wait(5000).then(() => {
-            this.loading = false;
-          });
+          this.loadingSpinner = true;
         });
     },
 
