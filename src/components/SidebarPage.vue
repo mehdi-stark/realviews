@@ -287,7 +287,7 @@ export default {
 
     getActiveSubscription() {
       const subscription = subscriptionService.getActiveSubscriptionFromStore();
-      console.log('Subscription test plan : ' +  JSON.stringify(subscription));
+      console.log('Get Active Subscription sidebar result : ' +  JSON.stringify(subscription));
       if (subscription) {
         this.maxProducts = subscriptionService.getMaxProducts(subscription);
         this.remainingProducts = subscription.apiCallsMade;

@@ -19,7 +19,7 @@ const store = createStore({
     showSessionExpiredDialog(state) {
       state.showSessionExpiredDialog = true;
     },
-    loginSuccess(state, { user, accessToken, subscriptionPlan }) {
+    loginSuccess(state, { user, accessToken, refreshToken, subscriptionPlan }) {
       state.user = user;
       state.accessToken = accessToken;
       state.subscriptionPlan = subscriptionPlan;
@@ -28,7 +28,7 @@ const store = createStore({
       localStorage.setItem('subscriptionPlan', JSON.stringify(subscriptionPlan));
       localStorage.setItem('isUserConnected', 'true');
       localStorage.setItem('access_token', accessToken);
-      localStorage.setItem('refresh_token', user.refreshToken);
+      localStorage.setItem('refresh_token', refreshToken);
     },
     logout(state) {
       state.user = null;
@@ -60,9 +60,8 @@ const store = createStore({
   actions: {
     refreshToken({ commit, state }) {
       try {
-        const response = api.get('/api/auth/refresh-token', {
-          refreshToken: state.refreshToken,
-        });
+        console.log('Refresh token = ' + state.refreshToken);
+        const response = api.get('/api/auth/refresh-token' + '?refreshToken=' + state.refreshToken, {});
         commit('setAccessToken', response.data.accessToken);
         return response.data.accessToken;
       } catch (error) {

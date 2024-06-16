@@ -66,9 +66,10 @@
   </div>
 
   <!-- Modale  -->
-  <GenerateModal v-if="showModal"></GenerateModal>
+  <GenerateModal v-if="showModal" :productDescription="form.description"></GenerateModal>
 
-  <ProductSuggestion v-if="showSuggestion" :products="products" @emit-close-suggestion="showSuggestion === false"></ProductSuggestion>
+  <ProductSuggestion v-if="showSuggestion" :products="products" :description="form.description" 
+  @emit-close-suggestion="showSuggestion === false"></ProductSuggestion>
 
   <!-- Spinner -->
   <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95">
@@ -180,6 +181,7 @@ export default {
             if(this.products !== null && this.products.length > 0) {
               this.showSuggestion = true;
             } else {
+              this.form.description = this.productDescription;
               this.showModal = true    
             }
           });

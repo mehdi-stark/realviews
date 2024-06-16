@@ -23,11 +23,11 @@
         <form @submit.prevent="login">
           <div class="mb-4">
             <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-            <input type="text" id="username" class="mt-1 p-2 w-full border rounded-md" v-model="form.username"/>
+            <input type="text" id="username" class="mt-1 p-2 w-full border rounded-md dark:text-white" v-model="form.username"/>
           </div>
           <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-            <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" v-model="form.password"/>
+            <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md dark:text-white" v-model="form.password"/>
           </div>
           <button type="submit" class="w-full bg-custom-purple-container text-white py-2 rounded-md hover:bg-blue-600">
             Se connecter

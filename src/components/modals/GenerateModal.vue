@@ -6,16 +6,28 @@
       <h3 type="text" class="text-2xl md:text-3xl text-white p-2 font-bold underline mb-8">Let's go !</h3>
       <form @submit.prevent="generateProduct()" class="space-y-10 mt-10 w-full px-3 md:px-6 lg:px-8">
         <div class="form-group">
-              <label for="comments" class="text-white text-lg md:text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
+              <label for="product_handle" class="text-white text-lg md:text-xl font-bold">Product handle</label>
               <input
-                type="number"
-                id="comments"
-                v-model="form.number"
+                type="text"
+                id="product_handle"
+                v-model="form.product_handle"
                 required
                 class="mt-1 p-2 border rounded-md w-full"
                 min="1"
               />
               <p v-if="form.number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p>
+            </div>
+        <div class="form-group">
+              <label for="comments" class="text-white text-lg md:text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
+              <input
+                type="number"
+                id="comments"
+                v-model="form.comments_number"
+                required
+                class="mt-1 p-2 border rounded-md w-full"
+                min="1"
+              />
+              <p v-if="form.comments_number > maxComments" class="text-red-500">Le nombre d'avis ne peut pas dépasser {{ maxComments }}.</p>
             </div>
             <div class="form-group">
               <div class="mt-4">
@@ -74,7 +86,12 @@ export default {
     props: {
         product: {
             type: Object,
-            required: true,
+            required: false,
+        },
+
+        productDescription: {
+            type: String,
+            required: false,
         },
     },
 
@@ -83,14 +100,13 @@ export default {
             // Your data properties go here
             showModal: null,
             maxComments: 25,
-            productDescription: "",
             form: {
               user_id: "",
-              product_name: "",
+              product_handle: "",
               description: "",
               product_link: "",
               language: "francais",
-              number: null,
+              comments_number: null,
             },
             access_token: "",
             spinner_text: null,
@@ -102,6 +118,7 @@ export default {
         // Code to run when the component is mounted goes here
         window.addEventListener('keydown', this.handleEsc);
         console.log("product on generate modal : " + JSON.stringify(this.product));
+        console.log("description on generate modal : " + this.productDescription);
 
         // Set the maximum number of comments based on the subscription plan
         this.maxComments = subscriptionService.getMaxComments(this.subscriptionPlan);
@@ -129,12 +146,15 @@ export default {
         }
         this.form.product_name = 'unamed_product'
         this.form.provider = 'amazon'
+        this.form.description = this.productDescription
         let response = null;
         try {
 
           // If the product link is not provided, generate comments without scrapping
-          if (this.form.product_link === null || this.form.product_link === '') {
-            response = await api.post('/api/v1/comments', this.form, {
+          if (this.form.product_link === null || this.form.product_link === '' || this.form.product_link === undefined) {
+            console.log('Generating comments without scrapping')
+            console.log('Form data : ' + JSON.stringify(this.form))
+            response = await api.post('/api/v1/generate', this.form, {
             responseType: 'arraybuffer', // Définir le type de réponse sur 'arraybuffer'
           })          
         }
@@ -145,10 +165,8 @@ export default {
           })
         }
         
-
           this.spinner_text = 'Generation du fichier Excel ..';
           await this.wait(1000);
-
 
           const excelArrayBuffer = response.data; // Utiliser response.data au lieu de response.arrayBuffer()
           const blob = new Blob([excelArrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -156,7 +174,7 @@ export default {
           const link = document.createElement('a');
           link.href = url;
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
-          link.download = 'comments_gen.xlsx';
+          link.download = this.form.product_handle !== "" ? this.form.language + '.xlsx' : 'comments_gen.xlsx';
           link.click();
           this.showModal = false
           this.loading = false;
@@ -173,6 +191,10 @@ export default {
       this.amazonLink = null
       this.aliexpressLink = null
       this.showModal = false
+    },
+
+    wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     },
     
     handleEsc(event) {

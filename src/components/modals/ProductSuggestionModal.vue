@@ -32,7 +32,7 @@
   </div>
 
     <!-- Modale  -->
-    <GenerateModal v-if="showModal" :product="selectedProduct"></GenerateModal>
+    <GenerateModal v-if="showModal" :product="selectedProduct" :productDescription="this.description"></GenerateModal>
 </template>
 
 <script>
@@ -50,6 +50,11 @@ export default {
     props: {
         products: {
             type: Array,
+            required: true,
+        },
+
+        description: {
+            type: String,
             required: true,
         },
     },
@@ -93,6 +98,7 @@ export default {
     mounted() {
         // Code to run when the component is mounted goes here
         console.log("product list on suggestion page : " + JSON.stringify(this.products));
+        console.log("description on suggestion page : " + this.description);
         // window.addEventListener('keydown', this.handleEsc);
     },
 
