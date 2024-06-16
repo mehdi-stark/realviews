@@ -174,7 +174,7 @@ export default {
           const link = document.createElement('a');
           link.href = url;
           link.target = '_blank'; // Ouvre le lien dans une nouvelle fenêtre
-          link.download = this.form.product_handle !== "" ? this.form.language + '.xlsx' : 'comments_gen.xlsx';
+          link.download = this.form.product_handle !== "" ? this.form.product_handle + '.xlsx' : 'comments_gen.xlsx';
           link.click();
           this.showModal = false
           this.loading = false;

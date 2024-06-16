@@ -120,7 +120,7 @@
               </div>
 
               <div class="w-1/4 text-right flex justify-start">
-                {{ product.productName ? product.productName : product.productHandle }}
+                {{ product.productName && product.productName !== "unamed_product" ? product.productName : product.productHandle }}
               </div>
               <div class="w-1/6 text-right flex justify-end">
                 {{ product.averageRating.toFixed(2) }}
