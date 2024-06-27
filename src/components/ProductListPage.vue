@@ -223,6 +223,8 @@ export default {
   },
 
   mounted() {
+    console.log('API calls made on product list : ' + this.$store.state.subscriptionPlan.apiCallsMade);
+
     if (!this.user || !this.accessToken) {
       console.error("user or token not present ! Login is required !");
       router.push("/login");

@@ -18,7 +18,7 @@
       mt-3
       md:mt-10 p-5">
             <div class="form-group">
-              <label for="amazon_link" class="text-white text-lg md:text-xl font-bold">URL {{ provider }}</label>
+              <label for="amazon_link" class="text-white text-lg md:text-xl font-bold">URL {{ provider }} <span class="text-red-500">*</span></label>
               <input
                 type="link"
                 id="amazon_link"
@@ -28,7 +28,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="amazon_link" class="text-white text-lg md:text-xl font-bold">Product handle</label>
+              <label for="amazon_link" class="text-white text-lg md:text-xl font-bold">Product handle <span class="text-red-500">*</span></label>
               <input
                 type="link"
                 id="amazon_link"
@@ -38,7 +38,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="comments" class="text-white text-lg md:text-xl font-bold">Nombre d'avis (maximum {{ maxComments }})</label>
+              <label for="comments" class="text-white text-lg md:text-xl font-bold">Nombre d'avis (maximum {{ maxComments }}) <span class="text-red-500">*</span></label>
               <input
                 type="number"
                 id="comments"
@@ -118,6 +118,7 @@ import yourAnimationData from '../assets/animation-loader.json';
 import { mapState } from 'vuex';
 import ProductLimitExceededDialog from "@/components/dialog/ProductLimitExceededDialog.vue";
 import subscriptionService from '@/services/subscriptionService';
+import store from '@/store/store';
 
 export default {
   name: 'AmazonPage',
@@ -220,6 +221,8 @@ export default {
           link.click();
           this.loading = false;
           router.push("/products");
+          console.log('API calls made before : ' + store.state.subscriptionPlan.apiCallsMade);
+          subscriptionService.getActiveSubscription(this.user)
         }
         catch (error) {
         // Handle API error

@@ -34,6 +34,7 @@ export default {
           const data = api.get('/api/v1/subscription-active' + '?userId=' + JSON.parse(user).id)
           .then((response) => {
               console.log('Subscription test plan : ' +  response.data.plan);
+              store.dispatch('refreshSubscriptionPlan', response.data);
               return response.data;
           })
           .catch((error) => {

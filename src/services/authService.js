@@ -22,10 +22,16 @@ export default {
           console.log("Test id " + JSON.stringify(reponse_data.id));
           console.log("Access token " + accessToken);
           subscriptionService.getSubscriptionPlan(reponse_data, accessToken, refreshToken, userData);
+          document.dispatchEvent(new Event('connexionComplete'));
       })
       .catch((error) => {
-        console.error("Error login : " + error);
+        if (error.message === "Network Error") {
+          this.error = "Impossible de se connecter au serveur. Veuillez vérifier votre connexion réseau ou réessayer plus tard.";
+        } else {
+          console.error("Error login : " + error);
+        }
         reject("username ou mot de passe invalide");
+
       });
     }
   )}

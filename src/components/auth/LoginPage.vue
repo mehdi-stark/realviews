@@ -1,13 +1,6 @@
 <template>
   <!-- SPINNER LOADING -->
-  <div v-if="loading_login" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 duration-3000">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-      <div class="flex flex-col items-center">
-        <div class="border-t-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
-        <p class="text-gray-600 mt-2">{{ spinner_text }}</p>
-      </div>
-    </div>
-  </div>
+   <SpinnerComponent v-if="loading_login" :spinner_text="spinner_text"></SpinnerComponent>
 
   <div class="min-h-screen flex flex-col items-center 
   md:justify-center bg-custom-purple p-3">
@@ -69,8 +62,13 @@
 import router from "@/router";
 import { mapState } from 'vuex';
 import authService from "@/services/authService";
+import SpinnerComponent from "../SpinnerComponent.vue";
 
     export default {
+
+      components: {
+        SpinnerComponent
+      },
 
       data() { return {
         form: {
@@ -97,15 +95,22 @@ import authService from "@/services/authService";
 
       methods: {
         async login(e) {
+          // Vérifier la connexion Internet avant de tenter de se connecter
+          if (!navigator.onLine) {
+            this.errorMessage = "Pas de connexion Internet. Veuillez vérifier votre connexion et réessayer.";
+            return; // Arrêter l'exécution de la fonction si pas de connexion
+          }
+
           this.spinner_text = "Connexion en cours.."
           this.loading_login = true
           e.preventDefault();
-
+          
+          this.wait(2000)
           // Login
           authService.login(this.form)
           .catch((error) => {
-            // Le login a échoué
-            this.error = error; // Affichez le message d'erreur sur la page
+              // Le login a échoué
+              this.error = error; // Affichez le message d'erreur sur la page
           });
 
           this.loading_login = false

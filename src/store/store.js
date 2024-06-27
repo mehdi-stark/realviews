@@ -54,6 +54,13 @@ const store = createStore({
     clearTokens(state) {
       state.accessToken = null;
       state.refreshToken = null;
+    },
+    incrementApiCalls(state) {
+      state.subscriptionPlan.apiCallsMade += 1;
+    },
+    refreshSubscriptionPlan(state, subscriptionPlan) {
+      state.subscriptionPlan = subscriptionPlan;
+      localStorage.setItem('subscriptionPlan', JSON.stringify(subscriptionPlan));
     }
   },
 
@@ -94,6 +101,16 @@ const store = createStore({
     
     closeSessionExpiredDialog({ commit }) {
       commit('closeSessionExpiredDialog');
+    },
+
+    refreshActiveSubscription({ commit, state }) {
+      api.get('/api/v1/subscription-active' + '?userId=' + state.user.id)
+        .then((response) => {
+          commit('refreshSubscriptionPlan', response.data);
+        })
+        .catch((error) => {
+          console.error('Error refreshing active subscription: ' + error);
+        });
     }
   }
 });
