@@ -105,16 +105,19 @@ import SpinnerComponent from "../SpinnerComponent.vue";
           this.loading_login = true
           e.preventDefault();
           
-          this.wait(2000)
-          // Login
-          authService.login(this.form)
-          .catch((error) => {
-              // Le login a échoué
-              this.error = error; // Affichez le message d'erreur sur la page
-          });
-
-          this.loading_login = false
-        },
+          try {
+            await this.wait(1000);
+            
+            // Remplacer par l'appel réel à authService.login et son traitement
+            await authService.login(this.form);
+            // Gestion de la réussite de la connexion ici, par exemple :
+            // router.push('/dashboard');
+          } catch (error) {
+            this.error = error; // Affichez le message d'erreur sur la page
+          } finally {
+            this.loading_login = false; // Assurez-vous que cela s'exécute que la requête réussisse ou échoue
+          }
+  },
         
         logout() {
           if (localStorage.getItem('access_token')) {
