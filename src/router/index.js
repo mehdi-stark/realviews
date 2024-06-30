@@ -12,6 +12,8 @@ import PricingPage from '@/components/PricingPage.vue'
 import HelpPage from '@/components/HelpPage.vue'
 import ClerkSignin from '@/components/ClerkSignin.vue'
 import StripeComponent from '@/components/StripeComponent.vue'
+import PaymentCanceledPage from '@/components/payment/PaymentCanceledPage.vue'
+import PaymentSuccessfulPage from '@/components/payment/PaymentSuccessfulPage.vue'
 
 const routes = [
   {
@@ -36,7 +38,9 @@ const routes = [
   { path: '/pricing', component: PricingPage, name: 'Pricing', props: true },
   { path: '/help', component: HelpPage, name: 'Help', props: true },
   { path: '/clerk', component: ClerkSignin, name: 'ClerkSignin', props: true },
-  { path: '/payment-intent', component: StripeComponent, name: 'Stripe Payment', props: true }
+  { path: '/payment-intent', component: StripeComponent, name: 'Stripe Payment', props: true },
+  { path: '/payment-cancel', component: PaymentCanceledPage, name: 'Payment Cancel', props: true},
+  { path: '/payment-success', component: PaymentSuccessfulPage, name: 'Payment Success', props: true},
 ]
 
 const router = createRouter({

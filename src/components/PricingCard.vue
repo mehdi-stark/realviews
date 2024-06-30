@@ -19,8 +19,8 @@
       <p v-if="current" class="mt-4 text-purple-600 font-semibold">Plan actuel</p>
       <button v-else-if="title === 'Custom'" class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800"
       ><a href="mailto:contact@realviews.ai?subject=RealViews - Demande custom abonnement">Contactez-nous</a></button>
-      <RouterLink v-else to="/payment-intent" class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800">Choisir</RouterLink>
-      <!-- <button v-else class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800">Choisir</button> -->
+      <!-- <RouterLink v-else to="/payment-intent" class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800">Choisir</RouterLink> -->
+      <button v-else class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800" @click="handleCheckout">Choisir</button>
     </div>
     <div id="features" class="justify-end">
       <ul class="mt-8 space-y-2 text-left">
@@ -39,6 +39,9 @@
 </template>
 
 <script>
+import api from '@/api';
+import { loadStripe } from '@stripe/stripe-js';
+  
 export default {
   props: {
     title: String,
@@ -48,11 +51,53 @@ export default {
     popular: Boolean,
     current: Boolean,
   },
-  computed: {
+
+  data() {
+      return {
+        stripe: null,
+        errorMessage: '',
+        sessionIdStripe: '',
+        urlCheckout: '',
+      };
+    },
+
+    computed: {
     featureList() {
       return this.features.split(',');
     },
   },
+
+  async mounted() {        
+        this.stripe = await loadStripe('pk_test_51JJLrVLuuLlzGggwHEMY3LCJSNgXrZM0Pm7QAaQAzRlIXSyhgKCe0Zh6grex7wZJZZRmeHzZQNxzBENMReUekQJw00jZKm6N5e');
+    },
+
+  methods: {
+      async handleCheckout() {
+        this.errorMessage = '';
+        try {
+          const response = await api.post('/api/v1/stripe/create-checkout-session', {});
+          const session = response.data;
+          this.sessionIdStripe = session.id;
+          this.urlCheckout = session.url;
+
+          console.log('session', session);
+          console.log('sessionIdStripe', this.sessionIdStripe);
+          console.log('urlCheckout', this.urlCheckout);
+          
+          if (session.error) {
+            this.errorMessage = session.error.message;
+          } else {
+            window.open(this.urlCheckout, '_blank'); // Ouvre dans un nouvel onglet
+            // const { error } = await this.stripe.redirectToCheckout({ sessionId: session.id });
+            // if (error) {
+            //   this.errorMessage = error.message;
+            // }
+          }
+        } catch (error) {
+          this.errorMessage = error.message;
+        }
+      },
+    },
 };
 </script>
 
