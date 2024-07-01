@@ -5,14 +5,6 @@
     </div>
   </template>
   
-
-  <template>
-    <div>
-      <button @click="handleCheckout">Checkout</button>
-      <div v-if="errorMessage">{{ errorMessage }}</div>
-    </div>
-  </template>
-  
   <script>
   import api from '@/api';
 import { loadStripe } from '@stripe/stripe-js';

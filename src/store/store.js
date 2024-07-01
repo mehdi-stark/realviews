@@ -11,7 +11,8 @@ const store = createStore({
       user: localStorage.getItem('user') && localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null,
       isUserConnected: localStorage.getItem('isUserConnected') === 'true',
       accessToken: localStorage.getItem('access_token') || null,
-      refreshToken: localStorage.getItem('refresh_token') || null
+      refreshToken: localStorage.getItem('refresh_token') || null,
+      selectedPlanTitle: null,
     };
   },
 
@@ -61,7 +62,11 @@ const store = createStore({
     refreshSubscriptionPlan(state, subscriptionPlan) {
       state.subscriptionPlan = subscriptionPlan;
       localStorage.setItem('subscriptionPlan', JSON.stringify(subscriptionPlan));
-    }
+    },
+        // autres mutations...
+    setSelectedPlanTitle(state, title) {
+      state.selectedPlanTitle = title;
+    },
   },
 
   actions: {

@@ -15,7 +15,7 @@
 
     <div id="price"
     class="md:h-[150px]">
-      <p class="text-black text-2xl font-extrabold">{{ price }}<span class="text-base font-normal">/mois</span></p>
+      <p class="text-black text-2xl font-extrabold">€{{ price }}<span class="text-base font-normal">/mois</span></p>
       <p v-if="current" class="mt-4 text-purple-600 font-semibold">Plan actuel</p>
       <button v-else-if="title === 'Custom'" class="mt-4 py-2 px-6 bg-purple-600 text-white rounded-full hover:bg-gray-800"
       ><a href="mailto:contact@realviews.ai?subject=RealViews - Demande custom abonnement">Contactez-nous</a></button>
@@ -36,11 +36,15 @@
       </ul>
     </div>
   </div>
+
+  <SpinnerComponent v-if="loading_price_card" :spinner_text="spinner_text" />
 </template>
 
 <script>
 import api from '@/api';
 import { loadStripe } from '@stripe/stripe-js';
+import SpinnerComponent from './SpinnerComponent.vue';
+// import router from '@/router';
   
 export default {
   props: {
@@ -52,16 +56,23 @@ export default {
     current: Boolean,
   },
 
+  components: {
+    SpinnerComponent,
+    // SpinnerComponent: () => import('./SpinnerComponent.vue'),
+  },
+
   data() {
       return {
         stripe: null,
         errorMessage: '',
         sessionIdStripe: '',
         urlCheckout: '',
+        loading_price_card: false,
+        spinner_text: '',
       };
     },
 
-    computed: {
+  computed: {
     featureList() {
       return this.features.split(',');
     },
@@ -73,9 +84,16 @@ export default {
 
   methods: {
       async handleCheckout() {
+        this.loading_price_card = true;
+        this.spinner_text = "Demande de paiement en cours ..."
         this.errorMessage = '';
         try {
-          const response = await api.post('/api/v1/stripe/create-checkout-session', {});
+          // this.spinner_text = "Ouverture de la \npage de paiement ..."
+          const response = await api.post('/api/v1/stripe/create-checkout-session', {
+            description: 'Souscription à l\'abonnement ' + this.title,
+            amount: this.price,
+            currency: 'eur',
+          });
           const session = response.data;
           this.sessionIdStripe = session.id;
           this.urlCheckout = session.url;
@@ -83,10 +101,12 @@ export default {
           console.log('session', session);
           console.log('sessionIdStripe', this.sessionIdStripe);
           console.log('urlCheckout', this.urlCheckout);
-          
+
           if (session.error) {
             this.errorMessage = session.error.message;
           } else {
+            console.log('Opening checkout page... ' + this.title);
+            this.$store.commit('setSelectedPlanTitle', this.title);
             window.open(this.urlCheckout, '_blank'); // Ouvre dans un nouvel onglet
             // const { error } = await this.stripe.redirectToCheckout({ sessionId: session.id });
             // if (error) {
